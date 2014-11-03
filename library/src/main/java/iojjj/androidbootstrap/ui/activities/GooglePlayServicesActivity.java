@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-import iojjj.androidbootstrap.ui.fragments.GooglePlayServicesFragment;
+import iojjj.androidbootstrap.ui.fragments.SimpleDialogFragment;
 
 
 public abstract class GooglePlayServicesActivity extends AbstractActivity {
@@ -17,8 +17,11 @@ public abstract class GooglePlayServicesActivity extends AbstractActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (checkServicesConnected())
+        int result = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (result == ConnectionResult.SUCCESS)
             onGooglePlayServicesAvailable();
+        else
+            onGooglePlayServicesNotAvailable(result);
     }
 
     @Override
@@ -26,34 +29,20 @@ public abstract class GooglePlayServicesActivity extends AbstractActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GOOGLE_PLAY_SERVICES_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                if (checkServicesConnected())
+                int result = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+                if (result == ConnectionResult.SUCCESS)
                     onGooglePlayServicesAvailable();
                 else
-                    finish();
+                    onGooglePlayServicesNotAvailable(resultCode);
             } else {
-                finish();
+                onGooglePlayServicesUpdateCancelled();
             }
         }
     }
 
     protected abstract void onGooglePlayServicesAvailable();
-
-    /**
-     * Check if Google Play Services are available and have latest version
-     * @return true if all ok, false otherwise
-     */
-    private boolean checkServicesConnected() {
-        // Check that Google Play services is available
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        // If Google Play services is available
-        if (ConnectionResult.SUCCESS == resultCode) {
-            return true;
-        }
-        // Google Play services was not available for some reason
-        // Get the error dialog from Google Play services
-        showErrorDialog(resultCode);
-        return false;
-    }
+    protected abstract void onGooglePlayServicesNotAvailable(final int resultCode);
+    protected abstract void onGooglePlayServicesUpdateCancelled();
 
     /**
      * Show Google Play Services error dialog
@@ -68,7 +57,7 @@ public abstract class GooglePlayServicesActivity extends AbstractActivity {
         // If Google Play services can provide an error dialog
         if (errorDialog != null) {
             // Create a new DialogFragment for the error dialog
-            GooglePlayServicesFragment errorFragment = new GooglePlayServicesFragment();
+            SimpleDialogFragment errorFragment = new SimpleDialogFragment();
             errorFragment.setDialog(errorDialog);
             errorFragment.show(getSupportFragmentManager(), "wl_update_google_play_services");
         }

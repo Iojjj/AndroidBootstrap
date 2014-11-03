@@ -10,31 +10,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
-
 import iojjj.androidbootstrap.R;
 
+/**
+ * Simple example of fragment with WebView
+ */
+public class SimpleWebViewFragment extends AbstractFragment {
 
-@EFragment
-public class SimpleWebViewFragment extends Fragment {
+    private static final String URL_KEY = "url_key";
 
-    @ViewById(resName = "progress")
-    ProgressBar progressBar;
-    @ViewById(resName = "web_view")
-    WebView webView;
+    private ProgressBar progressBar;
+    private WebView webView;
 
     public static Fragment instance(String url) {
-        Fragment fragment = new SimpleWebViewFragment_();
+        Fragment fragment = new SimpleWebViewFragment();
         Bundle args = new Bundle();
-        args.putString("url", url);
+        args.putString(URL_KEY, url);
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,17 +40,22 @@ public class SimpleWebViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CookieSyncManager.createInstance(getActivity());
         CookieManager.getInstance().setAcceptCookie(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_web_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_web_view, container, false);
+        webView = (WebView) view.findViewById(R.id.web_view);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress);
+        return view;
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    @AfterViews
-    public void initiateUI() {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         webView.setWebViewClient(new CustomWebViewClient());
         webView.setWebChromeClient(new WebChromeClient());
 
@@ -65,7 +68,7 @@ public class SimpleWebViewFragment extends Fragment {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
             webSettings.setPluginState(WebSettings.PluginState.ON);
         if (getArguments() != null)
-            webView.loadUrl(getArguments().getString("url"));
+            webView.loadUrl(getArguments().getString(URL_KEY));
     }
 
     @Override
@@ -84,6 +87,10 @@ public class SimpleWebViewFragment extends Fragment {
                 webView.onPause();
     }
 
+    /**
+     * Execute javascript code in WebView
+     * @param js javascript code
+     */
     private void runJs(String js) {
         if (webView == null)
             return;
@@ -94,6 +101,10 @@ public class SimpleWebViewFragment extends Fragment {
         }
     }
 
+    /**
+     * Simple example of WebViewClient.<br />
+     * It shows and hides ProgressBar when page is loading.
+     */
     public class CustomWebViewClient extends WebViewClient {
 
         @Override

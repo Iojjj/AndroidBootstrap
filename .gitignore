@@ -5,3 +5,6 @@
 .DS_Store
 /build
 /.idea
+/library/*.iml
+/demo/*.iml
+/support-settings-fragment/*.iml

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base attributes available to Preference. -->
+    <declare-styleable name="Preference">
+        <!-- The optional icon for the preference -->
+        <attr name="android:icon" />
+        <!-- The key to store the Preference value. -->
+        <attr name="android:key" /> <!--format="string"-->
+        <!-- The title for the Preference in a PreferenceActivity screen. -->
+        <attr name="android:title" />
+        <!-- The summary for the Preference in a PreferenceActivity screen. -->
+        <attr name="android:summary" />
+        <!-- The order for the Preference (lower values are to be ordered first). If this is not
+             specified, the default orderin will be alphabetic. -->
+        <attr name="android:order" /> <!--format="integer"-->
+        <!-- When used inside of a modern PreferenceActivity, this declares
+             a new PreferenceFragment to be shown when the user selects this item. -->
+        <attr name="android:fragment" />
+        <!-- The layout for the Preference in a PreferenceActivity screen. This should
+             rarely need to be changed, look at widgetLayout instead. -->
+        <attr name="android:layout" />
+        <!-- The layout for the controllable widget portion of a Preference. This is inflated
+             into the layout for a Preference and should be used more frequently than
+             the layout attribute. For example, a checkbox preference would specify
+             a custom layout (consisting of just the CheckBox) here. -->
+        <attr name="android:widgetLayout" /> <!-- format="reference" -->
+        <!-- Whether the Preference is enabled. -->
+        <attr name="android:enabled" />
+        <!-- Whether the Preference is selectable. -->
+        <attr name="android:selectable" /> <!--format="boolean"-->
+        <!-- The key of another Preference that this Preference will depend on.  If the other
+             Preference is not set or is off, this Preference will be disabled. -->
+        <attr name="android:dependency" /> <!--format="string"-->
+        <!-- Whether the Preference stores its value to the shared preferences. -->
+        <attr name="android:persistent" />
+        <!-- The default value for the preference, which will be set either if persistence
+             is off or persistence is on and the preference is not found in the persistent
+             storage.  -->
+        <attr name="android:defaultValue" /> <!--format="string|boolean|integer|reference|float"-->
+        <!-- Whether the view of this Preference should be disabled when
+             this Preference is disabled. -->
+        <attr name="android:shouldDisableView" /> <!--format="boolean"-->
+    </declare-styleable>
+
+    <!-- Base attributes available to CheckBoxPreference. -->
+    <declare-styleable name="CheckBoxPreference">
+        <!-- The summary for the Preference in a PreferenceActivity screen when the
+             CheckBoxPreference is checked. If separate on/off summaries are not
+             needed, the summary attribute can be used instead. -->
+        <attr name="android:summaryOn" /> <!--format="string"-->
+        <!-- The summary for the Preference in a PreferenceActivity screen when the
+             CheckBoxPreference is unchecked. If separate on/off summaries are not
+             needed, the summary attribute can be used instead. -->
+        <attr name="android:summaryOff" /> <!--format="string"-->
+        <!-- The state (true for on, or false for off) that causes dependents to be disabled. By default,
+             dependents will be disabled when this is unchecked, so the value of this preference is false. -->
+        <attr name="android:disableDependentsState" /> <!--format="boolean"-->
+    </declare-styleable>
+
+
+    <!-- Base attributes available to PreferenceGroup. -->
+    <declare-styleable name="PreferenceGroup">
+        <!-- Whether to order the Preference under this group as they appear in the XML file.
+             If this is false, the ordering will follow the Preference order attribute and
+             default to alphabetic for those without the order attribute. -->
+        <attr name="android:orderingFromXml" /> <!--format="boolean"-->
+    </declare-styleable>
+    
+    <declare-styleable name="VolumePreference">
+        <attr name="streamType" format="integer" />
+    </declare-styleable>
+
+</resources>

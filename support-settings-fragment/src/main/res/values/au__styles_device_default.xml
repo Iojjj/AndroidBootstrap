@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Preference.DeviceDefault" parent="Preference.Holo">
+
+    </style>
+
+    <style name="Preference.DeviceDefault.Category" parent="Preference.Holo.Category">
+
+    </style>
+
+    <style name="Preference.DeviceDefault.CheckBoxPreference" parent="Preference.Holo.CheckBoxPreference">
+
+    </style>
+
+    <style name="Preference.DeviceDefault.PreferenceScreen" parent="Preference.Holo.PreferenceScreen">
+
+    </style>
+
+</resources>

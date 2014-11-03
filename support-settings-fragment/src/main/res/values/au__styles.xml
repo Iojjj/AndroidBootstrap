@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Preference">
+        <item name="android:layout">@layout/au__preference</item>
+    </style>
+
+    <style name="Preference.Category">
+        <item name="android:layout">@layout/au__preference_category</item>
+        <!-- The title should not dim if the category is disabled, instead only the preference children should dim. -->
+        <item name="android:shouldDisableView">false</item>
+        <item name="android:selectable">false</item>
+    </style>
+
+    <style name="Preference.CheckBoxPreference">
+        <item name="android:widgetLayout">@layout/au__preference_widget_checkbox</item>
+    </style>
+
+    <style name="Preference.PreferenceScreen">
+    </style>
+
+
+    <style name="Preference.Holo">
+        <item name="android:layout">@layout/au__preference_holo</item>
+    </style>
+
+    <style name="Preference.Holo.Category">
+        <item name="android:layout">@layout/au__preference_category_holo</item>
+        <!-- The title should not dim if the category is disabled, instead only the preference children should dim. -->
+        <item name="android:shouldDisableView">false</item>
+        <item name="android:selectable">false</item>
+    </style>
+
+    <style name="Preference.Holo.CheckBoxPreference">
+        <item name="android:widgetLayout">@layout/au__preference_widget_checkbox</item>
+    </style>
+
+
+    <style name="PreferenceFragmentList">
+        <item name="android:paddingLeft">@dimen/preference_fragment_padding_side</item>
+        <item name="android:paddingRight">@dimen/preference_fragment_padding_side</item>
+    </style>
+
+    <style name="Preference.Holo.PreferenceScreen">
+    </style>
+
+</resources>

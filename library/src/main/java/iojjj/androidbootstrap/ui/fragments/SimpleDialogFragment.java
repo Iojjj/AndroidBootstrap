@@ -4,12 +4,11 @@ package iojjj.androidbootstrap.ui.fragments;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 
 /**
  * Simple DialogFragment class that displays provided dialog
  */
-public class SimpleDialogFragment extends DialogFragment {
+public class SimpleDialogFragment extends AbstractDialogFragment {
     // Global field to contain the error dialog
     private Dialog mDialog;
 
