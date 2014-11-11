@@ -61,6 +61,10 @@ public abstract class AbstractActivity extends ActionBarActivity implements IFra
      */
     protected abstract int getContainerId();
 
+    /**
+     * Start rotation of menu item's action view
+     * @param item menu item
+     */
     protected void startRotation(@Nullable MenuItem item) {
         if (item == null)
             return;
@@ -76,6 +80,10 @@ public abstract class AbstractActivity extends ActionBarActivity implements IFra
         MenuItemCompat.setActionView(item, rotationImage);
     }
 
+    /**
+     * Stop rotation of menu item's action view
+     * @param item menu item
+     */
     protected void stopRotation(@Nullable MenuItem item) {
         if (item == null)
             return;
@@ -87,6 +95,7 @@ public abstract class AbstractActivity extends ActionBarActivity implements IFra
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // default behavior for home button
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;

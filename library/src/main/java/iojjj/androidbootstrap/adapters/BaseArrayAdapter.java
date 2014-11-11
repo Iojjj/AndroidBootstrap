@@ -25,15 +25,29 @@ public abstract class BaseArrayAdapter<T> extends ArrayAdapter<T> {
     @Override
     public abstract View getView(int position, View convertView, ViewGroup parent);
 
+    /**
+     * Add element at specified position
+     * @param object object
+     * @param pos position
+     */
     public synchronized void add(T object, int pos) {
         pos = pos >= getCount() ? Math.max(getCount() - 1, 0) : pos;
         super.insert(object, pos);
     }
 
+    /**
+     * Adds the specified items at the end of the array.
+     * @param collection The items to add at the end of the array.
+     */
     public synchronized void addAll(Collection<? extends T> collection) {
         addAll(collection, true);
     }
 
+    /**
+     * Adds the specified items at the end of the array.
+     * @param collection The items to add at the end of the array.
+     * @param skipExisted if set to true, already existed items will not be added to collection
+     */
     public synchronized void addAll(Collection<? extends T> collection, boolean skipExisted) {
         if (collection == null) {
             return;
@@ -51,10 +65,19 @@ public abstract class BaseArrayAdapter<T> extends ArrayAdapter<T> {
         notifyDataSetChanged();
     }
 
+    /**
+     * Adds the specified items at the end of the array.
+     * @param collection The items to add at the end of the array.
+     */
     public synchronized void addAll(T... collection) {
         addAll(true, collection);
     }
 
+    /**
+     * Adds the specified items at the end of the array.
+     * @param collection The items to add at the end of the array.
+     * @param skipExisted if set to true, already existed items will not be added to collection
+     */
     public synchronized void addAll(boolean skipExisted, T... collection) {
         if (collection == null) {
             return;
@@ -72,6 +95,10 @@ public abstract class BaseArrayAdapter<T> extends ArrayAdapter<T> {
         notifyDataSetChanged();
     }
 
+    /**
+     * Adds the specified items at specified position.
+     * @param collection The items to add at the end of the array.
+     */
     public synchronized void insertAll(int position, T... collection) {
         if (collection == null) {
             return;

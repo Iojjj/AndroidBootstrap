@@ -11,5 +11,7 @@
     <string name="activity_simple">Simple</string>
     <string name="action_recycler_view">RecyclerView</string>
     <string name="activity_recycler_view">Recycler View</string>
+    <string name="action_switch">Switch</string>
+    <string name="activity_toolbar_overscroll">Tollbar Overscroll</string>
 
 </resources>

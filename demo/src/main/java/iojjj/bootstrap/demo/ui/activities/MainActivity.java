@@ -5,53 +5,80 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import iojjj.androidbootstrap.ui.activities.GooglePlayServicesActivity;
-import iojjj.androidbootstrap.ui.fragments.SimpleWebViewFragment;
+import iojjj.androidbootstrap.ui.activities.ToolbarActivity;
+import iojjj.androidbootstrap.utils.misc.GooglePlayServicesUtils;
+import iojjj.androidbootstrap.utils.threading.ThreadUtils;
 import iojjj.bootstrap.demo.R;
+import iojjj.bootstrap.demo.ui.fragments.ListFragment;
 
 
-public class MainActivity extends GooglePlayServicesActivity {
+public class MainActivity extends ToolbarActivity implements GooglePlayServicesUtils.IGooglePlayServicesCallback {
+
+    private final GooglePlayServicesUtils gpsUtils = new GooglePlayServicesUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        getSupportActionBar().setTitle(R.string.activity_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        gpsUtils.setCallback(this)
+                .setRequestCode(1)
+                .onCreate(this);
     }
 
     @Override
-    protected void onGooglePlayServicesAvailable() {
-        replaceFragment(SimpleWebViewFragment.instance("https://google.com/"), null, false);
+    public void onGooglePlayServicesAvailable() {
+        replaceFragment(new ListFragment(), null, false);
     }
 
     @Override
-    protected void onGooglePlayServicesNotAvailable(final int resultCode) {
+    public void onGooglePlayServicesNotAvailable(final int resultCode) {
         // Google Play services was not available for some reason
         // Get the error dialog from Google Play services
-        showErrorDialog(resultCode);
+        gpsUtils.showErrorDialog(this, resultCode);
+    }
+
+    @Override
+    public void onGooglePlayServicesUpdateCancelled() {
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        gpsUtils.onActivityResult(this, requestCode, resultCode);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.toolbar, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_toolbar) {
-            startActivity(new Intent(this, ToolbarActivity.class));
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        if (item.getItemId() == R.id.action_refresh) {
+            startRotation(item);
+            ThreadUtils.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    stopRotation(item);
+                }
+            }, 2000);
+            return true;
+        } else if (item.getItemId() == R.id.action_activity) {
+            startActivity(new Intent(this, SimpleActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.action_recycler_view) {
+            startActivity(new Intent(this, RecyclerViewActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    protected void onGooglePlayServicesUpdateCancelled() {
-        finish();
-    }
-
-    @Override
     protected int getContainerId() {
-        return R.id.root;
+        return R.id.container;
     }
 }

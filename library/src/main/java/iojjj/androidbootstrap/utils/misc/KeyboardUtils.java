@@ -7,10 +7,16 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 /**
- * Helper class for keyboard
+ * Keyboard utils
  */
 public class KeyboardUtils {
 
+    /**
+     * Show keyboard
+     * @param context context
+     * @param editText view requested keyboard
+     * @param result callback for operation
+     */
 	public static void showKeyboard(@Nullable final Context context,
                                     @Nullable final View editText,
                                     @Nullable final ResultReceiver result) {
@@ -27,6 +33,12 @@ public class KeyboardUtils {
 		});
 	}
 
+    /**
+     * Hide keyboard
+     * @param context context
+     * @param editText view requested keyboard
+     * @param result callback for operation
+     */
 	public static void hideKeyboard(@Nullable final Context context,
                                     @Nullable final View editText,
                                     @Nullable final ResultReceiver result) {
@@ -44,11 +56,20 @@ public class KeyboardUtils {
 
 	}
 
-
+    /**
+     * Show keyboard
+     * @param context context
+     * @param editText view requested keyboard
+     */
     public static void showKeyboard(@Nullable final Context context, @Nullable final View editText) {
 		showKeyboard(context, editText, null);
     }
 
+    /**
+     * Hide keyboard
+     * @param context context
+     * @param editText view requested keyboard
+     */
     public static void hideKeyboard(@Nullable Context context, @Nullable final View editText) {
 		hideKeyboard(context, editText, null);
     }

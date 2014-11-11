@@ -7,7 +7,7 @@ import iojjj.androidbootstrap.R;
 /**
  * Activity with enter and exit animations
  */
-public abstract class AbstractAnimatedActivity extends AbstractFocusableActivity {
+public abstract class AbstractAnimatedActivity extends AbstractActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

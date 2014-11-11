@@ -105,7 +105,7 @@ public class AdditionalKeyStoresSSLSocketFactory extends SSLSocketFactory {
                     // ignore
                 }
             }
-//            throw new CertificateException();
+            throw new CertificateException();
         }
 
         public X509Certificate[] getAcceptedIssuers() {

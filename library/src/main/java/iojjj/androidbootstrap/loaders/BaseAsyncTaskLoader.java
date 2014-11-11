@@ -18,30 +18,29 @@ public abstract class BaseAsyncTaskLoader<T> extends AsyncTaskLoader<T> {
      * super class will take care of delivering it; the implementation
      * here just adds a little more logic.
      */
-    @SuppressWarnings("UnnecessaryLocalVariable")
     @Override
-    public void deliverResult(T apps) {
+    public void deliverResult(T data) {
         if (isReset()) {
             // An async query came in while the loader is stopped.  We
             // don't need the result.
-            if (apps != null) {
-                onReleaseResources(apps);
+            if (data != null) {
+                onReleaseResources(data);
             }
         }
-        T oldApps = apps;
-        mData = apps;
+        T oldData = mData;
+        mData = data;
 
         if (isStarted()) {
             // If the Loader is currently started, we can immediately
             // deliver its results.
-            super.deliverResult(apps);
+            super.deliverResult(data);
         }
 
         // At this point we can release the resources associated with
-        // 'oldApps' if needed; now that the new result is delivered we
+        // 'oldData' if needed; now that the new result is delivered we
         // know that it is no longer in use.
-        if (oldApps != null) {
-            onReleaseResources(oldApps);
+        if (oldData != null) {
+            onReleaseResources(oldData);
         }
     }
 
@@ -55,7 +54,6 @@ public abstract class BaseAsyncTaskLoader<T> extends AsyncTaskLoader<T> {
             // immediately.
             deliverResult(mData);
         }
-
 
         if (takeContentChanged() || mData == null) {
             // If the data has changed since the last time it was loaded
@@ -77,12 +75,12 @@ public abstract class BaseAsyncTaskLoader<T> extends AsyncTaskLoader<T> {
      * Handles a request to cancel a load.
      */
     @Override
-    public void onCanceled(T apps) {
-        super.onCanceled(apps);
+    public void onCanceled(T data) {
+        super.onCanceled(data);
 
         // At this point we can release the resources associated with 'apps'
         // if needed.
-        onReleaseResources(apps);
+        onReleaseResources(data);
     }
 
     /**

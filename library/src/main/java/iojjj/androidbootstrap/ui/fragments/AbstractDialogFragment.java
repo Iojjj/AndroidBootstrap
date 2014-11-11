@@ -9,7 +9,7 @@ import android.support.v4.app.Fragment;
 import iojjj.androidbootstrap.interfaces.IFragmentManager;
 
 /**
- * Created by Александр on 03.11.2014.
+ * Base dialog fragment
  */
 public class AbstractDialogFragment extends DialogFragment implements IFragmentManager {
 

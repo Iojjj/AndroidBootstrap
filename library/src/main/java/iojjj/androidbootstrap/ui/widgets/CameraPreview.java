@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Camera preview
+ * Camera preview widget
  */
 @SuppressWarnings("deprecation")
 public class CameraPreview extends ViewGroup implements SurfaceHolder.Callback {

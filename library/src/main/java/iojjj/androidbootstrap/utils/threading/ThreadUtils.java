@@ -21,10 +21,18 @@ public class ThreadUtils {
 
     private static final ExecutorService BACKGROUND_EXECUTOR = Executors.newFixedThreadPool(Config.CORES_COUNT * 2 + 1);
 
+    /**
+     * Get handler for UI thread
+     * @return handler for UI thread
+     */
     public static Handler getMainHandler() {
         return MainThreadHandlerHolder.INSTANCE;
     }
 
+    /**
+     * Execute runnable on UI thread
+     * @param r runnable
+     */
     public static void runOnUiThread(@NonNull final Runnable r) {
         if (Thread.currentThread().equals(Looper.getMainLooper().getThread())) {
             r.run();
@@ -34,15 +42,31 @@ public class ThreadUtils {
         getMainHandler().post(r);
     }
 
+    /**
+     * Execute runnable on UI thread with delay
+     * @param r runnable
+     * @param delayMillis delay in milliseconds
+     */
     public static void runOnUiThread(@NonNull final Runnable r, final long delayMillis) {
         getMainHandler().postDelayed(r, delayMillis);
     }
 
+    /**
+     * Execute runnable in background thread
+     * @param runnable runnable
+     * @return a Future representing pending completion of the task
+     */
     @Nullable
     public static Future runInBackground(@NonNull final Runnable runnable) {
         return runInBackground(runnable, true);
     }
 
+    /**
+     * Execute runnable in background thread
+     * @param runnable runnable
+     * @param immediately if set to true, runnable will be executed immediately if current thread is not a UI thread
+     * @return a Future representing pending completion of the task or null if runnable was executed immediately
+     */
     @Nullable
     public static Future runInBackground(@NonNull final Runnable runnable, boolean immediately) {
         if (immediately && !Thread.currentThread().equals(Looper.getMainLooper().getThread())) {
