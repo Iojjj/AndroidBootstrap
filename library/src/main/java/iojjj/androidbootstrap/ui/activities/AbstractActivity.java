@@ -1,6 +1,7 @@
 package iojjj.androidbootstrap.ui.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -97,9 +98,17 @@ public abstract class AbstractActivity extends ActionBarActivity implements IFra
     public boolean onOptionsItemSelected(MenuItem item) {
         // default behavior for home button
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(getContainerId());
+        if (fragment != null)
+            fragment.onActivityResult(requestCode, resultCode, data);
     }
 }

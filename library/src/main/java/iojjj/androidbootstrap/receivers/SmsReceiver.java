@@ -23,34 +23,35 @@ public abstract class SmsReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction())) {
-            Bundle bundle = intent.getExtras();
-            if (bundle == null) {
-                return;
-            }
-            Object[] pdus = (Object[]) bundle.get("pdus");
-            SmsMessage[] msgs = new SmsMessage[pdus.length];
-            for (int i = 0; i < msgs.length; i++) {
-                msgs[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
-                if (msgs[i] == null)
-                    continue;
-                String msgBody = msgs[i].getMessageBody();
-                if (TextUtils.isEmpty(msgBody))
-                    continue;
-                Matcher matcher = getSmsCodePatter().matcher(msgBody);
-                if (matcher.find()) {
-                    String code = matcher.group(1);
-                    Iterator<SmsListener> iterator = SMS_LISTENERS.iterator();
-                    while (iterator.hasNext()) {
-                        SmsListener listener = iterator.next();
-                        if (listener == null) {
-                            iterator.remove();
-                            continue;
-                        }
-                        listener.onCodeReceived(code);
+        if (!Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction())) {
+            return;
+        }
+        Bundle bundle = intent.getExtras();
+        if (bundle == null) {
+            return;
+        }
+        Object[] pdus = (Object[]) bundle.get("pdus");
+        SmsMessage[] msgs = new SmsMessage[pdus.length];
+        for (int i = 0; i < msgs.length; i++) {
+            msgs[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
+            if (msgs[i] == null)
+                continue;
+            String msgBody = msgs[i].getMessageBody();
+            if (TextUtils.isEmpty(msgBody))
+                continue;
+            Matcher matcher = getSmsCodePatter().matcher(msgBody);
+            if (matcher.find()) {
+                String code = matcher.group(1);
+                Iterator<SmsListener> iterator = SMS_LISTENERS.iterator();
+                while (iterator.hasNext()) {
+                    SmsListener listener = iterator.next();
+                    if (listener == null) {
+                        iterator.remove();
+                        continue;
                     }
-                    break;
+                    listener.onCodeReceived(code);
                 }
+                break;
             }
         }
     }

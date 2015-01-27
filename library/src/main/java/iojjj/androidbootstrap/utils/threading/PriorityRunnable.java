@@ -8,10 +8,10 @@ import iojjj.androidbootstrap.annotations.ProcessPriority;
 * Runnable that set thread priority before execution
 */
 public abstract class PriorityRunnable implements Runnable {
-    private int threadPriority = Process.THREAD_PRIORITY_BACKGROUND;
+    private int threadPriority;
 
     public PriorityRunnable() {
-
+        threadPriority = Process.THREAD_PRIORITY_BACKGROUND;
     }
 
     public PriorityRunnable(@ProcessPriority int threadPriority) {

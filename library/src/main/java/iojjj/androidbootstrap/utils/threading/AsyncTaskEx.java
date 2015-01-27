@@ -12,6 +12,9 @@ import java.util.concurrent.Executor;
  */
 public abstract class AsyncTaskEx<TIn, TProgress, TOut> extends AsyncTask<TIn, TProgress, TOut> {
 
+    /**
+     * The executor to use for API >= 11.
+     */
     @NonNull
     private Executor executor;
 
@@ -26,14 +29,16 @@ public abstract class AsyncTaskEx<TIn, TProgress, TOut> extends AsyncTask<TIn, T
         }
     }
 
-    private AsyncTaskEx<TIn, TProgress, TOut> executeExSafe(final TIn... params) {
+    @SafeVarargs
+    private final AsyncTaskEx<TIn, TProgress, TOut> executeExSafe(final TIn... params) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             return (AsyncTaskEx<TIn, TProgress, TOut>) super.executeOnExecutor(executor, params);
         }
         return (AsyncTaskEx<TIn, TProgress, TOut>) super.execute(params);
     }
 
-    public void executeEx(final TIn... params) {
+    @SafeVarargs
+    public final void executeEx(final TIn... params) {
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {

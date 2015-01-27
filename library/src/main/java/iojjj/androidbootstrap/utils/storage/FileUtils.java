@@ -2,7 +2,9 @@ package iojjj.androidbootstrap.utils.storage;
 
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,7 +18,7 @@ import iojjj.androidbootstrap.annotations.CopyFileResult;
 public class FileUtils {
 
     /**
-     * Copy source file to destination
+     * Copy file from source to destination
      * @param src source file
      * @param dst destination file
      * @return result of operation
@@ -31,13 +33,8 @@ public class FileUtils {
         try {
             srcStream = new FileInputStream(src);
             dstStream = new FileOutputStream(dst);
-
             copyStream(srcStream, dstStream);
-
             dstStream.flush();
-            srcStream.close();
-            dstStream.close();
-
             return CopyFileResult.RESULT_SUCCESS;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -46,20 +43,8 @@ public class FileUtils {
             e.printStackTrace();
             return CopyFileResult.RESULT_GENERAL_ERROR;
         } finally {
-            if (srcStream != null) {
-                try {
-                    srcStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (dstStream != null) {
-                try {
-                    dstStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            closeStream(srcStream);
+            closeStream(dstStream);
         }
     }
 
@@ -75,6 +60,20 @@ public class FileUtils {
         int count;
         while ((count = is.read(bytes, 0, buffer_size)) != -1) {
             os.write(bytes, 0, count);
+        }
+    }
+
+    /**
+     * Close any closeable silently
+     * @param closeable any closeable
+     */
+    public static void closeStream(@Nullable Closeable closeable) {
+        if (closeable == null)
+            return;
+        try {
+            closeable.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

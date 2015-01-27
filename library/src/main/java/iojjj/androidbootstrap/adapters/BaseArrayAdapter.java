@@ -69,7 +69,8 @@ public abstract class BaseArrayAdapter<T> extends ArrayAdapter<T> {
      * Adds the specified items at the end of the array.
      * @param collection The items to add at the end of the array.
      */
-    public synchronized void addAll(T... collection) {
+    @SafeVarargs
+    public final synchronized void addAll(T... collection) {
         addAll(true, collection);
     }
 
@@ -78,7 +79,8 @@ public abstract class BaseArrayAdapter<T> extends ArrayAdapter<T> {
      * @param collection The items to add at the end of the array.
      * @param skipExisted if set to true, already existed items will not be added to collection
      */
-    public synchronized void addAll(boolean skipExisted, T... collection) {
+    @SafeVarargs
+    public final synchronized void addAll(boolean skipExisted, T... collection) {
         if (collection == null) {
             return;
         }

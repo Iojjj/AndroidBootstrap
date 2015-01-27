@@ -6,7 +6,6 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Process;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.File;
@@ -17,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import iojjj.androidbootstrap.utils.storage.FileUtils;
 import iojjj.androidbootstrap.utils.threading.PriorityRunnable;
 
 /**
@@ -48,9 +48,7 @@ public abstract class AudioRecorder implements IAudioRecorder {
 
     private final Object recorderStateMonitor = new Object();
 
-    @Nullable
     private File record;
-    @Nullable
     private File recordTmp;
 
 
@@ -133,28 +131,21 @@ public abstract class AudioRecorder implements IAudioRecorder {
                 } finally {
                     recorder.release();
                 }
-
+                FileUtils.closeStream(os);
                 try {
-                    os.close();
-
                     InputStream is = new FileInputStream(recordTmp);
-
+                    OutputStream os = new FileOutputStream(record);
                     try {
-                        assert record != null;
-                        OutputStream os = new FileOutputStream(record);
-
                         writeHeader(os, recordTmp.length());
-
                         int read;
                         final byte[] buf = new byte[1024];
                         while ((read = is.read(buf)) > 0) {
                             os.write(buf, 0, read);
                         }
-                        os.close();
                     } finally {
-                        is.close();
+                        FileUtils.closeStream(os);
+                        FileUtils.closeStream(is);
                     }
-
                 } catch (IOException e) {
                     e.printStackTrace();
                     onRecordFailure();
