@@ -1,7 +1,6 @@
 package iojjj.bootstrap.demo.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +15,13 @@ import java.util.List;
 
 import iojjj.androidbootstrap.adapters.BaseRecyclerViewAdapter;
 import iojjj.androidbootstrap.ui.fragments.AbstractFragment;
-import iojjj.androidbootstrap.utils.misc.RecyclerViewClickListener;
+import iojjj.androidbootstrap.utils.misc.ItemClickSupport;
 import iojjj.bootstrap.demo.R;
 
 /**
- * Created by Александр on 03.11.2014.
+ * Fragment with RecyclerView
  */
-public class RecyclerViewFragment extends AbstractFragment implements RecyclerViewClickListener.IOnItemClickListener {
+public class RecyclerViewFragment extends AbstractFragment {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter<DataViewHolder> adapter;
@@ -50,18 +49,10 @@ public class RecyclerViewFragment extends AbstractFragment implements RecyclerVi
         }
         adapter = new RecyclerAdapter(data);
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(new RecyclerViewClickListener(getActivity(), this));
-    }
-
-    @Override
-    public void onItemClick(@NonNull View view, int position) {
-        recyclerView.getChildViewHolder(view);
+        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView);
     }
 
     public static class RecyclerAdapter extends BaseRecyclerViewAdapter<String, DataViewHolder> {
-
-        public RecyclerAdapter() {
-        }
 
         public RecyclerAdapter(List<String> data) {
             super(data);

@@ -8,9 +8,6 @@ import iojjj.androidbootstrap.ui.activities.AbstractAnimatedActivity;
 import iojjj.androidbootstrap.utils.threading.ThreadUtils;
 import iojjj.bootstrap.demo.R;
 
-/**
- * Created by Александр on 03.11.2014.
- */
 public class SimpleActivity extends AbstractAnimatedActivity {
 
     @Override

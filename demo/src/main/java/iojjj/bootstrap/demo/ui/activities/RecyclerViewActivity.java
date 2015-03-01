@@ -7,7 +7,7 @@ import iojjj.bootstrap.demo.R;
 import iojjj.bootstrap.demo.ui.fragments.RecyclerViewFragment;
 
 /**
- * Created by Александр on 03.11.2014.
+ * Host activity for {@link iojjj.bootstrap.demo.ui.fragments.RecyclerViewFragment}
  */
 public class RecyclerViewActivity extends ToolbarActivity {
 

@@ -14,7 +14,7 @@ import iojjj.androidbootstrap.adapters.BaseArrayAdapter;
 import iojjj.androidbootstrap.ui.activities.ToolbarOverscrollActivity;
 
 /**
- * Created by Александр on 08.11.2014.
+ * Fragment with list of colors
  */
 public class ListFragment extends android.support.v4.app.ListFragment {
 
