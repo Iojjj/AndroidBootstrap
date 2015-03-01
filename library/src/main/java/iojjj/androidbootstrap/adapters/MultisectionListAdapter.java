@@ -165,6 +165,10 @@ public abstract class MultisectionListAdapter extends BaseAdapter {
         return sections.get(section).size() - 1;
     }
 
+    public boolean hasSection(int section) {
+        return sections.size() > section;
+    }
+
     public static abstract class OnItemClickListener implements AbsListView.OnItemClickListener {
 
         private MultisectionListAdapter adapter;

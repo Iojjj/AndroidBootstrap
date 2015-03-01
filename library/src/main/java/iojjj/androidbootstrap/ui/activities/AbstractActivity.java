@@ -1,7 +1,10 @@
 package iojjj.androidbootstrap.ui.activities;
 
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,19 +17,49 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import iojjj.androidbootstrap.R;
 import iojjj.androidbootstrap.interfaces.IFragmentManager;
+import iojjj.androidbootstrap.utils.misc.MiscellaneousUtils;
 
 
 public abstract class AbstractActivity extends ActionBarActivity implements IFragmentManager {
 
     private static ImageView rotationImage;
     private static Animation rotationAnimation;
+    private BroadcastReceiver toastReceiver;
+    private Toast toast;
+
+    @SuppressLint("ShowToast")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+        toastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                showToast(intent.getStringExtra(MiscellaneousUtils.EXTRA_TEXT), intent.getIntExtra(MiscellaneousUtils.EXTRA_DURATION, Toast.LENGTH_SHORT));
+            }
+        };
+        MiscellaneousUtils.registerToastReceiver(this, toastReceiver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MiscellaneousUtils.unregisterToastReceiver(this, toastReceiver);
+    }
+
+    private void showToast(String text, int duration) {
+        toast.setText(text);
+        toast.setDuration(duration);
+        toast.show();
+    }
 
     @Override
     public void addFragment(@NonNull Fragment fragment) {
-        addFragment(fragment, null, true);
+        addFragment(fragment, null, false);
     }
 
     @Override

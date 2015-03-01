@@ -5,11 +5,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import iojjj.androidbootstrap.R;
+import iojjj.androidbootstrap.interfaces.IToolbarActivity;
 
 /**
  * Base activity with toolbar
  */
-public class ToolbarActivity extends AbstractAnimatedActivity {
+public class ToolbarActivity extends AbstractAnimatedActivity implements IToolbarActivity {
 
     public static final String EXTRA_COLOR = "color_extra";
 
@@ -40,4 +41,10 @@ public class ToolbarActivity extends AbstractAnimatedActivity {
             toolbar.setBackgroundColor(color);
         }
     }
+
+    @Override
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
 }
