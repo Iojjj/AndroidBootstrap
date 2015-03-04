@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import iojjj.androidbootstrap.R;
+import iojjj.androidbootstrap.interfaces.IBackPressable;
 import iojjj.androidbootstrap.interfaces.IFragmentManager;
 import iojjj.androidbootstrap.utils.misc.MiscellaneousUtils;
 
@@ -143,5 +144,13 @@ public abstract class AbstractActivity extends ActionBarActivity implements IFra
         Fragment fragment = getSupportFragmentManager().findFragmentById(getContainerId());
         if (fragment != null)
             fragment.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(getContainerId());
+        if (fragment instanceof IBackPressable && ((IBackPressable) fragment).onBackPressed())
+            return;
+        super.onBackPressed();
     }
 }
