@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FlowerMenuItem">
+        <attr name="fmi_title" format="string" />
+    </declare-styleable>
+    
+    <declare-styleable name="FlowerMenu">
+        <attr name="fm_leavesCount" format="integer" />
+        <attr name="fm_centerItemLayout" format="reference" />
+        <attr name="fm_leafItemLayout" format="reference" />
+        <attr name="fm_animationDuration" format="integer" />
+        <attr name="fm_leafDisplayDelay" format="integer" />
+        <attr name="fm_showCenterItem" format="boolean" />
+        <attr name="fm_staticMenu" format="boolean" />
+        <attr name="fm_radiusSpacing" format="dimension" />
+        <attr name="fm_startAngle" format="float" />
+        <attr name="fm_endAngle" format="float" />
+    </declare-styleable>
+</resources>
