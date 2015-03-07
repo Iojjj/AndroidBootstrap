@@ -8,8 +8,9 @@ import iojjj.androidbootstrap.R;
 import iojjj.androidbootstrap.ui.widgets.ObservableScrollView;
 
 /**
- * Base activity with toolbar and scroll effect
+ * Base activity with toolbar and scroll effect. For SDK {@link android.os.Build.VERSION_CODES#HONEYCOMB} and above
  */
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ToolbarOverscrollActivity extends ToolbarActivity implements ObservableScrollView.IOnScrollChanged {
 
     @Override
@@ -24,11 +25,9 @@ public class ToolbarOverscrollActivity extends ToolbarActivity implements Observ
         // setup scroll
         final ObservableScrollView scrollView = (ObservableScrollView) findViewById(R.id.scroll_view);
         scrollView.setSmoothScrollingEnabled(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            scrollView.setOnScrollChanged(this);
+        scrollView.setOnScrollChanged(this);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onScrollChanged(int l, int t, int oldl, int oldt) {
         final int toolbarHeight = 4 * toolbar.getHeight();

@@ -19,6 +19,6 @@ public class NetworkUtils {
         final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         final NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        return wifi != null && wifi.isConnectedOrConnecting() || mobile != null &&mobile.isConnectedOrConnecting();
+        return wifi != null && wifi.isConnectedOrConnecting() || mobile != null && mobile.isConnectedOrConnecting();
     }
 }

@@ -15,7 +15,6 @@ import android.view.WindowManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -435,8 +434,6 @@ public abstract class CameraFragment extends AbstractFragment {
             os = new FileOutputStream(saveFile);
             FileUtils.copyStream(new ByteArrayInputStream(bytes), os);
             success = true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

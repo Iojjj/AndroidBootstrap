@@ -101,7 +101,8 @@ public abstract class BaseArrayAdapter<T> extends ArrayAdapter<T> {
      * Adds the specified items at specified position.
      * @param collection The items to add at the end of the array.
      */
-    public synchronized void insertAll(int position, T... collection) {
+    @SafeVarargs
+    public final synchronized void insertAll(int position, T... collection) {
         if (collection == null) {
             return;
         }

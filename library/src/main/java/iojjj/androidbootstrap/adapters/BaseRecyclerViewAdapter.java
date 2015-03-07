@@ -12,9 +12,6 @@ public abstract class BaseRecyclerViewAdapter<TData, TViewHolder extends Recycle
 
     private List<TData> data;
 
-    public BaseRecyclerViewAdapter() {
-    }
-
     public BaseRecyclerViewAdapter(List<TData> data) {
         this.data = data;
     }

@@ -20,6 +20,8 @@ public class AbstractDialogFragment extends DialogFragment implements IFragmentM
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        if (!(activity instanceof ActionBarActivity))
+            throw new IllegalArgumentException("Activity must extend " + ActionBarActivity.class.getSimpleName());
         if (activity instanceof IFragmentManager)
             fragmentManager = (IFragmentManager) activity;
         else
