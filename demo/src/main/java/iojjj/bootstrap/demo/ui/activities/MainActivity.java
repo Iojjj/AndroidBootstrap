@@ -9,7 +9,7 @@ import iojjj.androidbootstrap.ui.activities.ToolbarActivity;
 import iojjj.androidbootstrap.utils.misc.GooglePlayServicesUtils;
 import iojjj.androidbootstrap.utils.threading.ThreadUtils;
 import iojjj.bootstrap.demo.R;
-import iojjj.bootstrap.demo.ui.fragments.ListFragment;
+import iojjj.bootstrap.demo.ui.fragments.ResizeFragment;
 
 
 public class MainActivity extends ToolbarActivity implements GooglePlayServicesUtils.IGooglePlayServicesCallback {
@@ -29,7 +29,7 @@ public class MainActivity extends ToolbarActivity implements GooglePlayServicesU
 
     @Override
     public void onGooglePlayServicesAvailable() {
-        replaceFragment(new ListFragment(), null, false);
+        replaceFragment(new ResizeFragment(), null, false);
     }
 
     @Override
