@@ -36,6 +36,7 @@ public class ToolbarActivity extends AbstractAnimatedActivity implements IToolba
         toolbarShadow = findViewById(R.id.toolbar_shadow);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
         int color = getIntent().getIntExtra(EXTRA_COLOR, -1);
         if (color != -1) {
             toolbar.setBackgroundColor(color);

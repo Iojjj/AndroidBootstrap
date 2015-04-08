@@ -13,12 +13,12 @@ public class ObservableScrollView extends ScrollView {
 
     private static final IOnScrollChanged DEFAULT = new IOnScrollChanged() {
         @Override
-        public void onScrollChanged(int l, int t, int oldl, int oldt) {
+        public void onScrollChanged(ObservableScrollView view, int l, int t, int oldl, int oldt) {
 
         }
     };
 
-    private IOnScrollChanged onScrollChanged;
+    private IOnScrollChanged onScrollChanged = DEFAULT;
 
     public ObservableScrollView(Context context) {
         super(context);
@@ -47,10 +47,10 @@ public class ObservableScrollView extends ScrollView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-        onScrollChanged.onScrollChanged(l, t, oldl, oldt);
+        onScrollChanged.onScrollChanged(this, l, t, oldl, oldt);
     }
 
     public interface IOnScrollChanged {
-        void onScrollChanged(int l, int t, int oldl, int oldt);
+        void onScrollChanged(ObservableScrollView view, int l, int t, int oldl, int oldt);
     }
 }

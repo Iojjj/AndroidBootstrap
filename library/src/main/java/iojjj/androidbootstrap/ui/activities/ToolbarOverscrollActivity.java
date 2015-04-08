@@ -29,7 +29,7 @@ public class ToolbarOverscrollActivity extends ToolbarActivity implements Observ
     }
 
     @Override
-    public void onScrollChanged(int l, int t, int oldl, int oldt) {
+    public void onScrollChanged(ObservableScrollView view, int l, int t, int oldl, int oldt) {
         final int toolbarHeight = 4 * toolbar.getHeight();
         int transition = - t / 2; // divided by 2 for parallax effect
         if (transition > 0) // prevent overscroll
