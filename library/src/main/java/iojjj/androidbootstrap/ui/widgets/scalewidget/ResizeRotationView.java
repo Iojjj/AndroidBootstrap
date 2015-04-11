@@ -179,7 +179,7 @@ public class ResizeRotationView extends FrameLayout {
     /**
      * Drag listener for parent view.
      */
-    private class OnDragListener implements View.OnDragListener {
+    private static class OnDragListener implements View.OnDragListener {
 
         private View draggedView;
 

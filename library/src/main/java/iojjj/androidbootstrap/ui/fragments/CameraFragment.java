@@ -69,7 +69,6 @@ public abstract class CameraFragment extends AbstractFragment {
                 @Override
                 protected void onPostExecute(Boolean result) {
                     if (result) {
-                        System.gc();
                         onPhotoCaptured(pic);
                     } else {
                         camera.startPreview();

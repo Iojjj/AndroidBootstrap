@@ -53,7 +53,7 @@ public abstract class ClickItemTouchListener implements OnItemTouchListener {
     abstract boolean performItemClick(RecyclerView parent, View view, int position, long id);
     abstract boolean performItemLongClick(RecyclerView parent, View view, int position, long id);
 
-    private class ItemClickGestureDetector extends GestureDetectorCompat {
+    private static class ItemClickGestureDetector extends GestureDetectorCompat {
         private final ItemClickGestureListener mGestureListener;
 
         public ItemClickGestureDetector(Context context, ItemClickGestureListener listener) {

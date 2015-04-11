@@ -21,7 +21,7 @@ public class ImageUtils {
         paint.setAntiAlias(true);
         paint.setShader(shader);
         Canvas c = new Canvas(circleBitmap);
-        c.drawCircle((bitmap.getWidth()) / 2, (bitmap.getHeight()) / 2, (bitmap.getWidth()) / 2, paint);
+        c.drawCircle((bitmap.getWidth()) / 2f, (bitmap.getHeight()) / 2f, (bitmap.getWidth()) / 2f, paint);
         return circleBitmap;
     }
 }
