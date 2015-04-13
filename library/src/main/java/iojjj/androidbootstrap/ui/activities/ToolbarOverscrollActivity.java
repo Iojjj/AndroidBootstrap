@@ -11,7 +11,7 @@ import iojjj.androidbootstrap.ui.widgets.ObservableScrollView;
  * Base activity with toolbar and scroll effect. For SDK {@link android.os.Build.VERSION_CODES#HONEYCOMB} and above
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ToolbarOverscrollActivity extends ToolbarActivity implements ObservableScrollView.IOnScrollChanged {
+public abstract class ToolbarOverscrollActivity extends ToolbarActivity implements ObservableScrollView.IOnScrollChanged {
 
     @Override
     protected int getLayoutResource() {

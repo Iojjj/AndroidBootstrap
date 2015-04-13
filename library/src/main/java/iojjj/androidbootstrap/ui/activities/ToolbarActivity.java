@@ -10,7 +10,7 @@ import iojjj.androidbootstrap.interfaces.IToolbarActivity;
 /**
  * Base activity with toolbar
  */
-public class ToolbarActivity extends AbstractAnimatedActivity implements IToolbarActivity {
+public abstract class ToolbarActivity extends AbstractAnimatedActivity implements IToolbarActivity {
 
     public static final String EXTRA_COLOR = "color_extra";
 

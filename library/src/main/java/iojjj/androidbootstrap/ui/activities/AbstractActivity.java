@@ -36,20 +36,23 @@ public abstract class AbstractActivity extends ActionBarActivity implements IFra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-        toastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                showToast(intent.getStringExtra(MiscellaneousUtils.EXTRA_TEXT), intent.getIntExtra(MiscellaneousUtils.EXTRA_DURATION, Toast.LENGTH_SHORT));
-            }
-        };
-        MiscellaneousUtils.registerToastReceiver(this, toastReceiver);
+        if (shouldSubscribeForToast()) {
+            toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+            toastReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    showToast(intent.getStringExtra(MiscellaneousUtils.EXTRA_TEXT), intent.getIntExtra(MiscellaneousUtils.EXTRA_DURATION, Toast.LENGTH_SHORT));
+                }
+            };
+            MiscellaneousUtils.registerToastReceiver(this, toastReceiver);
+        }
     }
 
     @Override
     protected void onDestroy() {
+        if (shouldSubscribeForToast())
+            MiscellaneousUtils.unregisterToastReceiver(this, toastReceiver);
         super.onDestroy();
-        MiscellaneousUtils.unregisterToastReceiver(this, toastReceiver);
     }
 
     private void showToast(String text, int duration) {
@@ -153,4 +156,6 @@ public abstract class AbstractActivity extends ActionBarActivity implements IFra
             return;
         super.onBackPressed();
     }
+
+    protected abstract boolean shouldSubscribeForToast();
 }
