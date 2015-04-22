@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="progress_border">@color/theme_color_primary_dark</color>
-    <color name="progress_fill">@color/theme_color_primary</color>
-    <color name="progress_text">@color/theme_color_accent</color>
+    <color name="cpb_progress_border">@color/theme_color_primary_dark</color>
 </resources>

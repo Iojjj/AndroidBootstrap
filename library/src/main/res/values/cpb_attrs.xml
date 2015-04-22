@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CircularProgressBar">
-        <attr name="cpb_border_color" format="color" />
-        <attr name="cpb_fill_color" format="color" />
-        <attr name="cpb_text_color" format="color" />
-        <attr name="cpb_text_size" format="dimension" />
-        <attr name="cpb_border_stroke_width" format="dimension" />
+    <declare-styleable name="CircleProgressBar">
+        <attr name="cpb_borderColor" format="color" />
+        <attr name="cpb_borderStrokeWidth" format="dimension" />
         <attr name="cpb_progress" format="integer" />
+        <attr name="cpb_max" format="integer" />
     </declare-styleable>
 </resources>

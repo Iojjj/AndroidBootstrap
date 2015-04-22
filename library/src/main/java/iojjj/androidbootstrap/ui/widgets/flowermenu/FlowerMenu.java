@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import org.jetbrains.annotations.NotNull;
 
 import iojjj.androidbootstrap.R;
+import iojjj.androidbootstrap.utils.multimedia.ImageUtils;
 
 /**
  * Flower menu
@@ -102,10 +103,6 @@ public abstract class FlowerMenu extends FrameLayout implements FlowerMenuItem.I
         setMeasuredDimension(width, height);
     }
 
-    public static float dpToPx(@NotNull final Context context, int dp) {
-        return context.getResources().getDisplayMetrics().density * dp;
-    }
-
     private AnimatorSet makeAnimation(int i) {
         final FlowerMenuItem leaf = leaves[i];
         if (leaf.getMeasuredWidth() == 0 || leaf.getMeasuredHeight() == 0) {
@@ -171,7 +168,7 @@ public abstract class FlowerMenu extends FrameLayout implements FlowerMenuItem.I
         radiusSpacing = DEFAULT_RADIUS_SPACING;
         startAngle = DEFAULT_START_ANGLE;
         endAngle = DEFAULT_END_ANGLE;
-        additionalSpacing = dpToPx(context, ADDITIONAL_SPACING);
+        additionalSpacing = ImageUtils.dpToPx(context, ADDITIONAL_SPACING);
         staticMenu = true;
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.FlowerMenu);
