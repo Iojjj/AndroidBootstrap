@@ -86,8 +86,6 @@ public class ItemClickSupport {
         if (itemClickSupport == null) {
             itemClickSupport = new ItemClickSupport(recyclerView);
             recyclerView.setTag(R.id.twowayview_item_click_support, itemClickSupport);
-        } else {
-            // TODO: Log warning
         }
 
         return itemClickSupport;
@@ -96,7 +94,6 @@ public class ItemClickSupport {
     public static void removeFrom(RecyclerView recyclerView) {
         final ItemClickSupport itemClickSupport = from(recyclerView);
         if (itemClickSupport == null) {
-            // TODO: Log warning
             return;
         }
 

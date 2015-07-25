@@ -3,7 +3,6 @@ package iojjj.androidbootstrap.utils.misc;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnItemTouchListener;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -65,10 +64,10 @@ public abstract class ClickItemTouchListener implements OnItemTouchListener {
         public boolean onTouchEvent(MotionEvent event) {
             final boolean handled = super.onTouchEvent(event);
 
-            final int action = event.getAction() & MotionEventCompat.ACTION_MASK;
-            if (action == MotionEvent.ACTION_UP) {
-                mGestureListener.dispatchSingleTapUpIfNeeded(event);
-            }
+//            final int action = event.getAction() & MotionEventCompat.ACTION_MASK;
+//            if (action == MotionEvent.ACTION_UP) {
+//                mGestureListener.dispatchSingleTapUpIfNeeded(event);
+//            }
 
             return handled;
         }

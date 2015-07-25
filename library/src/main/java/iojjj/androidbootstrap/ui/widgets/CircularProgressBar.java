@@ -18,30 +18,30 @@ import iojjj.androidbootstrap.R;
 /**
  * Circular progress bar
  */
-public class AbstractCircularProgressBar extends View {
+public class CircularProgressBar extends View {
 
-    private final RectF borderRect = new RectF();
-    private final Paint borderPaint = new Paint();
+    protected final RectF borderRect = new RectF();
+    protected final Paint borderPaint = new Paint();
     private final PointF center = new PointF();
-    private int progress = 0;
-    private int max = 0;
+    protected int progress = 0;
+    protected int max = 0;
 
-    public AbstractCircularProgressBar(Context context) {
+    public CircularProgressBar(Context context) {
         super(context);
     }
 
-    public AbstractCircularProgressBar(Context context, AttributeSet attrs) {
+    public CircularProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public AbstractCircularProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CircularProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public AbstractCircularProgressBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CircularProgressBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
     }
@@ -85,17 +85,21 @@ public class AbstractCircularProgressBar extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        drawProgress(canvas);
+    }
+
+    protected void drawProgress(Canvas canvas) {
         float degPerMax = 360f / max;
         canvas.drawArc(borderRect, -90, progress * degPerMax, false, borderPaint);
     }
 
-    public AbstractCircularProgressBar setProgress(int progress) {
+    public CircularProgressBar setProgress(int progress) {
         this.progress = progress;
         invalidate();
         return this;
     }
 
-    public AbstractCircularProgressBar setMax(int max) {
+    public CircularProgressBar setMax(int max) {
         this.max = max;
         invalidate();
         return this;

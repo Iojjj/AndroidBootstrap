@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,8 +24,7 @@ import iojjj.androidbootstrap.interfaces.IBackPressable;
 import iojjj.androidbootstrap.interfaces.IFragmentManager;
 import iojjj.androidbootstrap.utils.misc.MiscellaneousUtils;
 
-
-public abstract class AbstractActivity extends ActionBarActivity implements IFragmentManager {
+public abstract class AbstractActivity extends AppCompatActivity implements IFragmentManager {
 
     private static ImageView rotationImage;
     private static Animation rotationAnimation;
@@ -63,30 +62,47 @@ public abstract class AbstractActivity extends ActionBarActivity implements IFra
 
     @Override
     public void addFragment(@NonNull Fragment fragment) {
-        addFragment(fragment, null, false);
+        addFragment(fragment, getContainerId());
+    }
+
+    public void addFragment(@NonNull Fragment fragment, int containerId) {
+        addFragment(fragment, null, false, containerId);
     }
 
     @Override
     public void addFragment(@NonNull Fragment fragment, @Nullable String tag, boolean addToBackStack) {
-        changeFragment(fragment, tag, addToBackStack, false);
+        addFragment(fragment, tag, addToBackStack, getContainerId());
+    }
+
+    public void addFragment(@NonNull Fragment fragment, @Nullable String tag, boolean addToBackStack, int containerId) {
+        changeFragment(fragment, tag, addToBackStack, false, containerId);
     }
 
     @Override
     public void replaceFragment(@NonNull Fragment fragment) {
-        replaceFragment(fragment, null, true);
+        replaceFragment(fragment, getContainerId());
+    }
+
+    public void replaceFragment(@NonNull Fragment fragment, int containerId) {
+        replaceFragment(fragment, null, true, containerId);
     }
 
     @Override
     public void replaceFragment(@NonNull Fragment fragment, @Nullable String tag, boolean addToBackStack) {
-        changeFragment(fragment, tag, addToBackStack, true);
+        replaceFragment(fragment, tag, addToBackStack, getContainerId());
     }
 
-    private void changeFragment(@NonNull Fragment fragment, @Nullable String tag, final boolean addToStack, final boolean isReplace) {
+    public void replaceFragment(@NonNull Fragment fragment, @Nullable String tag, boolean addToBackStack, int containerId) {
+        changeFragment(fragment, tag, addToBackStack, true, containerId);
+    }
+
+    protected void changeFragment(@NonNull Fragment fragment, @Nullable String tag, final boolean addToStack, final boolean isReplace, final int containerId) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (isReplace)
-            transaction.replace(getContainerId(), fragment);
-        else
-            transaction.add(getContainerId(), fragment);
+        if (isReplace) {
+            transaction.replace(containerId, fragment);
+        } else {
+            transaction.add(containerId, fragment);
+        }
         if (addToStack) {
             transaction.addToBackStack(tag);
         }

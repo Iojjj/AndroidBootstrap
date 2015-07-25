@@ -1,8 +1,10 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColorPrimary">@color/theme_text_color_primary</item>
+        <item name="android:textColorSecondary">@color/theme_text_color_secondary</item>
+        <item name="android:divider">@color/theme_color_divider</item>
         <item name="android:colorPrimary">@color/theme_color_primary</item>
         <item name="android:colorPrimaryDark">@color/theme_color_primary_dark</item>
         <item name="android:colorAccent">@color/theme_color_accent</item>
@@ -10,11 +12,26 @@
         <item name="colorPrimaryDark">@color/theme_color_primary_dark</item>
         <item name="colorAccent">@color/theme_color_accent</item>
         <item name="android:windowBackground">@color/theme_color_background</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="windowActionBar">false</item>
+    <style name="AppThemeDark.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColorPrimary">@color/theme_text_color_primary</item>
+        <item name="android:textColorSecondary">@color/theme_text_color_secondary</item>
+        <item name="android:divider">@color/theme_color_divider</item>
+        <item name="android:colorPrimary">@color/theme_color_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_color_primary_dark</item>
+        <item name="android:colorAccent">@color/theme_color_accent</item>
+        <item name="colorPrimary">@color/theme_color_primary</item>
+        <item name="colorPrimaryDark">@color/theme_color_primary_dark</item>
+        <item name="colorAccent">@color/theme_color_accent</item>
+        <item name="android:windowBackground">@color/theme_color_background</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
     </style>
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/theme_color_accent</item>
+        <item name="android:textColorPrimary">@color/theme_text_color_primary</item>
+    </style>
+
 </resources>

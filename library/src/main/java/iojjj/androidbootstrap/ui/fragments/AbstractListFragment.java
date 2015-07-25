@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import iojjj.androidbootstrap.interfaces.IFragmentManager;
 
@@ -20,8 +20,8 @@ public class AbstractListFragment extends ListFragment implements IFragmentManag
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (!(activity instanceof ActionBarActivity))
-            throw new IllegalArgumentException("Activity must extend " + ActionBarActivity.class.getSimpleName());
+        if (!(activity instanceof AppCompatActivity))
+            throw new IllegalArgumentException("Activity must extend " + AppCompatActivity.class.getSimpleName());
         if (activity instanceof IFragmentManager)
             fragmentManager = (IFragmentManager) activity;
         else
@@ -30,8 +30,8 @@ public class AbstractListFragment extends ListFragment implements IFragmentManag
 
     @Override
     public void onDetach() {
-        super.onDetach();
         fragmentManager = null;
+        super.onDetach();
     }
 
     @Override
@@ -47,9 +47,27 @@ public class AbstractListFragment extends ListFragment implements IFragmentManag
     }
 
     @Override
+    public void addFragment(@NonNull Fragment fragment, int containerId) {
+        if (isAdded())
+            fragmentManager.addFragment(fragment, containerId);
+    }
+
+    @Override
+    public void addFragment(@NonNull Fragment fragment, @Nullable String tag, boolean addToBackStack, int containerId) {
+        if (isAdded())
+            fragmentManager.addFragment(fragment, tag, addToBackStack, containerId);
+    }
+
+    @Override
     public void replaceFragment(@NonNull Fragment fragment) {
         if (isAdded())
             fragmentManager.replaceFragment(fragment);
+    }
+
+    @Override
+    public void replaceFragment(@NonNull Fragment fragment, int containerId) {
+        if (isAdded())
+            fragmentManager.replaceFragment(fragment, containerId);
     }
 
     @Override
@@ -58,7 +76,13 @@ public class AbstractListFragment extends ListFragment implements IFragmentManag
             fragmentManager.replaceFragment(fragment, tag, addToBackStack);
     }
 
+    @Override
+    public void replaceFragment(@NonNull Fragment fragment, @Nullable String tag, boolean addToBackStack, int containerId) {
+        if (isAdded())
+            fragmentManager.replaceFragment(fragment, tag, addToBackStack, containerId);
+    }
+
     public ActionBar getSupportActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
+        return ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
 }
