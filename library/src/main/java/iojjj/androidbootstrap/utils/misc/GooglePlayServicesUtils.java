@@ -3,7 +3,7 @@ package iojjj.androidbootstrap.utils.misc;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -87,7 +87,7 @@ public class GooglePlayServicesUtils {
      * @param activity hosted activity
      * @param resultCode error code from Google Play Services
      */
-    public void showErrorDialog(@NonNull final ActionBarActivity activity, int resultCode) {
+    public void showErrorDialog(@NonNull final AppCompatActivity activity, int resultCode) {
         Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(
                 resultCode,
                 activity,

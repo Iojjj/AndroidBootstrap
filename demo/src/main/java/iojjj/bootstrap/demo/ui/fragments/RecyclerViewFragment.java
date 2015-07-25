@@ -1,5 +1,6 @@
 package iojjj.bootstrap.demo.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,15 +50,15 @@ public class RecyclerViewFragment extends AbstractFragment {
         for (int i=0; i<1000; i++) {
             data.add("Item #" + (i + 1));
         }
-        adapter = new RecyclerAdapter(data);
+        adapter = new RecyclerAdapter(getActivity(), data);
         recyclerView.setAdapter(adapter);
         ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView);
     }
 
     public static class RecyclerAdapter extends BaseRecyclerViewAdapter<String, DataViewHolder> {
 
-        public RecyclerAdapter(List<String> data) {
-            super(data);
+        public RecyclerAdapter(@NotNull Context context, List<String> data) {
+            super(context, data);
         }
 
         @Override

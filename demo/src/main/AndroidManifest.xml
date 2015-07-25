@@ -22,17 +22,9 @@
         </activity>
 
         <activity
-            android:name="iojjj.androidbootstrap.ui.activities.ToolbarActivity"
-            android:label="@string/activity_toolbar"/>
-
-        <activity
-            android:name="iojjj.androidbootstrap.ui.activities.ToolbarOverscrollActivity"
-            android:label="@string/activity_toolbar_overscroll"/>
-
-        <activity
             android:name=".ui.activities.SimpleActivity"
             android:label="@string/activity_simple"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.NoActionBar"
             />
 
         <activity

@@ -173,5 +173,7 @@ public abstract class AbstractActivity extends AppCompatActivity implements IFra
         super.onBackPressed();
     }
 
-    protected abstract boolean shouldSubscribeForToast();
+    protected boolean shouldSubscribeForToast() {
+        return true;
+    }
 }
