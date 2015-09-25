@@ -173,4 +173,21 @@ public abstract class AbstractFilledProgressBar extends View {
     public int getMax() {
         return max;
     }
+
+    public void setBorderColor(int borderColor) {
+        this.borderPaint.setColor(borderColor);
+        this.invalidate();
+    }
+
+    public void setBorderColorResource(int borderColorRes) {
+        this.setBorderColor(this.getContext().getResources().getColor(borderColorRes));
+    }
+
+    public void setFillWithColor(int fillColor) {
+        arcPaint.reset();
+        arcPaint.setColor(fillColor);
+        arcPaint.setAntiAlias(true);
+        arcPaint.setStyle(Paint.Style.FILL);
+        this.invalidate();
+    }
 }
