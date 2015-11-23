@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fpb_progress_border">@color/theme_color_primary_dark</color>
+    <color name="fpb_progress_fill">@color/theme_color_primary</color>
+    <color name="fpb_progress_textEmpty">#ffffffff</color>
+    <color name="fpb_progress_textFilled">@color/theme_color_accent</color>
+</resources>

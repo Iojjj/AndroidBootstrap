@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TableRow>
+        <View
+            android:id="@+id/dot_lt"
+            android:layout_width="@dimen/dot_size"
+            android:layout_height="@dimen/dot_size"
+            android:background="@android:color/black"
+            />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="@android:color/black"
+            android:layout_marginTop="@dimen/dot_half_size"
+            />
+
+        <View
+            android:id="@+id/dot_rt"
+            android:layout_width="@dimen/dot_size"
+            android:layout_height="@dimen/dot_size"
+            android:background="@android:color/black"
+            />
+    </TableRow>
+
+    <TableRow>
+        <View
+            android:id="@+id/line2"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:layout_marginLeft="@dimen/dot_half_size"
+            android:layout_marginStart="@dimen/dot_half_size"
+            android:layout_marginRight="@dimen/dot_half_size"
+            android:layout_marginEnd="@dimen/dot_half_size"
+            />
+
+        <FrameLayout
+            android:id="@+id/resize_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/content_padding"
+            android:layout_gravity="center"
+            />
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:layout_marginLeft="@dimen/dot_half_size"
+            android:layout_marginStart="@dimen/dot_half_size"
+            android:layout_marginRight="@dimen/dot_half_size"
+            android:layout_marginEnd="@dimen/dot_half_size"
+            />
+    </TableRow>
+
+    <TableRow>
+        <View
+            android:id="@+id/dot_lb"
+            android:layout_width="@dimen/dot_size"
+            android:layout_height="@dimen/dot_size"
+            android:background="@android:color/black"
+            />
+
+        <View
+            android:id="@+id/line4"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="@android:color/black"
+            android:layout_marginTop="@dimen/dot_half_size"
+            />
+
+        <View
+            android:id="@+id/dot_rb"
+            android:layout_width="@dimen/dot_size"
+            android:layout_height="@dimen/dot_size"
+            android:background="@android:color/black"
+            />
+
+    </TableRow>
+
+</TableLayout>

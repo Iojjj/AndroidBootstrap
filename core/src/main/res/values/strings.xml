@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AndroidBootstrap</string>
+    <string name="rate_title">Rate %1$s</string>
+    <string name="rate_content">If you enjoy using %1$s, please take a moment to rate the app. Thank you for your support!</string>
+    <string name="rate_now">Rate Now</string>
+    <string name="rate_later">Later</string>
+    <string name="rate_never">No, thanks</string>
+</resources>
