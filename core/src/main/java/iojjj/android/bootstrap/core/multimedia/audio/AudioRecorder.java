@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import iojjj.android.bootstrap.core.utils.misc.MiscellaneousUtils;
-import iojjj.android.bootstrap.core.utils.threading.PriorityRunnable;
+import iojjj.android.bootstrap.threading.PriorityRunnable;
+import iojjj.android.bootstrap.utils.StreamUtils;
 
 /**
  * Helper class for audio recording and saving as .wav
@@ -131,7 +131,7 @@ public abstract class AudioRecorder implements IAudioRecorder {
                 } finally {
                     recorder.release();
                 }
-                MiscellaneousUtils.close(os);
+                StreamUtils.close(os);
                 try {
                     InputStream is = new FileInputStream(recordTmp);
                     OutputStream os = new FileOutputStream(record);
@@ -143,8 +143,8 @@ public abstract class AudioRecorder implements IAudioRecorder {
                             os.write(buf, 0, read);
                         }
                     } finally {
-                        MiscellaneousUtils.close(os);
-                        MiscellaneousUtils.close(is);
+                        StreamUtils.close(os);
+                        StreamUtils.close(is);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

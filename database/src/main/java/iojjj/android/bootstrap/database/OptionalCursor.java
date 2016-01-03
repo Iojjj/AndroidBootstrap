@@ -6,11 +6,11 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import iojjj.android.bootstrap.core.utils.misc.Optional;
+import iojjj.android.bootstrap.core.utils.Optional;
 import iojjj.android.bootstrap.database.interfaces.IEntity;
 
 /**
- * Custom implementation of {@link iojjj.android.bootstrap.core.utils.misc.Optional} for cursor
+ * Custom implementation of {@link Optional} for cursor
  */
 public class OptionalCursor<T extends IEntity> extends Optional<Cursor> {
 

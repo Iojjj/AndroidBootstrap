@@ -23,8 +23,8 @@ import java.util.Collection;
 import java.util.List;
 
 import iojjj.android.bootstrap.core.ui.fragments.AbstractFragment;
-import iojjj.android.bootstrap.core.utils.storage.FileUtils;
-import iojjj.android.bootstrap.core.utils.threading.AsyncTaskEx;
+import iojjj.android.bootstrap.utils.StreamUtils;
+import iojjj.android.bootstrap.threading.AsyncTaskEx;
 
 /**
  * Camera screen
@@ -431,18 +431,12 @@ public abstract class CameraFragment extends AbstractFragment {
         OutputStream os = null;
         try {
             os = new FileOutputStream(saveFile);
-            FileUtils.copyStream(new ByteArrayInputStream(bytes), os);
+            StreamUtils.copyStream(new ByteArrayInputStream(bytes), os);
             success = true;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (os != null) {
-                try {
-                    os.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            StreamUtils.close(os);
         }
         return success;
     }

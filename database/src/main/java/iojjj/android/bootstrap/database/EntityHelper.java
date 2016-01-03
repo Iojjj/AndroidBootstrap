@@ -2,7 +2,7 @@ package iojjj.android.bootstrap.database;
 
 import android.support.annotation.NonNull;
 
-import iojjj.android.bootstrap.core.utils.misc.AssertionUtils;
+import iojjj.android.bootstrap.assertions.AssertionUtils;
 import iojjj.android.bootstrap.database.interfaces.IEntity;
 
 /**

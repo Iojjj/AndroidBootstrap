@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import iojjj.android.bootstrap.core.utils.misc.AssertionUtils;
-import iojjj.android.bootstrap.core.utils.misc.Config;
-import iojjj.android.bootstrap.core.utils.misc.Optional;
-import iojjj.android.bootstrap.core.utils.threading.ThreadUtils;
+import iojjj.android.bootstrap.assertions.AssertionUtils;
+import iojjj.android.bootstrap.core.utils.Config;
+import iojjj.android.bootstrap.core.utils.Optional;
+import iojjj.android.bootstrap.threading.ThreadUtils;
 import iojjj.android.bootstrap.database.interfaces.IEntity;
 import iojjj.android.bootstrap.database.interfaces.IQuery;
 

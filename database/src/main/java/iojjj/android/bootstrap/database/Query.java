@@ -12,9 +12,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import iojjj.android.bootstrap.core.utils.misc.AssertionUtils;
-import iojjj.android.bootstrap.core.utils.misc.MiscellaneousUtils;
-import iojjj.android.bootstrap.core.utils.misc.Optional;
+import iojjj.android.bootstrap.assertions.AssertionUtils;
+import iojjj.android.bootstrap.core.utils.Optional;
 import iojjj.android.bootstrap.database.interfaces.IEntity;
 import iojjj.android.bootstrap.database.interfaces.IQuery;
 import iojjj.android.bootstrap.database.interfaces.IQueryGroupPart;
@@ -22,6 +21,7 @@ import iojjj.android.bootstrap.database.interfaces.IQueryHavingPart;
 import iojjj.android.bootstrap.database.interfaces.IQueryLimitPart;
 import iojjj.android.bootstrap.database.interfaces.IQueryOrderPart;
 import iojjj.android.bootstrap.database.interfaces.IQueryWherePart;
+import iojjj.android.bootstrap.utils.StreamUtils;
 
 /**
  * Created by Alexander Vlasov on 10.10.2015.
@@ -76,7 +76,7 @@ class Query<T extends IEntity> implements IQuery<T> {
 
     @Nullable
     private Cursor getCursor() {
-        AssertionUtils.check(dbContext.isClosed(), "Database is closed");
+        AssertionUtils.assertFalse(dbContext.isClosed(), "Database is closed");
         return dbContext.getSqliteHelper().getReadableDatabase().rawQuery(getSQL(false), getArgs());
     }
 
@@ -105,7 +105,7 @@ class Query<T extends IEntity> implements IQuery<T> {
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } finally {
-            MiscellaneousUtils.close(cursor);
+            StreamUtils.close(cursor);
         }
         return Collections.emptyList();
     }
@@ -150,7 +150,7 @@ class Query<T extends IEntity> implements IQuery<T> {
     }
 
     private int getCount() {
-        AssertionUtils.check(dbContext.isClosed(), "Database is closed");
+        AssertionUtils.assertFalse(dbContext.isClosed(), "Database is closed");
         int count = 0;
         Cursor cursor = dbContext.getSqliteHelper().getReadableDatabase().rawQuery(getSQL(true), getArgs());
         try {
@@ -160,7 +160,7 @@ class Query<T extends IEntity> implements IQuery<T> {
         } catch (SQLiteException e) {
             e.printStackTrace();
         } finally {
-            MiscellaneousUtils.close(cursor);
+            StreamUtils.close(cursor);
         }
         return count;
     }

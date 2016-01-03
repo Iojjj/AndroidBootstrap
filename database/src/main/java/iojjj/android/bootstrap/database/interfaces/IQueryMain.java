@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import iojjj.android.bootstrap.core.utils.misc.Optional;
+import iojjj.android.bootstrap.core.utils.Optional;
 import iojjj.android.bootstrap.database.OptionalCursor;
 
 /**

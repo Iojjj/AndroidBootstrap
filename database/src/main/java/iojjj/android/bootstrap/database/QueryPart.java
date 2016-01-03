@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import iojjj.android.bootstrap.core.utils.misc.AssertionUtils;
-import iojjj.android.bootstrap.core.utils.misc.Optional;
+import iojjj.android.bootstrap.assertions.AssertionUtils;
+import iojjj.android.bootstrap.core.utils.Optional;
 import iojjj.android.bootstrap.database.interfaces.IEntity;
 import iojjj.android.bootstrap.database.interfaces.IQuery;
 import iojjj.android.bootstrap.database.interfaces.IQueryMain;

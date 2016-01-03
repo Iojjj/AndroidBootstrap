@@ -3,7 +3,7 @@ package iojjj.android.bootstrap.database;
 import android.support.annotation.NonNull;
 import android.util.LruCache;
 
-import iojjj.android.bootstrap.core.utils.misc.AssertionUtils;
+import iojjj.android.bootstrap.assertions.AssertionUtils;
 
 /**
  * Created by Alexander Vlasov on 08.10.2015.
