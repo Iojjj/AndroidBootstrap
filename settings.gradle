@@ -1,1 +1,1 @@
-include ':database.annotations.processor', ':core', ':database', ':database.annotations', ':assertions', ':threading', ':adapters', ':animations', ':app_focus', ':utils', ':security', ':loaders', ':widgets', ':utils_gs'
+include ':database.annotations.processor', ':core', ':database', ':database.annotations', ':assertions', ':threading', ':adapters', ':animations', ':app_focus', ':utils', ':security', ':loaders', ':widgets', ':utils_gs', ':rxx'

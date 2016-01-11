@@ -1,5 +1,19 @@
 <resources>
 
+    <style name="BootstrapTheme" parent="Theme.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/theme_text_color_primary</item>
+        <item name="android:textColorSecondary">@color/theme_text_color_secondary</item>
+        <item name="android:divider">@color/theme_color_divider</item>
+        <item name="android:colorPrimary">@color/theme_color_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_color_primary_dark</item>
+        <item name="android:colorAccent">@color/theme_color_accent</item>
+        <item name="colorPrimary">@color/theme_color_primary</item>
+        <item name="colorPrimaryDark">@color/theme_color_primary_dark</item>
+        <item name="colorAccent">@color/theme_color_accent</item>
+        <item name="android:windowBackground">@color/theme_color_background</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="BootstrapTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColorPrimary">@color/theme_text_color_primary</item>

@@ -4,7 +4,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -18,18 +21,24 @@ import iojjj.android.bootstrap.assertions.AssertionUtils;
 public abstract class BaseRecyclerViewAdapter<TData, TViewHolder extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<TViewHolder> implements IFilterableAdapter<TData, BaseRecyclerViewAdapter.Filter<TData>> {
 
-    private Context context;
+    private final Context context;
+    private final LayoutInflater layoutInflater;
     private final List<TData> data;
     private Filter<TData> filter;
 
     public BaseRecyclerViewAdapter(@NonNull final Context context) {
+        AssertionUtils.assertNotNull(context, "Context");
         this.context = context.getApplicationContext();
-        data = new ArrayList<>();
+        this.layoutInflater = LayoutInflater.from(context);
+        this.data = new ArrayList<>();
     }
 
     public BaseRecyclerViewAdapter(@NonNull final Context context, @NonNull List<TData> data) {
+        AssertionUtils.assertNotNull(context, "Context");
+        AssertionUtils.assertNotNull(data, "Data");
         this.context = context.getApplicationContext();
-        this.data = data;
+        this.layoutInflater = LayoutInflater.from(context);
+        this.data = new ArrayList<>(data);
     }
 
     @Override
@@ -96,8 +105,13 @@ public abstract class BaseRecyclerViewAdapter<TData, TViewHolder extends Recycle
         return data.addAll(collection);
     }
 
-    public boolean addAll(@NonNull TData... collection) {
+    @SafeVarargs
+    public final boolean addAll(@NonNull TData... collection) {
         return Collections.addAll(data, collection);
+    }
+
+    public LayoutInflater getLayoutInflater() {
+        return layoutInflater;
     }
 
     /**
@@ -126,4 +140,5 @@ public abstract class BaseRecyclerViewAdapter<TData, TViewHolder extends Recycle
             return adapterDataObserver;
         }
     }
+
 }

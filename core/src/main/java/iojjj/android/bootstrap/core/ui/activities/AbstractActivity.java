@@ -5,15 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.List;
-
-import iojjj.android.bootstrap.core.interfaces.IBackPressable;
 import iojjj.android.bootstrap.utils.MiscellaneousUtils;
 
 public abstract class AbstractActivity extends AppCompatActivity {
@@ -50,12 +45,6 @@ public abstract class AbstractActivity extends AppCompatActivity {
         toast.show();
     }
 
-    /**
-     * Get id of fragment's container
-     * @return id of container
-     */
-    protected abstract int getContainerId();
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // default behavior for home button
@@ -64,32 +53,6 @@ public abstract class AbstractActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        for (Fragment fragment : fragments) {
-            fragment.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        for (Fragment fragment : fragments) {
-            fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(getContainerId());
-        if (fragment instanceof IBackPressable && ((IBackPressable) fragment).onBackPressed())
-            return;
-        super.onBackPressed();
     }
 
     protected boolean shouldSubscribeForToast() {
