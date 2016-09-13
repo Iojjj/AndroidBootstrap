@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AspectRatioView">
+        <attr name="arv_aspectX" format="float" />
+        <attr name="arv_aspectY" format="float" />
+    </declare-styleable>
+</resources>

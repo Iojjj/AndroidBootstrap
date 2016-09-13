@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000">
+
+    <com.github.iojjj.bootstrap.camera.CameraView
+        android:id="@+id/camera_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:padding="4dp">
+
+        <ImageButton
+            android:id="@+id/btn_switch_flash"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_flash_auto_white_24dp"
+            android:background="?attr/selectableItemBackground"
+            />
+
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="match_parent"/>
+
+
+        <ImageButton
+            android:id="@+id/btn_switch_camera"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_camera_front_white_24dp"
+            android:background="?attr/selectableItemBackground"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom">
+
+        <ImageButton
+            android:id="@+id/btn_capture_photo"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_camera_alt_white_24dp"
+            android:background="?attr/selectableItemBackground"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="4dp"/>
+
+        <ImageButton
+            android:id="@+id/btn_capture_video"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_camera_roll_white_24dp"
+            android:background="?attr/selectableItemBackground"
+            />
+
+    </LinearLayout>
+
+</FrameLayout>

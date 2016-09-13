@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BSFilledProgressBar">
+        <attr name="fpb_borderColor" format="color" />
+        <attr name="fpb_fillWith" format="reference|color" />
+        <attr name="fpb_textColorEmpty" format="color" />
+        <attr name="fpb_textColorFilled" format="color" />
+        <attr name="fpb_textSize" format="dimension" />
+        <attr name="fpb_borderStrokeWidth" format="dimension" />
+        <attr name="fpb_progress" format="integer" />
+        <attr name="fpb_max" format="integer" />
+        <attr name="fpb_shaderWidth" format="dimension" />
+        <attr name="fpb_shaderHeight" format="dimension" />
+    </declare-styleable>
+</resources>

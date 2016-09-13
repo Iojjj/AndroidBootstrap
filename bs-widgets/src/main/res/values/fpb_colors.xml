@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fpb_progress_border">@android:color/black</color>
+    <color name="fpb_progress_fill">@android:color/white</color>
+    <color name="fpb_progress_textEmpty">#ffffffff</color>
+    <color name="fpb_progress_textFilled">@android:color/black</color>
+</resources>
