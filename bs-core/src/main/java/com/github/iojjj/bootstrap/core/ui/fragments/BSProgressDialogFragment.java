@@ -1,129 +1,108 @@
 package com.github.iojjj.bootstrap.core.ui.fragments;
 
 import android.app.Dialog;
-import android.app.FragmentManager;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.app.DialogFragment;
+
+import static com.github.iojjj.bootstrap.core.ui.fragments.ProgressDialogFragmentDelegate.KEY_MESSAGE;
 
 /**
  * Implementation of {@link ProgressDialog} wrapped in {@link DialogFragment}.
  *
  * @since 1.0
  */
-public class BSProgressDialogFragment extends DialogFragment {
+public class BSProgressDialogFragment extends DialogFragment
+        implements ProgressDialogFragmentDelegate.InnerDialogFragment<DialogFragment> {
 
-    private static final String KEY_MESSAGE = "MESSAGE";
+    private final ProgressDialogFragmentDelegate<DialogFragment> mDelegate;
 
-    private String mMessage;
-
-    public static Manager newManager() {
-        return new ManagerImpl();
+    public BSProgressDialogFragment() {
+        mDelegate = new ProgressDialogFragmentDelegate<>(this);
     }
 
-    static BSProgressDialogFragment newInstance(@Nullable String message) {
+    @NonNull
+    public static BSProgressDialogFragment newInstance() {
         Bundle args = new Bundle();
-        args.putString(KEY_MESSAGE, message);
         BSProgressDialogFragment fragment = new BSProgressDialogFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
+    private static BSProgressDialogFragment newInstanceImpl(@Nullable String message) {
+        final BSProgressDialogFragment fragment = newInstance();
+        fragment.getArguments().putString(KEY_MESSAGE, message);
+        return fragment;
+    }
+
+    /**
+     * Get fragment's manager.
+     * @return fragment's manager
+     */
+    public Manager getManager() {
+        return mDelegate.getManager();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMessage = getArguments().getString(KEY_MESSAGE);
+        mDelegate.onCreate(getArguments());
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        ProgressDialog pd = new ProgressDialog(getActivity());
-        pd.setMessage(mMessage);
-        pd.setIndeterminate(true);
-        pd.setCancelable(false);
-        pd.setCanceledOnTouchOutside(true);
-        return pd;
+        return mDelegate.onCreateDialog(getActivity());
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        getArguments().putString(KEY_MESSAGE, mMessage);
+        mDelegate.onSaveInstanceState(getArguments());
     }
 
-    public void setMessage(@Nullable String message) {
-        mMessage = message;
-        final ProgressDialog dialog = (ProgressDialog) getDialog();
-        if (dialog != null) {
-            dialog.setMessage(message);
+    @NonNull
+    @Override
+    public DialogFragment newInstance(@Nullable String message) {
+        return newInstanceImpl(message);
+    }
+
+    @Override
+    public void show(DialogFragment dialogFragment, String tag) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            dialogFragment.show(getChildFragmentManager(), tag);
+        } else {
+            dialogFragment.show(getFragmentManager(), tag);
         }
     }
 
-    /**
-     * Progress dialog manager.
-     */
-    public interface Manager {
-
-        /**
-         * Show progress dialog.
-         *
-         * @param fragmentManager instance of FragmentManager to use to display a fragment
-         * @param message         message to display in progress dialog
-         */
-        void showProgressDialog(@NonNull FragmentManager fragmentManager, @NonNull String message);
-
-        /**
-         * Hide progress dialog.
-         */
-        void hideProgressDialog();
-
-        /**
-         * Set cancelable flag for progress dialog.
-         *
-         * @param isCancellable true if dialog should be cancelable, false otherwise
-         */
-        void setCancellable(boolean isCancellable);
+    @Override
+    public void dismissAllowingStateLoss(DialogFragment dialogFragment) {
+        dialogFragment.dismissAllowingStateLoss();
     }
 
-    private static class ManagerImpl implements Manager {
+    @Override
+    public boolean isAdded(DialogFragment dialogFragment) {
+        return dialogFragment.isAdded();
+    }
 
-        private static final String TAG_PROGRESS_DIALOG = "ProgressDialog";
-
-        private BSProgressDialogFragment mProgressDialogFragment;
-        private boolean mCancellable;
-
-        @Override
-        public void showProgressDialog(@NonNull FragmentManager fragmentManager, @NonNull String message) {
-            if (mProgressDialogFragment == null) {
-                mProgressDialogFragment = newInstance(message);
-                mProgressDialogFragment.setCancelable(mCancellable);
-            }
-            mProgressDialogFragment.setMessage(message);
-            final DialogFragment fragment = (DialogFragment) fragmentManager.findFragmentByTag(TAG_PROGRESS_DIALOG);
-            if (fragment != null && fragment.isAdded()) {
-                fragment.dismissAllowingStateLoss();
-            }
-            if (!mProgressDialogFragment.isAdded()) {
-                mProgressDialogFragment.show(fragmentManager, TAG_PROGRESS_DIALOG);
-            }
+    @Override
+    public DialogFragment findFragmentByTag(String tag) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return (DialogFragment) getChildFragmentManager().findFragmentByTag(tag);
         }
+        return (DialogFragment) getFragmentManager().findFragmentByTag(tag);
+    }
 
-        @Override
-        public void hideProgressDialog() {
-            if (mProgressDialogFragment != null) {
-                mProgressDialogFragment.dismissAllowingStateLoss();
-            }
-        }
+    @Override
+    public void setCancelable(DialogFragment dialogFragment, boolean cancelable) {
+        dialogFragment.setCancelable(cancelable);
+    }
 
-        @Override
-        public void setCancellable(boolean isCancellable) {
-            if (mProgressDialogFragment != null) {
-                mProgressDialogFragment.setCancelable(isCancellable);
-            }
-            mCancellable = isCancellable;
-        }
+    public interface Manager extends ProgressDialogFragmentDelegate.Manager {
+
     }
 }

@@ -1,9 +1,9 @@
 package com.github.iojjj.bootstrap.mvp;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.app.DialogFragment;
 
 import com.github.iojjj.bootstrap.core.function.BSFunction0;
 
@@ -12,36 +12,39 @@ import com.github.iojjj.bootstrap.core.function.BSFunction0;
  *
  * @since 1.0
  */
-public abstract class BSAbstractDialogFragment extends DialogFragment implements BSMvpFollower {
+public abstract class BSAbstractDialogFragment extends DialogFragment implements BSMvpDelegate {
 
-    private final BSMvpFollower mMvpFollower;
+    private final BSMvpDelegate mMvpDelegate;
 
     protected BSAbstractDialogFragment() {
-        mMvpFollower = new BSMvpFollowerImpl(this);
-    }
-
-    @Override
-    public <TPresenter extends BSMvpPresenter<TView>, TView extends BSMvpView<TPresenter>>
-    void initPresenter(int loaderId, @NonNull TView view, @NonNull BSFunction0<TPresenter> presenterProvider) {
-        mMvpFollower.initPresenter(loaderId, view, presenterProvider);
+        mMvpDelegate = new BSMvpDelegateImpl(new BSMvpDelegateImpl.UIDelegate() {
+            @Override
+            public <TView extends BSMvpView<TPresenter>, TPresenter extends BSMvpPresenter<TView>> AndroidPresenterCallbacks
+            initLoader(int loaderId, @Nullable Bundle args, TView view, BSFunction0<TPresenter> presenterProvider) {
+                final PresenterLoaderCallbacks<TPresenter, TView> loaderCallbacks =
+                        PresenterLoaderCallbacks.create(getActivity(), view, presenterProvider);
+                getLoaderManager().initLoader(loaderId, args, loaderCallbacks);
+                return loaderCallbacks;
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mMvpFollower.onResume();
+        mMvpDelegate.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mMvpFollower.onPause();
+        mMvpDelegate.onPause();
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        mMvpFollower.onSaveInstanceState(outState);
+        mMvpDelegate.onSaveInstanceState(outState);
     }
 
     @Override
@@ -52,6 +55,6 @@ public abstract class BSAbstractDialogFragment extends DialogFragment implements
 
     @Override
     public void onRestoreInstanceState(@Nullable Bundle savedInstanceState) {
-        mMvpFollower.onRestoreInstanceState(savedInstanceState);
+        mMvpDelegate.onRestoreInstanceState(savedInstanceState);
     }
 }

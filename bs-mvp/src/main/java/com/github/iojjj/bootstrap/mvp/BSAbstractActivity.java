@@ -3,6 +3,7 @@ package com.github.iojjj.bootstrap.mvp;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.github.iojjj.bootstrap.core.function.BSFunction0;
 
@@ -11,41 +12,44 @@ import com.github.iojjj.bootstrap.core.function.BSFunction0;
  *
  * @since 1.0
  */
-public abstract class BSAbstractActivity extends Activity implements BSMvpFollower {
+public abstract class BSAbstractActivity extends Activity implements BSMvpDelegate {
 
-    private final BSMvpFollower mMvpFollower;
+    private final BSMvpDelegate mMvpDelegate;
 
     protected BSAbstractActivity() {
-        mMvpFollower = new BSMvpFollowerImpl(this);
-    }
-
-    @Override
-    public <TPresenter extends BSMvpPresenter<TView>, TView extends BSMvpView<TPresenter>> void
-    initPresenter(int loaderId, @NonNull TView view, @NonNull BSFunction0<TPresenter> presenterProvider) {
-        mMvpFollower.initPresenter(loaderId, view, presenterProvider);
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mMvpFollower.onRestoreInstanceState(savedInstanceState);
+        mMvpDelegate = new BSMvpDelegateImpl(new BSMvpDelegateImpl.UIDelegate() {
+            @Override
+            public <TView extends BSMvpView<TPresenter>, TPresenter extends BSMvpPresenter<TView>> AndroidPresenterCallbacks
+            initLoader(int loaderId, @Nullable Bundle args, TView view, BSFunction0<TPresenter> presenterProvider) {
+                final PresenterLoaderCallbacks<TPresenter, TView> loaderCallbacks =
+                        PresenterLoaderCallbacks.create(BSAbstractActivity.this, view, presenterProvider);
+                getLoaderManager().initLoader(loaderId, args, loaderCallbacks);
+                return loaderCallbacks;
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mMvpFollower.onResume();
+        mMvpDelegate.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mMvpFollower.onPause();
+        mMvpDelegate.onPause();
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        mMvpFollower.onSaveInstanceState(outState);
+        mMvpDelegate.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mMvpDelegate.onRestoreInstanceState(savedInstanceState);
     }
 }

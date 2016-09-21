@@ -5,38 +5,29 @@ import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.github.iojjj.bootstrap.core.BSAssertions;
-
 /**
  * Manager that allows to retrieve Google Plus access token.
  */
-public interface BSGoogleSignInManager extends BSGoogleSignInCoreManager {
+public interface BSGoogleSignInManager extends GoogleSignInManager {
 
+    // TODO: 22.09.2016 documentation
     void signIn(@NonNull Activity activity);
 
     void signIn(@NonNull Fragment fragment);
 
-    class Factory {
+    class Builder extends AbstractManagerBuilder<BSGoogleSignInManager> {
 
-        public static ManagerBuilder<BSGoogleSignInManager> newBuilder(@NonNull Context context) {
-            BSAssertions.assertNotNull(context, "context");
+        public static Builder newInstance(@NonNull Context context) {
             return new Builder(context);
         }
 
-        private Factory() {
-            //no instance
+        private Builder(@NonNull Context context) {
+            super(context);
         }
 
-        private static class Builder extends ManagerBuilder<BSGoogleSignInManager> {
-
-            Builder(@NonNull Context context) {
-                super(context);
-            }
-
-            @Override
-            public BSGoogleSignInManager build() {
-                return new BSGoogleSignInManagerImpl(this);
-            }
+        @Override
+        public BSGoogleSignInManager build() {
+            return new BSGoogleSignInManagerImpl(this);
         }
     }
 }

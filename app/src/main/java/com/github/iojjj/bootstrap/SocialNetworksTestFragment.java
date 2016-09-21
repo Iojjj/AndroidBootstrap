@@ -10,9 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.github.iojjj.bootstrap.authorization.BSGoogleSignInCoreManager;
-import com.github.iojjj.bootstrap.support.authorization.BSGoogleSignInManager;
-import com.github.iojjj.bootstrap.support.core.ui.fragments.BSProgressDialogFragment;
+import com.github.iojjj.bootstrap.authorization.BSGoogleSignInManager;
+import com.github.iojjj.bootstrap.core.ui.fragments.BSProgressDialogFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.Scopes;
@@ -24,7 +23,7 @@ import butterknife.OnClick;
 /**
  * Fragment for testing Social Networks integration.
  */
-public class SocialNetworksTestFragment extends Fragment implements BSGoogleSignInCoreManager.Callback {
+public class SocialNetworksTestFragment extends Fragment implements BSGoogleSignInManager.Callback {
 
     private static final int RC_GOOGLE_PLAY_SERVICES = 1;
 
@@ -41,12 +40,13 @@ public class SocialNetworksTestFragment extends Fragment implements BSGoogleSign
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGoogleSignInManager = BSGoogleSignInManager.Factory.newBuilder(getContext())
+        mGoogleSignInManager = BSGoogleSignInManager.Builder.newInstance(getContext())
                 .setServerClientId("455940207678-1a0t348gc3pajph6i8cc7unpt8hd57a1.apps.googleusercontent.com")
                 .setScopes(new Scope(Scopes.PLUS_LOGIN), new Scope(Scopes.PROFILE))
                 .setCallback(this)
+                .setRequestCode(1234)
                 .build();
-        mProgressDialogManager = BSProgressDialogFragment.newManager();
+        mProgressDialogManager = BSProgressDialogFragment.newInstance().getManager();
     }
 
     @Nullable
@@ -98,7 +98,7 @@ public class SocialNetworksTestFragment extends Fragment implements BSGoogleSign
 
     @Override
     public void showProgressDialog() {
-        mProgressDialogManager.showProgressDialog(getFragmentManager(), "Signing in...");
+        mProgressDialogManager.showProgressDialog("Signing in...");
     }
 
     @Override

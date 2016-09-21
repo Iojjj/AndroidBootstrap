@@ -1,7 +1,7 @@
 package com.github.iojjj.bootstrap.mvp;
 
-import android.app.DialogFragment;
 import android.support.annotation.Nullable;
+import android.app.DialogFragment;
 
 /**
  * Implementation of {@link BSMvpView} for {@link DialogFragment}.
@@ -16,6 +16,7 @@ public abstract class BSAbstractDialogFragmentMvpView<TPresenter extends BSMvpPr
     private TPresenter mPresenter;
 
     @Nullable
+    @Override
     public TPresenter getPresenter() {
         return mPresenter;
     }

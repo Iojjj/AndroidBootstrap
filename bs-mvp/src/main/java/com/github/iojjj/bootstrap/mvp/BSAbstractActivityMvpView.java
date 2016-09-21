@@ -16,6 +16,7 @@ public abstract class BSAbstractActivityMvpView<TPresenter extends BSMvpPresente
     private TPresenter mPresenter;
 
     @Nullable
+    @Override
     public TPresenter getPresenter() {
         return mPresenter;
     }

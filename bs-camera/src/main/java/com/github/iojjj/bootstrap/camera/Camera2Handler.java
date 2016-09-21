@@ -39,7 +39,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.WindowManager;
 
-import com.github.iojjj.bootstrap.core.BSAssertions;
+import com.github.iojjj.bootstrap.assertions.BSAssertions;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -417,7 +417,8 @@ class Camera2Handler implements CameraService {
                     effectModesList.add(CameraView.EffectMode.WHITEBOARD);
                 }
             }
-            cameraOptions.setEffectModes(effectModesList);
+            // TODO: 22.09.2016
+//            cameraOptions.setEffectModes(effectModesList);
         }
     }
 
@@ -436,7 +437,8 @@ class Camera2Handler implements CameraService {
                     aeAntibandingModes.add(CameraView.AeAntibandingMode._60HZ);
                 }
             }
-            cameraOptions.setAeAntibandingModes(aeAntibandingModes);
+            // TODO: 22.09.2016
+//            cameraOptions.setAeAntibandingModes(aeAntibandingModes);
         }
     }
 
@@ -453,7 +455,8 @@ class Camera2Handler implements CameraService {
                     hotPixelsModes.add(CameraView.HotPixelsMode.HIGH_QUALITY);
                 }
             }
-            cameraOptions.setHotPixelModes(hotPixelsModes);
+            // TODO: 22.09.2016
+//            cameraOptions.setHotPixelModes(hotPixelsModes);
         }
     }
 
@@ -470,7 +473,8 @@ class Camera2Handler implements CameraService {
                     aberrationModes.add(CameraView.ColorCorrectionAberrationMode.HIGH_QUALITY);
                 }
             }
-            cameraOptions.setAberrationModes(aberrationModes);
+            // TODO: 22.09.2016
+//            cameraOptions.setAberrationModes(aberrationModes);
         }
     }
 
