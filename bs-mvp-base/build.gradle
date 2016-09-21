@@ -27,5 +27,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(':bs-assertions')
+    compile project(':bs-core-base')
     testCompile 'junit:junit:4.12'
 }

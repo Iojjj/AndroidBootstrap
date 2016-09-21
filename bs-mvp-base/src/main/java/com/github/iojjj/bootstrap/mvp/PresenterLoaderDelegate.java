@@ -2,7 +2,7 @@ package com.github.iojjj.bootstrap.mvp;
 
 import android.support.annotation.NonNull;
 
-import com.github.iojjj.bootstrap.core.BSAssertions;
+import com.github.iojjj.bootstrap.assertions.BSAssertions;
 import com.github.iojjj.bootstrap.core.function.BSFunction0;
 
 // TODO: 21.09.2016 documentation

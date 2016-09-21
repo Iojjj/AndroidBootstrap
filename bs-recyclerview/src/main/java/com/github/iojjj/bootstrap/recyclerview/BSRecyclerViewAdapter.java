@@ -12,7 +12,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.github.iojjj.bootstrap.core.BSAssertions;
+import com.github.iojjj.bootstrap.assertions.BSAssertions;
 import com.github.iojjj.bootstrap.core.adapters.BSFilterPredicate;
 
 import java.util.ArrayList;

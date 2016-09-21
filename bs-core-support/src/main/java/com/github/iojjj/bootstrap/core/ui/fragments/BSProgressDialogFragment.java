@@ -17,9 +17,32 @@ import static com.github.iojjj.bootstrap.core.ui.fragments.ProgressDialogFragmen
 public class BSProgressDialogFragment extends DialogFragment implements ProgressDialogFragmentDelegate.InnerDialogFragment<DialogFragment> {
 
     private final ProgressDialogFragmentDelegate<DialogFragment> mDelegate;
+    private final Manager mManager;
 
     public BSProgressDialogFragment() {
         mDelegate = new ProgressDialogFragmentDelegate<>(this);
+        final ProgressDialogFragmentDelegate.Manager manager = mDelegate.getManager();
+        mManager = new Manager() {
+            @Override
+            public void showProgressDialog(@Nullable String message) {
+                manager.showProgressDialog(message);
+            }
+
+            @Override
+            public void hideProgressDialog() {
+                manager.hideProgressDialog();
+            }
+
+            @Override
+            public void setMessage(@Nullable String message) {
+                manager.setMessage(message);
+            }
+
+            @Override
+            public void setCancelable(boolean isCancelable) {
+                manager.setCancelable(isCancelable);
+            }
+        };
     }
 
     @NonNull
@@ -41,7 +64,7 @@ public class BSProgressDialogFragment extends DialogFragment implements Progress
      * @return fragment's manager
      */
     public Manager getManager() {
-        return mDelegate.getManager();
+        return mManager;
     }
 
     @Override

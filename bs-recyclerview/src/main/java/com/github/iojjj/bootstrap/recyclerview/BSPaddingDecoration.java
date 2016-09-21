@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.github.iojjj.bootstrap.core.BSAssertions;
+import com.github.iojjj.bootstrap.assertions.BSAssertions;
 
 /**
  * Item margin decoration. Compatible with {@link LinearLayoutManager} and {@link GridLayoutManager} only.

@@ -1,12 +1,12 @@
 package com.github.iojjj.bootstrap.mvp;
 
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
+import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.Loader;
 
-import com.github.iojjj.bootstrap.core.BSAssertions;
+import com.github.iojjj.bootstrap.assertions.BSAssertions;
 import com.github.iojjj.bootstrap.core.function.BSFunction0;
 
 /**

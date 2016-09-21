@@ -76,9 +76,8 @@ class ProgressDialogFragmentDelegate<TFragment> {
         mInnerDialogFragment.setCancelable(fragment, cancelable);
     }
 
-    <T extends Manager> T getManager() {
-        //noinspection unchecked
-        return (T) mManager;
+    Manager getManager() {
+        return mManager;
     }
 
     /**
