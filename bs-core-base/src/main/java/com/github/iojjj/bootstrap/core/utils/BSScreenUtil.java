@@ -1,4 +1,4 @@
-package com.github.iojjj.bootstrap.core;
+package com.github.iojjj.bootstrap.core.utils;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -9,29 +9,27 @@ import android.view.WindowManager;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
 
-/**
- * Created by cvetl on 06.06.2016.
- */
-public class BSScreenManager {
+// TODO: 23.09.2016 documentation
+public class BSScreenUtil {
 
-    private BSScreenManager() {
+    private BSScreenUtil() {
         //no instance
     }
 
     public static float dpToPx(@NonNull final Context context, float dp) {
-        BSAssertions.assertNotNull(context, "Context");
+        BSAssertions.assertNotNull(context, "context");
         return context.getResources().getDisplayMetrics().density * dp;
     }
 
     public static float pxToDp(@NonNull final Context context, float px) {
-        BSAssertions.assertNotNull(context, "Context");
+        BSAssertions.assertNotNull(context, "context");
         return px / context.getResources().getDisplayMetrics().density;
     }
 
     @SuppressWarnings("deprecation")
     public static void getScreenDimensions(@NonNull Context context, @NonNull final Point point) {
-        BSAssertions.assertNotNull(context, "Context");
-        BSAssertions.assertNotNull(point, "Point");
+        BSAssertions.assertNotNull(context, "context");
+        BSAssertions.assertNotNull(point, "point");
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             windowManager.getDefaultDisplay().getSize(point);

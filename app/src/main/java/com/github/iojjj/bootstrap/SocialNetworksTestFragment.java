@@ -97,12 +97,12 @@ public class SocialNetworksTestFragment extends Fragment implements BSGoogleSign
     }
 
     @Override
-    public void showProgressDialog() {
+    public void onSignInStarted() {
         mProgressDialogManager.showProgressDialog("Signing in...");
     }
 
     @Override
-    public void hideProgressDialog() {
+    public void onSignInFinished() {
         mProgressDialogManager.hideProgressDialog();
     }
 

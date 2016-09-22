@@ -22,7 +22,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.plus.Plus;
 
 import java.io.IOException;
 
@@ -62,7 +61,6 @@ class AbstractGoogleSignInManager implements GoogleSignInManager, GoogleApiClien
         final GoogleSignInOptions gso = gsoBuilder
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(builder.getContext().getApplicationContext())
-                .addApi(Plus.API)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -196,11 +194,11 @@ class AbstractGoogleSignInManager implements GoogleSignInManager, GoogleApiClien
                     break;
                 }
                 case RESULT_SHOW_PROGRESS_DIALOG: {
-                    mCallback.showProgressDialog();
+                    mCallback.onSignInStarted();
                     break;
                 }
                 case RESULT_HIDE_PROGRESS_DIALOG: {
-                    mCallback.hideProgressDialog();
+                    mCallback.onSignInFinished();
                     break;
                 }
                 default: {

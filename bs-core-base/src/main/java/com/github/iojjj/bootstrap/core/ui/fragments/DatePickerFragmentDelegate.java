@@ -10,19 +10,19 @@ import android.support.annotation.NonNull;
 import android.widget.DatePicker;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
-import com.github.iojjj.bootstrap.core.BSConstantGenerator;
+import com.github.iojjj.bootstrap.core.utils.BSConstantsUtil;
 
 import java.util.Calendar;
 
 class DatePickerFragmentDelegate implements DatePickerDialog.OnDateSetListener {
 
-    private final InnerFragment mInnerFragment;
-    static final String EXTRA_DATE = BSConstantGenerator.extra("date");
-    static final String RESULT_DATE = BSConstantGenerator.result("date");
+    private final OuterDelegate mOuterDelegate;
+    static final String EXTRA_DATE = BSConstantsUtil.extra("date");
+    static final String RESULT_DATE = BSConstantsUtil.result("date");
 
-    DatePickerFragmentDelegate(@NonNull InnerFragment innerFragment) {
-        BSAssertions.assertNotNull(innerFragment, "innerFragment");
-        mInnerFragment = innerFragment;
+    DatePickerFragmentDelegate(@NonNull OuterDelegate outerDelegate) {
+        BSAssertions.assertNotNull(outerDelegate, "outerDelegate");
+        mOuterDelegate = outerDelegate;
     }
 
     @NonNull
@@ -44,11 +44,11 @@ class DatePickerFragmentDelegate implements DatePickerDialog.OnDateSetListener {
         calendar.set(year, month, dayOfMonth, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         data.putExtra(RESULT_DATE, calendar.getTimeInMillis());
-        mInnerFragment.onDateSet(Activity.RESULT_OK, data);
-        mInnerFragment.dismiss();
+        mOuterDelegate.onDateSet(Activity.RESULT_OK, data);
+        mOuterDelegate.dismiss();
     }
 
-    interface InnerFragment {
+    interface OuterDelegate {
 
         void onDateSet(int result, Intent data);
 

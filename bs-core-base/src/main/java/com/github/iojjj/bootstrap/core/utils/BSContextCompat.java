@@ -1,4 +1,4 @@
-package com.github.iojjj.bootstrap.core;
+package com.github.iojjj.bootstrap.core.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -11,13 +11,10 @@ import android.support.annotation.Nullable;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
 
-/**
- * Created by cvetl on 20.08.2016.
- */
+// TODO: 23.09.2016 documentation
+public class BSContextCompat {
 
-public class ContextCompat {
-
-    private ContextCompat() {
+    private BSContextCompat() {
         //no instance
     }
 

@@ -1,28 +1,28 @@
 package com.github.iojjj.bootstrap.mvp;
 
-import android.support.annotation.Nullable;
 import android.app.Fragment;
+import android.support.annotation.Nullable;
 
 /**
  * Implementation of {@link BSMvpView} for {@link Fragment}.
  *
- * @param <TPresenter>
+ * @param <P>
  * @since 1.0
  */
-public abstract class BSAbstractFragmentMvpView<TPresenter extends BSMvpPresenter> extends BSAbstractFragment implements
-        BSMvpView<TPresenter> {
+public abstract class BSAbstractFragmentMvpView<P extends BSMvpPresenter> extends BSAbstractFragment implements
+        BSMvpView<P> {
 
     @Nullable
-    private TPresenter mPresenter;
+    private P mPresenter;
 
     @Nullable
     @Override
-    public TPresenter getPresenter() {
+    public P getPresenter() {
         return mPresenter;
     }
 
     @Override
-    public void setPresenter(@Nullable TPresenter presenter) {
+    public void setPresenter(@Nullable P presenter) {
         mPresenter = presenter;
     }
 }

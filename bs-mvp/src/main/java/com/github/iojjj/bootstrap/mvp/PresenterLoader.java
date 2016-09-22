@@ -6,7 +6,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
-import com.github.iojjj.bootstrap.core.function.BSFunction0;
+import com.github.iojjj.bootstrap.core.functions.BSFunction0;
 
 /**
  * Implementation of {@link Loader} that loads and stores {@link BSMvpPresenter} instance.

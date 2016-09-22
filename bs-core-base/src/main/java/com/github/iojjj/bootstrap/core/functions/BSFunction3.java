@@ -1,4 +1,4 @@
-package com.github.iojjj.bootstrap.core.function;
+package com.github.iojjj.bootstrap.core.functions;
 
 /**
  * Represents a function that accepts three arguments and produces a result.

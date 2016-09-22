@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.iojjj.bootstrap.core;
+package com.github.iojjj.bootstrap.core.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -27,14 +27,16 @@ import android.view.View.OnTouchListener;
 import android.widget.EditText;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
+import com.github.iojjj.bootstrap.core.BSSimpleTextWatcher;
 
+// TODO: 23.09.2016 documentation
 /**
- * Helper class for adding functionality of clearing of EditText.
+ * Util class for adding functionality of clearing of {@link EditText}.
  *
  * @since 1.0
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
-public class BSEditTextClearManager {
+public class BSEditTextClearUtil {
 
     private EditText mEditText;
     private Drawable mClearDrawable;
@@ -42,7 +44,7 @@ public class BSEditTextClearManager {
     private OnTouchListener mOnTouchListener;
     private OnFocusChangeListener mOnFocusChangeListener;
 
-    private BSEditTextClearManager(@NonNull EditText editText, @NonNull Drawable clearDrawable) {
+    private BSEditTextClearUtil(@NonNull EditText editText, @NonNull Drawable clearDrawable) {
         mEditText = editText;
         mClearDrawable = clearDrawable;
         init();
@@ -131,12 +133,12 @@ public class BSEditTextClearManager {
         }
 
         public Builder setClearDrawable(@DrawableRes int drawableId) {
-            mClearDrawable = ContextCompat.getDrawable(mContext, drawableId);
+            mClearDrawable = BSContextCompat.getDrawable(mContext, drawableId);
             return this;
         }
 
-        public BSEditTextClearManager build() {
-            return new BSEditTextClearManager(mEditText, mClearDrawable);
+        public BSEditTextClearUtil build() {
+            return new BSEditTextClearUtil(mEditText, mClearDrawable);
         }
     }
 }

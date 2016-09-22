@@ -13,16 +13,16 @@ import android.support.annotation.Nullable;
  *
  * @since 1.0
  */
-abstract class AbstractPresenterLoaderCallbacks<TPresenter extends BSMvpPresenter<TView>, TView extends BSMvpView<TPresenter>>
+abstract class AbstractPresenterLoaderCallbacks<P extends BSMvpPresenter<V>, V extends BSMvpView<P>>
         implements AndroidPresenterCallbacks {
 
     @NonNull
-    private final TView mView;
+    private final V mView;
     @Nullable
-    private TPresenter mPresenter;
+    private P mPresenter;
     private boolean mResumed;
 
-    AbstractPresenterLoaderCallbacks(@NonNull TView view) {
+    AbstractPresenterLoaderCallbacks(@NonNull V view) {
         mView = view;
     }
 
@@ -35,9 +35,9 @@ abstract class AbstractPresenterLoaderCallbacks<TPresenter extends BSMvpPresente
     @Override
     public void onPause() {
         mResumed = false;
-        TPresenter presenter = mPresenter;
+        P presenter = mPresenter;
         if (presenter != null) {
-            final TView view = presenter.getView();
+            final V view = presenter.getView();
             if (view == mView) {
                 mView.setPresenter(null);
             }
@@ -47,7 +47,7 @@ abstract class AbstractPresenterLoaderCallbacks<TPresenter extends BSMvpPresente
     }
 
     private void checkAndCallResume() {
-        TPresenter presenter = mPresenter;
+        P presenter = mPresenter;
         if (presenter != null) {
             mView.setPresenter(presenter);
             presenter.setView(mView);
@@ -55,7 +55,7 @@ abstract class AbstractPresenterLoaderCallbacks<TPresenter extends BSMvpPresente
         }
     }
 
-    void onLoadFinished(TPresenter data) {
+    void onLoadFinished(P data) {
         mPresenter = data;
         if (mResumed) {
             checkAndCallResume();
@@ -63,7 +63,7 @@ abstract class AbstractPresenterLoaderCallbacks<TPresenter extends BSMvpPresente
     }
 
     void onLoaderReset() {
-        TPresenter presenter = mPresenter;
+        P presenter = mPresenter;
         if (presenter != null) {
             presenter.setView(null);
         }
@@ -72,7 +72,7 @@ abstract class AbstractPresenterLoaderCallbacks<TPresenter extends BSMvpPresente
 
     @Override
     public void onRestoreInstanceState(@Nullable Bundle savedInstanceState) {
-        final TPresenter presenter = mPresenter;
+        final P presenter = mPresenter;
         if (presenter != null) {
             presenter.onRestoreInstanceState(savedInstanceState);
         }
@@ -80,7 +80,7 @@ abstract class AbstractPresenterLoaderCallbacks<TPresenter extends BSMvpPresente
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        TPresenter presenter = mPresenter;
+        P presenter = mPresenter;
         if (presenter != null) {
             presenter.onSaveInstanceState(outState);
         }

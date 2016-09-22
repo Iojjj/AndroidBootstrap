@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 
-import com.github.iojjj.bootstrap.core.function.BSFunction0;
+import com.github.iojjj.bootstrap.core.functions.BSFunction0;
 
 /**
  * Implementation of {@link DialogFragment} with MVP pattern.
@@ -50,8 +50,8 @@ public abstract class BSAbstractDialogFragment extends DialogFragment implements
     }
 
     @Override
-    public <TView extends BSMvpView<TPresenter>, TPresenter extends BSMvpPresenter<TView>>
-    void initPresenter(int loaderId, @NonNull TView view, @NonNull BSFunction0<TPresenter> presenterProvider) {
+    public <V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
+    void initPresenter(int loaderId, @NonNull V view, @NonNull BSFunction0<P> presenterProvider) {
         mMvpDelegate.initPresenter(loaderId, view, presenterProvider);
     }
 }

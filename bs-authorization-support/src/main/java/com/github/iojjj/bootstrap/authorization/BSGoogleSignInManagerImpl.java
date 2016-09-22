@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import com.google.android.gms.auth.api.Auth;
 
 /**
- * Implementation of BSGoogleSignInManager.
+ * Implementation of {@link AbstractGoogleSignInManager}.
+ *
+ * @since 1.0
  */
 class BSGoogleSignInManagerImpl extends AbstractGoogleSignInManager implements BSGoogleSignInManager {
 

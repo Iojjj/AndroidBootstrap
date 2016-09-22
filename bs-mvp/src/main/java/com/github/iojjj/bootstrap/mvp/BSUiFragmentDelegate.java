@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
-import com.github.iojjj.bootstrap.core.function.BSFunction0;
+import com.github.iojjj.bootstrap.core.functions.BSFunction0;
 
 public class BSUiFragmentDelegate implements BSMvpDelegateImpl.UIDelegate {
 
@@ -19,9 +19,9 @@ public class BSUiFragmentDelegate implements BSMvpDelegateImpl.UIDelegate {
     }
 
     @Override
-    public <TView extends BSMvpView<TPresenter>, TPresenter extends BSMvpPresenter<TView>> AndroidPresenterCallbacks
-    initLoader(int loaderId, @Nullable Bundle args, TView view, BSFunction0<TPresenter> presenterProvider) {
-        final PresenterLoaderCallbacks<TPresenter, TView> loaderCallbacks =
+    public <V extends BSMvpView<P>, P extends BSMvpPresenter<V>> AndroidPresenterCallbacks
+    initLoader(int loaderId, @Nullable Bundle args, V view, BSFunction0<P> presenterProvider) {
+        final PresenterLoaderCallbacks<P, V> loaderCallbacks =
                 PresenterLoaderCallbacks.create(mFragment.getActivity(), view, presenterProvider);
         mFragment.getLoaderManager().initLoader(loaderId, args, loaderCallbacks);
         return loaderCallbacks;

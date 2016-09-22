@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
-import com.github.iojjj.bootstrap.core.function.BSFunction0;
+import com.github.iojjj.bootstrap.core.functions.BSFunction0;
 
 /**
  * Implementation of {@link AppCompatActivity} with MVP pattern.
@@ -44,8 +44,8 @@ public abstract class BSAbstractActivity extends AppCompatActivity implements BS
     }
 
     @Override
-    public <TView extends BSMvpView<TPresenter>, TPresenter extends BSMvpPresenter<TView>>
-    void initPresenter(int loaderId, @NonNull TView view, @NonNull BSFunction0<TPresenter> presenterProvider) {
+    public <V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
+    void initPresenter(int loaderId, @NonNull V view, @NonNull BSFunction0<P> presenterProvider) {
         mMvpDelegate.initPresenter(loaderId, view, presenterProvider);
     }
 }

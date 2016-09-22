@@ -26,7 +26,7 @@ public class BSThreadingManager {
      * @return handler for UI thread
      */
     public static Handler getMainHandler() {
-        return MainThreadHandlerHolder.INSTANCE;
+        return Loader.INSTANCE;
     }
 
     /**
@@ -92,7 +92,7 @@ public class BSThreadingManager {
         return Thread.currentThread().equals(Looper.getMainLooper().getThread());
     }
 
-    private static final class MainThreadHandlerHolder {
+    private static final class Loader {
         public static final Handler INSTANCE = new Handler(Looper.getMainLooper());
     }
 }

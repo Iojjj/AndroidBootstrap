@@ -2,7 +2,7 @@ package com.github.iojjj.bootstrap.mvp;
 
 import android.support.annotation.NonNull;
 
-import com.github.iojjj.bootstrap.core.function.BSFunction0;
+import com.github.iojjj.bootstrap.core.functions.BSFunction0;
 
 /**
  * MVP pattern delegate interface.
@@ -19,7 +19,7 @@ public interface BSMvpDelegate extends AndroidPresenterCallbacks {
      * @param view              instance of BSMvpView
      * @param presenterProvider functional interface that creates an instance of BSMvpPresenter
      */
-    <TView extends BSMvpView<TPresenter>, TPresenter extends BSMvpPresenter<TView>>
-    void initPresenter(int loaderId, @NonNull TView view, @NonNull BSFunction0<TPresenter> presenterProvider);
+    <V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
+    void initPresenter(int loaderId, @NonNull V view, @NonNull BSFunction0<P> presenterProvider);
 
 }

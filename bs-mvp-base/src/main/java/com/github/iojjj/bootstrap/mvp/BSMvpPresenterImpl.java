@@ -7,22 +7,22 @@ import android.support.annotation.Nullable;
 /**
  * Implementation of {@link BSMvpPresenter}.
  *
- * @param <TView> type of view.
+ * @param <V> type of view.
  * @since 1.0
  */
-public abstract class BSMvpPresenterImpl<TView extends BSMvpView> implements BSMvpPresenter<TView> {
+public abstract class BSMvpPresenterImpl<V extends BSMvpView> implements BSMvpPresenter<V> {
 
     @Nullable
-    private TView mView;
+    private V mView;
 
     @Nullable
     @Override
-    public TView getView() {
+    public V getView() {
         return mView;
     }
 
     @Override
-    public void setView(@Nullable TView view) {
+    public void setView(@Nullable V view) {
         mView = view;
     }
 

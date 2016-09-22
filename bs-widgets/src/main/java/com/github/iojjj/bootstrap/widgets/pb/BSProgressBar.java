@@ -20,7 +20,7 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.github.iojjj.bootstrap.core.BSScreenManager;
+import com.github.iojjj.bootstrap.core.utils.BSScreenUtil;
 import com.github.iojjj.bootstrap.widgets.R;
 
 /**
@@ -77,8 +77,8 @@ abstract class BSProgressBar extends View {
                 if (drawable == null) {
                     arcPaint.setColor(array.getColor(R.styleable.BSFilledProgressBar_fpb_fillWith, ContextCompat.getColor(context, R.color.fpb_progress_fill)));
                 } else {
-                    int width = array.getDimensionPixelSize(R.styleable.BSFilledProgressBar_fpb_shaderWidth, (int) BSScreenManager.dpToPx(context, 144));
-                    int height = array.getDimensionPixelSize(R.styleable.BSFilledProgressBar_fpb_shaderHeight, (int) BSScreenManager.dpToPx(context, 144));
+                    int width = array.getDimensionPixelSize(R.styleable.BSFilledProgressBar_fpb_shaderWidth, (int) BSScreenUtil.dpToPx(context, 144));
+                    int height = array.getDimensionPixelSize(R.styleable.BSFilledProgressBar_fpb_shaderHeight, (int) BSScreenUtil.dpToPx(context, 144));
                     Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
                     Canvas canvas = new Canvas(bitmap);
                     drawable.setBounds(0, 0, width, height);

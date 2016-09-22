@@ -6,23 +6,23 @@ import android.support.v4.app.DialogFragment;
 /**
  * Implementation of {@link BSMvpView} for {@link DialogFragment}.
  *
- * @param <TPresenter>
+ * @param <P>
  * @since 1.0
  */
-public abstract class BSAbstractDialogFragmentMvpView<TPresenter extends BSMvpPresenter> extends BSAbstractDialogFragment
-        implements BSMvpView<TPresenter> {
+public abstract class BSAbstractDialogFragmentMvpView<P extends BSMvpPresenter> extends BSAbstractDialogFragment
+        implements BSMvpView<P> {
 
     @Nullable
-    private TPresenter mPresenter;
+    private P mPresenter;
 
     @Nullable
     @Override
-    public TPresenter getPresenter() {
+    public P getPresenter() {
         return mPresenter;
     }
 
     @Override
-    public void setPresenter(@Nullable TPresenter presenter) {
+    public void setPresenter(@Nullable P presenter) {
         mPresenter = presenter;
     }
 }

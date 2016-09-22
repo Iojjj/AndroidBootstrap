@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
-import com.github.iojjj.bootstrap.core.function.BSFunction0;
+import com.github.iojjj.bootstrap.core.functions.BSFunction0;
 
 /**
  * Implementation of {@link BSMvpDelegate}.
@@ -26,8 +26,8 @@ public final class BSMvpDelegateImpl implements BSMvpDelegate {
     }
 
     @Override
-    public <TView extends BSMvpView<TPresenter>, TPresenter extends BSMvpPresenter<TView>>
-    void initPresenter(int loaderId, @NonNull TView view, @NonNull BSFunction0<TPresenter> presenterProvider) {
+    public <V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
+    void initPresenter(int loaderId, @NonNull V view, @NonNull BSFunction0<P> presenterProvider) {
         BSAssertions.assertNotNull(view, "view");
         BSAssertions.assertNotNull(presenterProvider, "presenterProvider");
         AndroidPresenterCallbacks loaderCallbacks = mUIDelegate.initLoader(loaderId, null, view, presenterProvider);
@@ -72,7 +72,7 @@ public final class BSMvpDelegateImpl implements BSMvpDelegate {
 
     public interface UIDelegate {
 
-        <TView extends BSMvpView<TPresenter>, TPresenter extends BSMvpPresenter<TView>>
-        AndroidPresenterCallbacks initLoader(int loaderId, @Nullable Bundle args, TView view, BSFunction0<TPresenter> presenterProvider);
+        <V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
+        AndroidPresenterCallbacks initLoader(int loaderId, @Nullable Bundle args, V view, BSFunction0<P> presenterProvider);
     }
 }

@@ -7,7 +7,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
-import com.github.iojjj.bootstrap.core.function.BSFunction0;
+import com.github.iojjj.bootstrap.core.functions.BSFunction0;
 
 /**
  * Implementation of {@link LoaderCallbacks} for MVP pattern.
@@ -18,17 +18,17 @@ import com.github.iojjj.bootstrap.core.function.BSFunction0;
  *
  * @since 1.0
  */
-class PresenterLoaderCallbacks<TPresenter extends BSMvpPresenter<TView>, TView extends BSMvpView<TPresenter>>
-        extends AbstractPresenterLoaderCallbacks<TPresenter, TView>
-        implements LoaderCallbacks<TPresenter> {
+class PresenterLoaderCallbacks<P extends BSMvpPresenter<V>, V extends BSMvpView<P>>
+        extends AbstractPresenterLoaderCallbacks<P, V>
+        implements LoaderCallbacks<P> {
 
     @NonNull
     private final Context mContext;
     @NonNull
-    private final BSFunction0<TPresenter> mPresenterCallable;
+    private final BSFunction0<P> mPresenterCallable;
 
-    private PresenterLoaderCallbacks(@NonNull Context context, @NonNull TView view,
-                                     @NonNull BSFunction0<TPresenter> presenterCallable) {
+    private PresenterLoaderCallbacks(@NonNull Context context, @NonNull V view,
+                                     @NonNull BSFunction0<P> presenterCallable) {
         super(view);
         BSAssertions.assertNotNull(context, "context");
         BSAssertions.assertNotNull(presenterCallable, "presenterCallable");
@@ -36,24 +36,23 @@ class PresenterLoaderCallbacks<TPresenter extends BSMvpPresenter<TView>, TView e
         mPresenterCallable = presenterCallable;
     }
 
-    static <TPresenter extends BSMvpPresenter<TView>, TView extends BSMvpView<TPresenter>>
-    PresenterLoaderCallbacks<TPresenter, TView>
-    create(@NonNull Context context, @NonNull TView view, @NonNull BSFunction0<TPresenter> presenterCallable) {
+    static <P extends BSMvpPresenter<V>, V extends BSMvpView<P>> PresenterLoaderCallbacks<P, V>
+    create(@NonNull Context context, @NonNull V view, @NonNull BSFunction0<P> presenterCallable) {
         return new PresenterLoaderCallbacks<>(context, view, presenterCallable);
     }
 
     @Override
-    public Loader<TPresenter> onCreateLoader(int id, Bundle args) {
+    public Loader<P> onCreateLoader(int id, Bundle args) {
         return new PresenterLoader<>(mContext, mPresenterCallable);
     }
 
     @Override
-    public void onLoadFinished(Loader<TPresenter> loader, TPresenter data) {
+    public void onLoadFinished(Loader<P> loader, P data) {
         onLoadFinished(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<TPresenter> loader) {
+    public void onLoaderReset(Loader<P> loader) {
         onLoaderReset();
     }
 }

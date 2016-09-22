@@ -1,4 +1,4 @@
-package com.github.iojjj.bootstrap.core;
+package com.github.iojjj.bootstrap.core.utils;
 
 import android.content.Context;
 import android.os.IBinder;
@@ -8,13 +8,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-/**
- * Keyboard utils.
- */
+// TODO: 23.09.2016 actualize
 @SuppressWarnings({"WeakerAccess", "unused"})
-public class BSKeyboardManager {
+public class BSKeyboardUtil {
 
-    private BSKeyboardManager() {
+    private BSKeyboardUtil() {
         //no instance
     }
 

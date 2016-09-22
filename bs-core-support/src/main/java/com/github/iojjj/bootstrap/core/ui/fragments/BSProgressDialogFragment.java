@@ -14,13 +14,13 @@ import static com.github.iojjj.bootstrap.core.ui.fragments.ProgressDialogFragmen
  *
  * @since 1.0
  */
-public class BSProgressDialogFragment extends DialogFragment implements ProgressDialogFragmentDelegate.InnerDialogFragment<DialogFragment> {
+public class BSProgressDialogFragment extends DialogFragment {
 
     private final ProgressDialogFragmentDelegate<DialogFragment> mDelegate;
     private final Manager mManager;
 
     public BSProgressDialogFragment() {
-        mDelegate = new ProgressDialogFragmentDelegate<>(this);
+        mDelegate = new ProgressDialogFragmentDelegate<>(new OuterDelegateImpl(this));
         final ProgressDialogFragmentDelegate.Manager manager = mDelegate.getManager();
         mManager = new Manager() {
             @Override
@@ -61,6 +61,7 @@ public class BSProgressDialogFragment extends DialogFragment implements Progress
 
     /**
      * Get fragment's manager.
+     *
      * @return fragment's manager
      */
     public Manager getManager() {
@@ -85,38 +86,54 @@ public class BSProgressDialogFragment extends DialogFragment implements Progress
         mDelegate.onSaveInstanceState(getArguments());
     }
 
-    @NonNull
-    @Override
-    public DialogFragment newInstance(@Nullable String message) {
-        return newInstanceImpl(message);
-    }
-
-    @Override
-    public void show(DialogFragment dialogFragment, String tag) {
-        dialogFragment.show(getChildFragmentManager(), tag);
-    }
-
-    @Override
-    public void dismissAllowingStateLoss(DialogFragment dialogFragment) {
-        dialogFragment.dismissAllowingStateLoss();
-    }
-
-    @Override
-    public boolean isAdded(DialogFragment dialogFragment) {
-        return dialogFragment.isAdded();
-    }
-
-    @Override
-    public DialogFragment findFragmentByTag(String tag) {
-        return (DialogFragment) getChildFragmentManager().findFragmentByTag(tag);
-    }
-
-    @Override
-    public void setCancelable(DialogFragment dialogFragment, boolean cancelable) {
-        dialogFragment.setCancelable(cancelable);
-    }
-
     public interface Manager extends ProgressDialogFragmentDelegate.Manager {
 
+    }
+
+    private static class OuterDelegateImpl implements ProgressDialogFragmentDelegate.OuterDelegate<DialogFragment> {
+
+        @NonNull
+        private final BSProgressDialogFragment mFragment;
+
+        private OuterDelegateImpl(@NonNull BSProgressDialogFragment fragment) {
+            mFragment = fragment;
+        }
+
+        @Nullable
+        @Override
+        public Dialog getDialog() {
+            return mFragment.getDialog();
+        }
+
+        @NonNull
+        @Override
+        public DialogFragment newInstance(@Nullable String message) {
+            return newInstanceImpl(message);
+        }
+
+        @Override
+        public void show(DialogFragment dialogFragment, String tag) {
+            dialogFragment.show(mFragment.getFragmentManager(), tag);
+        }
+
+        @Override
+        public void dismissAllowingStateLoss(DialogFragment dialogFragment) {
+            dialogFragment.dismissAllowingStateLoss();
+        }
+
+        @Override
+        public boolean isAdded(DialogFragment dialogFragment) {
+            return dialogFragment.isAdded();
+        }
+
+        @Override
+        public DialogFragment findFragmentByTag(String tag) {
+            return (DialogFragment) mFragment.getChildFragmentManager().findFragmentByTag(tag);
+        }
+
+        @Override
+        public void setCancelable(DialogFragment dialogFragment, boolean cancelable) {
+            dialogFragment.setCancelable(cancelable);
+        }
     }
 }

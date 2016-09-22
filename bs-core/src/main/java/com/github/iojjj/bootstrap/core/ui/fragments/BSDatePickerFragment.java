@@ -17,14 +17,14 @@ import static com.github.iojjj.bootstrap.core.ui.fragments.DatePickerFragmentDel
  * @since 1.0
  */
 // TODO: 10.09.2016 set date picker mode
-public class DatePickerFragment extends DialogFragment implements DatePickerFragmentDelegate.InnerFragment {
+public class BSDatePickerFragment extends DialogFragment {
 
     public static final String RESULT_DATE = DatePickerFragmentDelegate.RESULT_DATE;
 
     private final DatePickerFragmentDelegate mDelegate;
 
-    public DatePickerFragment() {
-        mDelegate = new DatePickerFragmentDelegate(this);
+    public BSDatePickerFragment() {
+        mDelegate = new DatePickerFragmentDelegate(new OuterDelegateImpl(this));
     }
 
     /**
@@ -32,9 +32,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerFrag
      * @param date initial date in milliseconds
      * @return new instance of date picker dialog fragment
      */
-    public static DatePickerFragment newInstance(long date) {
+    public static BSDatePickerFragment newInstance(long date) {
         Bundle args = new Bundle();
-        DatePickerFragment fragment = new DatePickerFragment();
+        BSDatePickerFragment fragment = new BSDatePickerFragment();
         args.putLong(EXTRA_DATE, date);
         fragment.setArguments(args);
         return fragment;
@@ -46,8 +46,23 @@ public class DatePickerFragment extends DialogFragment implements DatePickerFrag
         return mDelegate.onCreateDialog(getArguments(), getActivity());
     }
 
-    @Override
-    public void onDateSet(int result, Intent data) {
-        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
+    private static final class OuterDelegateImpl implements DatePickerFragmentDelegate.OuterDelegate {
+
+        @NonNull
+        private final BSDatePickerFragment mFragment;
+
+        private OuterDelegateImpl(@NonNull BSDatePickerFragment fragment) {
+            mFragment = fragment;
+        }
+
+        @Override
+        public void onDateSet(int result, Intent data) {
+            mFragment.getTargetFragment().onActivityResult(mFragment.getTargetRequestCode(), Activity.RESULT_OK, data);
+        }
+
+        @Override
+        public void dismiss() {
+            mFragment.dismiss();
+        }
     }
 }

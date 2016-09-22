@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 
 /**
  * A container object which may or may not contain a non-null value.
- * If a value is present, isPresent() will return true and get() will return the value.
+ * If a value is present, {@link #isPresent()} will return true and {@link #get()} will return the value.
  *
  * @since 1.0
  */
@@ -22,10 +22,23 @@ public class BSOptional<T> {
         mObject = object;
     }
 
+    /**
+     * Create a new optional from an object.
+     *
+     * @param object any object or null
+     * @param <T>    type of object
+     * @return a new optional
+     */
     public static <T> BSOptional<T> from(@Nullable T object) {
         return new BSOptional<>(object);
     }
 
+    /**
+     * Create a new empty optional.
+     *
+     * @param <T> type of object
+     * @return a new empty optional
+     */
     public static <T> BSOptional<T> empty() {
         return new BSOptional<>(null);
     }

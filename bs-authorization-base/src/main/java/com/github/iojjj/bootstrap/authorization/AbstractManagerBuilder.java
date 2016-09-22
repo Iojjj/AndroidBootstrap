@@ -7,7 +7,12 @@ import android.support.annotation.Nullable;
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
 import com.google.android.gms.common.api.Scope;
 
-// TODO: 22.09.2016 documentation
+/**
+ * Abstract implementation of {@link ManagerBuilder}.
+ *
+ * @param <T> type of {@link GoogleSignInManager}
+ * @since 1.0
+ */
 abstract class AbstractManagerBuilder<T extends GoogleSignInManager> implements ManagerBuilder<T> {
 
     @NonNull

@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
  *
  * @since 1.0
  */
-public interface BSMvpPresenter<TView extends BSMvpView> extends AndroidPresenterCallbacks {
+public interface BSMvpPresenter<V extends BSMvpView> extends AndroidPresenterCallbacks {
 
     /**
      * Get view linked to this presenter.
@@ -15,14 +15,14 @@ public interface BSMvpPresenter<TView extends BSMvpView> extends AndroidPresente
      * @return view linked to this presenter
      */
     @Nullable
-    TView getView();
+    V getView();
 
     /**
      * Set view linked to this presenter
      *
      * @param view view linked to this presenter
      */
-    void setView(@Nullable TView view);
+    void setView(@Nullable V view);
 
     /**
      * Called when presenter is created.

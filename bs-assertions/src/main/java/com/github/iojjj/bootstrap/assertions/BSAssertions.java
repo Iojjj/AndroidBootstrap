@@ -5,12 +5,13 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 /**
- * Assertion functions useful for debugging.
+ * Assertion functions useful for debugging. All assertion checks could be enabled/disabled with
+ * {@link #setAssertionsEnabled(boolean)} method.
  *
  * @since 1.0
  */
 @SuppressWarnings({"WeakerAccess", "unused", "ConstantConditions"})
-public class  BSAssertions {
+public class BSAssertions {
 
     private static boolean sAssertionsEnabled = true;
 

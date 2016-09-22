@@ -14,9 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
- * Created by Alexander Vlasov on 03.01.2016.
- */
+// TODO: 23.09.2016 check this
 public class BSIoManager {
 
     private BSIoManager() {}

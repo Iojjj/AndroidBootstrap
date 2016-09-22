@@ -12,13 +12,13 @@ import com.github.iojjj.bootstrap.assertions.BSAssertions;
 class ProgressDialogFragmentDelegate<TFragment> {
 
     static final String KEY_MESSAGE = "MESSAGE";
-    private final InnerDialogFragment<TFragment> mInnerDialogFragment;
+    private final OuterDelegate<TFragment> mOuterDelegate;
     private final Manager mManager;
     private String mMessage;
 
-    ProgressDialogFragmentDelegate(@NonNull InnerDialogFragment<TFragment> innerDialogFragment) {
-        BSAssertions.assertNotNull(innerDialogFragment, "innerDialogFragment");
-        mInnerDialogFragment = innerDialogFragment;
+    ProgressDialogFragmentDelegate(@NonNull OuterDelegate<TFragment> outerDelegate) {
+        BSAssertions.assertNotNull(outerDelegate, "outerDelegate");
+        mOuterDelegate = outerDelegate;
         mManager = new ManagerImpl<>(this);
     }
 
@@ -45,7 +45,7 @@ class ProgressDialogFragmentDelegate<TFragment> {
 
     private void setMessage(@Nullable String message) {
         mMessage = message;
-        final ProgressDialog dialog = (ProgressDialog) mInnerDialogFragment.getDialog();
+        final ProgressDialog dialog = (ProgressDialog) mOuterDelegate.getDialog();
         if (dialog != null) {
             dialog.setMessage(message);
         }
@@ -53,27 +53,27 @@ class ProgressDialogFragmentDelegate<TFragment> {
 
     @NonNull
     private TFragment newInstance(@Nullable String message) {
-        return mInnerDialogFragment.newInstance(message);
+        return mOuterDelegate.newInstance(message);
     }
 
     private void show(TFragment fragment, String tag) {
-        mInnerDialogFragment.show(fragment, tag);
+        mOuterDelegate.show(fragment, tag);
     }
 
     private void dismissAllowingStateLoss(TFragment fragment) {
-        mInnerDialogFragment.dismissAllowingStateLoss(fragment);
+        mOuterDelegate.dismissAllowingStateLoss(fragment);
     }
 
     private boolean isAdded(TFragment fragment) {
-        return mInnerDialogFragment.isAdded(fragment);
+        return mOuterDelegate.isAdded(fragment);
     }
 
     private TFragment findFragmentByTag(String tag) {
-        return mInnerDialogFragment.findFragmentByTag(tag);
+        return mOuterDelegate.findFragmentByTag(tag);
     }
 
     private void setCancelable(TFragment fragment, boolean cancelable) {
-        mInnerDialogFragment.setCancelable(fragment, cancelable);
+        mOuterDelegate.setCancelable(fragment, cancelable);
     }
 
     Manager getManager() {
@@ -84,7 +84,7 @@ class ProgressDialogFragmentDelegate<TFragment> {
      * Inner progress dialog fragment.
      * @param <TFragment> type of fragment
      */
-    interface InnerDialogFragment<TFragment> {
+    interface OuterDelegate<TFragment> {
 
         @Nullable
         Dialog getDialog();
