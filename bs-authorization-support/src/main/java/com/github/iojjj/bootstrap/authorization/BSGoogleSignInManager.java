@@ -28,7 +28,7 @@ public interface BSGoogleSignInManager extends GoogleSignInManager {
     void signIn(@NonNull Fragment fragment);
 
     /**
-     * Builder that create a new instance of {@link BSGoogleSignInManager}.
+     * BSOAuthBuilder that create a new instance of {@link BSGoogleSignInManager}.
      */
     class Builder extends AbstractManagerBuilder<BSGoogleSignInManager> {
 
@@ -37,10 +37,10 @@ public interface BSGoogleSignInManager extends GoogleSignInManager {
         }
 
         /**
-         * Create a new instance of Builder
+         * Create a new instance of BSOAuthBuilder
          *
          * @param context instance of Context
-         * @return a new instance of Builder
+         * @return a new instance of BSOAuthBuilder
          */
         public static Builder newInstance(@NonNull Context context) {
             return new Builder(context);

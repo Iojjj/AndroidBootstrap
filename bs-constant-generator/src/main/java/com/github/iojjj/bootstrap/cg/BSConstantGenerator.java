@@ -1,4 +1,4 @@
-package com.github.iojjj.bootstrap.core.utils;
+package com.github.iojjj.bootstrap.cg;
 
 import android.support.annotation.NonNull;
 
@@ -11,7 +11,7 @@ import com.github.iojjj.bootstrap.assertions.BSAssertions;
  * @since 1.0
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
-public class BSConstantsUtil {
+public class BSConstantGenerator {
 
     private static final String EXTRA_IN_PREFIX = "EXTRA_";
     private static final String EXTRA_OUT_PREFIX = "RESULT_";
@@ -21,7 +21,7 @@ public class BSConstantsUtil {
 
     private static String sPackageName = "";
 
-    private BSConstantsUtil() {
+    private BSConstantGenerator() {
         //no instance
     }
 

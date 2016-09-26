@@ -44,7 +44,7 @@ abstract class AbstractManagerBuilder<T extends GoogleSignInManager> implements 
     public ManagerBuilder<T> setScopes(@NonNull Scope first, Scope... otherScopes) {
         mScopes = new Scope[otherScopes.length + 1];
         mScopes[0] = first;
-        System.arraycopy(otherScopes, 0, mScopes, 1, mScopes.length);
+        System.arraycopy(otherScopes, 0, mScopes, 1, otherScopes.length);
         return this;
     }
 

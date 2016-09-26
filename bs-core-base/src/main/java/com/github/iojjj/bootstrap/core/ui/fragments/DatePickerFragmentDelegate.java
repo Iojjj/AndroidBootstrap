@@ -10,15 +10,15 @@ import android.support.annotation.NonNull;
 import android.widget.DatePicker;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
-import com.github.iojjj.bootstrap.core.utils.BSConstantsUtil;
+import com.github.iojjj.bootstrap.cg.BSConstantGenerator;
 
 import java.util.Calendar;
 
 class DatePickerFragmentDelegate implements DatePickerDialog.OnDateSetListener {
 
     private final OuterDelegate mOuterDelegate;
-    static final String EXTRA_DATE = BSConstantsUtil.extra("date");
-    static final String RESULT_DATE = BSConstantsUtil.result("date");
+    static final String EXTRA_DATE = BSConstantGenerator.extra("date");
+    static final String RESULT_DATE = BSConstantGenerator.result("date");
 
     DatePickerFragmentDelegate(@NonNull OuterDelegate outerDelegate) {
         BSAssertions.assertNotNull(outerDelegate, "outerDelegate");

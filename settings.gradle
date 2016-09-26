@@ -1,1 +1,1 @@
-include ':app', ':bs-core', ':bs-authorization', ':bs-widgets', ':bs-camera', ':bs-core-support', ':bs-recyclerview', ':bs-authorization-support', ':bs-mvp', ':bs-mvp-support', ':bs-core-base', ':bs-mvp-base', ':bs-authorization-base', ':bs-assertions'
+include ':app', ':bs-core', ':bs-authorization', ':bs-widgets', ':bs-camera', ':bs-core-support', ':bs-recyclerview', ':bs-authorization-support', ':bs-mvp', ':bs-mvp-support', ':bs-core-base', ':bs-mvp-base', ':bs-authorization-base', ':bs-assertions', ':bs-constant-generator'
