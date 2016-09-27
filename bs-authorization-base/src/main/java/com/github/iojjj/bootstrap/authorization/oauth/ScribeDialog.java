@@ -162,7 +162,7 @@ class ScribeDialog extends Dialog {
                 super.onPostExecute(oAuth2AccessToken);
                 if (oAuth2AccessToken != null) {
                     mToken = BSOAuthAccessToken.wrap(oAuth2AccessToken);
-                    dismiss();
+                    mDelegate.dismiss();
                 } else {
                     mDelegate.dismiss();
                     mAuthListener.onError(new Exception("Can't retrieve an access token."));
@@ -196,7 +196,7 @@ class ScribeDialog extends Dialog {
                 super.onPostExecute(oAuth1AccessToken);
                 if (oAuth1AccessToken != null) {
                     mToken = BSOAuthAccessToken.wrap(oAuth1AccessToken);
-                    dismiss();
+                    mDelegate.dismiss();
                 } else {
                     mDelegate.dismiss();
                     mAuthListener.onError(new Exception("Can't retrieve an access token."));
