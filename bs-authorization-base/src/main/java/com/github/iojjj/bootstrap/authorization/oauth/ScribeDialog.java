@@ -50,6 +50,9 @@ class ScribeDialog extends Dialog {
     private OAuth1RequestToken mOAuth1RequestToken;
     private BSOAuthAccessToken mToken;
     private boolean mCanceled;
+    private AsyncTask mOAuth1ReqTokenTask;
+    private AsyncTask mOAuth1AccTokenTask;
+    private AsyncTask mOAuth2AccTokenTask;
 
     ScribeDialog(@NonNull Context context,
                  @NonNull OAuthService service,
@@ -85,6 +88,16 @@ class ScribeDialog extends Dialog {
         setOnShowListener(dialog -> requestToken());
         setOnCancelListener(dialog -> mCanceled = true);
         setOnDismissListener(dialog -> {
+            // cancel all tasks
+            if (mOAuth1ReqTokenTask != null) {
+                mOAuth1ReqTokenTask.cancel(true);
+            }
+            if (mOAuth1AccTokenTask != null) {
+                mOAuth1AccTokenTask.cancel(true);
+            }
+            if (mOAuth2AccTokenTask != null) {
+                mOAuth2AccTokenTask.cancel(true);
+            }
             if (mToken != null) {
                 mAuthListener.onTokenAcquired(mToken);
             } else if (mCanceled) {
@@ -106,7 +119,10 @@ class ScribeDialog extends Dialog {
     private void requestToken() {
         if (mService instanceof OAuth10aService) {
             final OAuth10aService service = (OAuth10aService) mService;
-            new AsyncTask<Void, Void, OAuth1RequestToken>() {
+            if (mOAuth1ReqTokenTask != null) {
+                mOAuth1ReqTokenTask.cancel(true);
+            }
+            mOAuth1ReqTokenTask = new AsyncTask<Void, Void, OAuth1RequestToken>() {
 
                 @Nullable
                 @Override
@@ -144,7 +160,10 @@ class ScribeDialog extends Dialog {
      * @param code    OAuth 2.0 code required for retrieving of an access token
      */
     private void retrieveAccessToken(@NonNull OAuth20Service service, @NonNull String code) {
-        new AsyncTask<Void, Void, OAuth2AccessToken>() {
+        if (mOAuth2AccTokenTask != null) {
+            mOAuth2AccTokenTask.cancel(true);
+        }
+        mOAuth2AccTokenTask = new AsyncTask<Void, Void, OAuth2AccessToken>() {
 
             @Nullable
             @Override
@@ -178,7 +197,10 @@ class ScribeDialog extends Dialog {
      * @param verifier OAuth 1.0a verifier required for retrieving of an access token
      */
     private void retrieveAccessToken(@NonNull OAuth10aService service, @NonNull String verifier) {
-        new AsyncTask<Void, Void, OAuth1AccessToken>() {
+        if (mOAuth1AccTokenTask != null) {
+            mOAuth1AccTokenTask.cancel(true);
+        }
+        mOAuth1AccTokenTask = new AsyncTask<Void, Void, OAuth1AccessToken>() {
 
             @Nullable
             @Override
