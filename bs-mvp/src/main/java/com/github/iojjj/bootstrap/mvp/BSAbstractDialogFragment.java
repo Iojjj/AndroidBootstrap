@@ -50,8 +50,8 @@ public abstract class BSAbstractDialogFragment extends DialogFragment implements
     }
 
     @Override
-    public <TView extends BSMvpView<TPresenter>, TPresenter extends BSMvpPresenter<TView>>
-    void initPresenter(int loaderId, @NonNull TView view, @NonNull BSFunction0<TPresenter> presenterProvider) {
+    public <V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
+    void initPresenter(int loaderId, @NonNull V view, @NonNull BSFunction0<P> presenterProvider) {
         mMvpDelegate.initPresenter(loaderId, view, presenterProvider);
     }
 }

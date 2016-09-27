@@ -11,13 +11,24 @@ import android.support.annotation.Nullable;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
 
-// TODO: 23.09.2016 documentation
+/**
+ * Helper class that allows work with {@link Context} on different versions of Android.
+ *
+ * @since 1.0
+ */
 public class BSContextCompat {
 
     private BSContextCompat() {
         //no instance
     }
 
+    /**
+     * Get color by resource id.
+     *
+     * @param context instance of Context
+     * @param resId   color resource id
+     * @return color from resources
+     */
     @ColorInt
     public static int getColor(@NonNull Context context, @ColorRes int resId) {
         BSAssertions.assertNotNull(context, "context");
@@ -28,6 +39,13 @@ public class BSContextCompat {
         return context.getResources().getColor(resId);
     }
 
+    /**
+     * Get drawable by resource id.
+     *
+     * @param context instance of Context
+     * @param resId   drawable resource id
+     * @return drawable from resources
+     */
     @Nullable
     public static Drawable getDrawable(@NonNull Context context, @DrawableRes int resId) {
         BSAssertions.assertNotNull(context, "context");

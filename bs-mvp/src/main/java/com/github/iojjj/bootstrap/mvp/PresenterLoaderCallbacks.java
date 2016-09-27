@@ -19,31 +19,31 @@ import com.github.iojjj.bootstrap.core.functions.BSFunction0;
  * @since 1.0
  */
 class PresenterLoaderCallbacks<P extends BSMvpPresenter<V>, V extends BSMvpView<P>>
-        extends AbstractPresenterLoaderCallbacks<P, V>
+        extends AbstractPresenterLoaderCallbacks<V, P>
         implements LoaderCallbacks<P> {
 
     @NonNull
     private final Context mContext;
     @NonNull
-    private final BSFunction0<P> mPresenterCallable;
+    private final BSFunction0<P> mPresenterProvider;
 
     private PresenterLoaderCallbacks(@NonNull Context context, @NonNull V view,
-                                     @NonNull BSFunction0<P> presenterCallable) {
+                                     @NonNull BSFunction0<P> presenterProvider) {
         super(view);
         BSAssertions.assertNotNull(context, "context");
-        BSAssertions.assertNotNull(presenterCallable, "presenterCallable");
+        BSAssertions.assertNotNull(presenterProvider, "presenterProvider");
         mContext = context.getApplicationContext();
-        mPresenterCallable = presenterCallable;
+        mPresenterProvider = presenterProvider;
     }
 
     static <P extends BSMvpPresenter<V>, V extends BSMvpView<P>> PresenterLoaderCallbacks<P, V>
-    create(@NonNull Context context, @NonNull V view, @NonNull BSFunction0<P> presenterCallable) {
-        return new PresenterLoaderCallbacks<>(context, view, presenterCallable);
+    create(@NonNull Context context, @NonNull V view, @NonNull BSFunction0<P> presenterProvider) {
+        return new PresenterLoaderCallbacks<>(context, view, presenterProvider);
     }
 
     @Override
     public Loader<P> onCreateLoader(int id, Bundle args) {
-        return new PresenterLoader<>(mContext, mPresenterCallable);
+        return new PresenterLoader<>(mContext, mPresenterProvider);
     }
 
     @Override

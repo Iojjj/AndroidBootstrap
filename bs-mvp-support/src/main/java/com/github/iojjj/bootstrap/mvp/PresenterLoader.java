@@ -9,12 +9,12 @@ import com.github.iojjj.bootstrap.core.functions.BSFunction0;
 
 /**
  * Implementation of {@link Loader} that loads and stores {@link BSMvpPresenter} instance.
- * @param <TPresenter> type of presenter
+ * @param <P> type of presenter
  */
-final class PresenterLoader<TPresenter extends BSMvpPresenter> extends Loader<TPresenter>
-        implements LoaderDelegate<TPresenter> {
+final class PresenterLoader<P extends BSMvpPresenter> extends Loader<P>
+        implements LoaderDelegate<P> {
 
-    private final PresenterLoaderDelegate<TPresenter> mPresenterLoaderDelegate;
+    private final PresenterLoaderDelegate<P> mPresenterLoaderDelegate;
 
     /**
      * Stores away the application context associated with context.
@@ -26,7 +26,7 @@ final class PresenterLoader<TPresenter extends BSMvpPresenter> extends Loader<TP
      *  @param context used to retrieve the application context.
      * @param presenterProvider provider of presenter instances
      */
-    PresenterLoader(@NonNull Context context, @NonNull BSFunction0<TPresenter> presenterProvider) {
+    PresenterLoader(@NonNull Context context, @NonNull BSFunction0<P> presenterProvider) {
         super(context);
         BSAssertions.assertNotNull(presenterProvider, "presenterProvider");
         mPresenterLoaderDelegate = new PresenterLoaderDelegate<>(presenterProvider, this);

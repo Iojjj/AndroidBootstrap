@@ -21,7 +21,7 @@ public class BSUiFragmentDelegate implements BSMvpDelegateImpl.UIDelegate {
     @Override
     public <V extends BSMvpView<P>, P extends BSMvpPresenter<V>> AndroidPresenterCallbacks
     initLoader(int loaderId, @Nullable Bundle args, V view, BSFunction0<P> presenterProvider) {
-        final PresenterLoaderCallbacks<P, V> loaderCallbacks =
+        final PresenterLoaderCallbacks<V, P> loaderCallbacks =
                 PresenterLoaderCallbacks.create(mFragment.getContext(), view, presenterProvider);
         mFragment.getLoaderManager().initLoader(loaderId, args, loaderCallbacks);
         return loaderCallbacks;

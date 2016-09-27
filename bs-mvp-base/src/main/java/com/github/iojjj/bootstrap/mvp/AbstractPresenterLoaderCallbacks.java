@@ -13,7 +13,7 @@ import android.support.annotation.Nullable;
  *
  * @since 1.0
  */
-abstract class AbstractPresenterLoaderCallbacks<P extends BSMvpPresenter<V>, V extends BSMvpView<P>>
+abstract class AbstractPresenterLoaderCallbacks<V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
         implements AndroidPresenterCallbacks {
 
     @NonNull

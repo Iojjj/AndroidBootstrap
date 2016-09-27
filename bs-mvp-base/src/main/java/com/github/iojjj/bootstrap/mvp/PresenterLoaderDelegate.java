@@ -5,12 +5,17 @@ import android.support.annotation.NonNull;
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
 import com.github.iojjj.bootstrap.core.functions.BSFunction0;
 
-// TODO: 21.09.2016 documentation
+/**
+ * Shared presenter loader delegate.
+ *
+ * @param <P> type of presenter
+ * @since 1.0
+ */
 class PresenterLoaderDelegate<P extends BSMvpPresenter> {
 
-    private P mPresenter;
     private final BSFunction0<P> mPresenterProvider;
     private final LoaderDelegate<P> mLoaderDelegate;
+    private P mPresenter;
 
     PresenterLoaderDelegate(@NonNull BSFunction0<P> presenterProvider,
                             @NonNull LoaderDelegate<P> loaderDelegate) {
