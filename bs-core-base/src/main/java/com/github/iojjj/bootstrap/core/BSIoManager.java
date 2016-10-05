@@ -17,12 +17,23 @@ import java.io.OutputStream;
 // TODO: 23.09.2016 check this
 public class BSIoManager {
 
-    private BSIoManager() {}
+    private BSIoManager() {
+    }
+
+    public static void closeSilently(@NonNull Closeable closeable) {
+        try {
+            closeable.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Copy source file to destination file.
+     *
      * @param src source file
      * @param dst destination file
+     *
      * @throws IOException
      */
     @SuppressLint("NewApi")
@@ -36,8 +47,10 @@ public class BSIoManager {
 
     /**
      * Copy input stream to output stream. This method doesn't close those streams after completion of operation.
-     * @param inputStream input stream
+     *
+     * @param inputStream  input stream
      * @param outputStream output stream
+     *
      * @throws IOException
      */
     public static void copyStream(@NonNull InputStream inputStream, @NonNull OutputStream outputStream) throws IOException {
@@ -51,28 +64,20 @@ public class BSIoManager {
         }
     }
 
-    public static void closeSilently(@NonNull Closeable closeable) {
-        try {
-            closeable.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
-     *  Checks if external storage is available for read and write.
-     */
-    public static boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state);
-    }
-
-    /**
-     *  Checks if external storage is available to at least read.
+     * Checks if external storage is available to at least read.
      */
     public static boolean isExternalStorageReadable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state) ||
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
+    }
+
+    /**
+     * Checks if external storage is available for read and write.
+     */
+    public static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 }

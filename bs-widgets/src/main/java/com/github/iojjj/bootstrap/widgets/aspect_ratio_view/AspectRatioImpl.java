@@ -18,21 +18,6 @@ class AspectRatioImpl implements AspectRatio {
     private float mRatioX = -1;
     private float mRatioY = -1;
 
-    void init(@NonNull final Context context, @Nullable final AttributeSet attrs) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.AspectRatioView);
-        try {
-            mRatioX = array.getFloat(R.styleable.AspectRatioView_arv_aspectX, -1);
-            mRatioY = array.getFloat(R.styleable.AspectRatioView_arv_aspectY, -1);
-        } finally {
-            array.recycle();
-        }
-    }
-
-    public void setAspectRatio(float ratioX, float ratioY) {
-        mRatioX = ratioX;
-        mRatioY = ratioY;
-    }
-
     @Override
     public float getRatioX() {
         return mRatioX;
@@ -41,6 +26,21 @@ class AspectRatioImpl implements AspectRatio {
     @Override
     public float getRatioY() {
         return mRatioY;
+    }
+
+    public void setAspectRatio(float ratioX, float ratioY) {
+        mRatioX = ratioX;
+        mRatioY = ratioY;
+    }
+
+    void init(@NonNull final Context context, @Nullable final AttributeSet attrs) {
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.AspectRatioView);
+        try {
+            mRatioX = array.getFloat(R.styleable.AspectRatioView_arv_aspectX, -1);
+            mRatioY = array.getFloat(R.styleable.AspectRatioView_arv_aspectY, -1);
+        } finally {
+            array.recycle();
+        }
     }
 
     void onMeasure(@NonNull AspectRatioView view, int widthMeasureSpec, int heightMeasureSpec) {

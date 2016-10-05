@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
  * Implementation of {@link BSMvpView} for {@link DialogFragment}.
  *
  * @param <P>
+ *
  * @since 1.0
  */
 public abstract class BSAbstractDialogFragmentMvpView<P extends BSMvpPresenter> extends BSAbstractDialogFragment

@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class BSBackPressUtil implements BSFunction0<Boolean> {
 
-    private long mTimeout;
     private long mPrevCheck = -1;
+    private long mTimeout;
 
     /**
      * Constructor with a timeout parameter.
@@ -37,12 +37,6 @@ public class BSBackPressUtil implements BSFunction0<Boolean> {
         this(TimeUnit.MILLISECONDS.convert(timeSpan, checkAndReturn(timeUnit)));
     }
 
-    @NonNull
-    private static TimeUnit checkAndReturn(@NonNull TimeUnit timeUnit) {
-        BSAssertions.assertNotNull(timeUnit, "timeUnit");
-        return timeUnit;
-    }
-
     @Override
     public Boolean apply() {
         long timestamp = System.currentTimeMillis();
@@ -51,5 +45,11 @@ public class BSBackPressUtil implements BSFunction0<Boolean> {
             return false;
         }
         return true;
+    }
+
+    @NonNull
+    private static TimeUnit checkAndReturn(@NonNull TimeUnit timeUnit) {
+        BSAssertions.assertNotNull(timeUnit, "timeUnit");
+        return timeUnit;
     }
 }

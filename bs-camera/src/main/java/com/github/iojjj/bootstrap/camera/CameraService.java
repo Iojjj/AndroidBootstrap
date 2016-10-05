@@ -10,12 +10,6 @@ import java.io.File;
 
 public interface CameraService {
 
-    void setCameraFacing(@NonNull CameraView.Facing facing);
-
-    void setAutoExposureMode(@NonNull CameraView.AutoExposureMode autoExposureMode);
-
-    void setAutoFocusMode(@NonNull CameraView.AutoFocusMode autoFocusMode);
-
     void captureImage(@NonNull String filePath);
 
     void captureImage(@NonNull File file);
@@ -27,4 +21,10 @@ public interface CameraService {
     CameraOptions getCameraOptions();
 
     CameraOptions getCameraOptions(@NonNull CameraView.Facing facing);
+
+    void setAutoExposureMode(@NonNull CameraView.AutoExposureMode autoExposureMode);
+
+    void setAutoFocusMode(@NonNull CameraView.AutoFocusMode autoFocusMode);
+
+    void setCameraFacing(@NonNull CameraView.Facing facing);
 }

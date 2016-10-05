@@ -9,12 +9,13 @@ import com.github.iojjj.bootstrap.core.functions.BSFunction0;
  * Shared presenter loader delegate.
  *
  * @param <P> type of presenter
+ *
  * @since 1.0
  */
 class PresenterLoaderDelegate<P extends BSMvpPresenter> {
 
-    private final BSFunction0<P> mPresenterProvider;
     private final LoaderDelegate<P> mLoaderDelegate;
+    private final BSFunction0<P> mPresenterProvider;
     private P mPresenter;
 
     PresenterLoaderDelegate(@NonNull BSFunction0<P> presenterProvider,
@@ -23,18 +24,6 @@ class PresenterLoaderDelegate<P extends BSMvpPresenter> {
         BSAssertions.assertNotNull(loaderDelegate, "loaderDelegate");
         mPresenterProvider = presenterProvider;
         mLoaderDelegate = loaderDelegate;
-    }
-
-    void onStartLoading() {
-        if (mLoaderDelegate.takeContentChanged() || mPresenter == null) {
-            mLoaderDelegate.forceLoad();
-            return;
-        }
-        mLoaderDelegate.deliverResult(mPresenter);
-    }
-
-    void onStopLoading() {
-        mLoaderDelegate.cancelLoadImpl();
     }
 
     void onForceLoad() {
@@ -48,5 +37,17 @@ class PresenterLoaderDelegate<P extends BSMvpPresenter> {
         onStopLoading();
         mPresenter.onDestroyed();
         mPresenter = null;
+    }
+
+    void onStartLoading() {
+        if (mLoaderDelegate.takeContentChanged() || mPresenter == null) {
+            mLoaderDelegate.forceLoad();
+            return;
+        }
+        mLoaderDelegate.deliverResult(mPresenter);
+    }
+
+    void onStopLoading() {
+        mLoaderDelegate.cancelLoadImpl();
     }
 }

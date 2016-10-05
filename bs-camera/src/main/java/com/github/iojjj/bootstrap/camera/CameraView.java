@@ -37,6 +37,19 @@ public class CameraView extends FrameLayout {
         init();
     }
 
+    @NonNull
+    public CameraService getCameraService() {
+        return mCameraHandler;
+    }
+
+    public void onPause() {
+        mCameraHandler.onPause();
+    }
+
+    public void onResume() {
+        mCameraHandler.onResume();
+    }
+
     private void init() {
         final CameraTextureView textureView = new CameraTextureView(getContext());
         final LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -64,19 +77,6 @@ public class CameraView extends FrameLayout {
         } else if (!cameraOptions.getSupportedAutoExposureModes().isEmpty()) {
             mCameraHandler.setAutoExposureMode(cameraOptions.getSupportedAutoExposureModes().get(0));
         }
-    }
-
-    public void onResume() {
-        mCameraHandler.onResume();
-    }
-
-    public void onPause() {
-        mCameraHandler.onPause();
-    }
-    
-    @NonNull
-    public CameraService getCameraService() {
-        return mCameraHandler;
     }
 
     public enum Facing {

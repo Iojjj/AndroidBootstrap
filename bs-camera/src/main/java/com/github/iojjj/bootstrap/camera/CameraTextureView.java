@@ -13,8 +13,8 @@ import android.view.TextureView;
 
 public class CameraTextureView extends TextureView {
 
-    private int mRatioWidth;
     private int mRatioHeight;
+    private int mRatioWidth;
     private ScaleType mScaleType = ScaleType.NORMAL;
 
     public CameraTextureView(Context context) {

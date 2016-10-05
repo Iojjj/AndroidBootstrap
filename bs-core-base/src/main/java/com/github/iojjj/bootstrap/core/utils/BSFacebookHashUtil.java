@@ -30,6 +30,7 @@ public class BSFacebookHashUtil {
      * Get a key hash for Facebook.
      *
      * @param context instance of Context
+     *
      * @return optional key hash
      */
     public static BSOptional<String> generate(@NonNull Context context) {
@@ -42,6 +43,7 @@ public class BSFacebookHashUtil {
      *
      * @param context     instance of Context
      * @param packageName package name
+     *
      * @return optional key hash
      */
     public static BSOptional<String> generate(@NonNull Context context, @NonNull String packageName) {

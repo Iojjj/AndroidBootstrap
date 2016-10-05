@@ -27,6 +27,7 @@ public class BSContextCompat {
      *
      * @param context instance of Context
      * @param resId   color resource id
+     *
      * @return color from resources
      */
     @ColorInt
@@ -44,6 +45,7 @@ public class BSContextCompat {
      *
      * @param context instance of Context
      * @param resId   drawable resource id
+     *
      * @return drawable from resources
      */
     @Nullable

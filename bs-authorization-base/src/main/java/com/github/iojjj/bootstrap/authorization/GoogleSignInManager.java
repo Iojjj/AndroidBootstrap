@@ -15,16 +15,6 @@ import com.google.android.gms.common.ConnectionResult;
 interface GoogleSignInManager {
 
     /**
-     * Should be called in {@link Activity#onStart()} or {@link Fragment#onStart()} methods.
-     */
-    void onStart();
-
-    /**
-     * Should be called in {@link Activity#onStop()} or {@link Fragment#onStop()} methods.
-     */
-    void onStop();
-
-    /**
      * Should be called in {@link Activity#onActivityResult(int, int, Intent)} or
      * {@link Fragment#onActivityResult(int, int, Intent)} methods.
      *
@@ -33,6 +23,16 @@ interface GoogleSignInManager {
      * @param resultCode  The integer result code returned by the child activity through its setResult().
      */
     void onActivityResult(int requestCode, int resultCode, Intent data);
+
+    /**
+     * Should be called in {@link Activity#onStart()} or {@link Fragment#onStart()} methods.
+     */
+    void onStart();
+
+    /**
+     * Should be called in {@link Activity#onStop()} or {@link Fragment#onStop()} methods.
+     */
+    void onStop();
 
     /**
      * Sign out from Google account.
@@ -45,16 +45,16 @@ interface GoogleSignInManager {
     interface Callback {
 
         /**
+         * Called when connection to Google Play Services canceled.
+         */
+        void onCanceled();
+
+        /**
          * Called when connection to Google Play Services failed.
          *
          * @param connectionResult instance of ConnectionResult
          */
         void onConnectionFailed(@NonNull ConnectionResult connectionResult);
-
-        /**
-         * Called when connection to Google Play Services canceled.
-         */
-        void onCanceled();
 
         /**
          * Called when there is an error occurred.
@@ -64,11 +64,9 @@ interface GoogleSignInManager {
         void onError(@NonNull Throwable throwable);
 
         /**
-         * Called when user successfully signed into it's Google account.
-         *
-         * @param accessToken access token
+         * Called when a sign in operation finished.
          */
-        void onSignedIn(@NonNull String accessToken);
+        void onSignInFinished();
 
         /**
          * Called when a sign in operation started.
@@ -76,9 +74,11 @@ interface GoogleSignInManager {
         void onSignInStarted();
 
         /**
-         * Called when a sign in operation finished.
+         * Called when user successfully signed into it's Google account.
+         *
+         * @param accessToken access token
          */
-        void onSignInFinished();
+        void onSignedIn(@NonNull String accessToken);
     }
 
 }

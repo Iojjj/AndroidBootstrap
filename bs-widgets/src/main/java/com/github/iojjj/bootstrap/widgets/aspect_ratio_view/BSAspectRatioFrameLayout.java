@@ -37,8 +37,18 @@ public class BSAspectRatioFrameLayout extends FrameLayout implements AspectRatio
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        mAspectRatio.onMeasure(this, widthMeasureSpec, heightMeasureSpec);
+    public float getRatioX() {
+        return mAspectRatio.getRatioX();
+    }
+
+    @Override
+    public float getRatioY() {
+        return mAspectRatio.getRatioY();
+    }
+
+    @Override
+    public void setAspectRatio(float ratioX, float ratioY) {
+        mAspectRatio.setAspectRatio(ratioX, ratioY);
     }
 
     @SuppressLint("WrongCall")
@@ -53,17 +63,7 @@ public class BSAspectRatioFrameLayout extends FrameLayout implements AspectRatio
     }
 
     @Override
-    public void setAspectRatio(float ratioX, float ratioY) {
-        mAspectRatio.setAspectRatio(ratioX, ratioY);
-    }
-
-    @Override
-    public float getRatioX() {
-        return mAspectRatio.getRatioX();
-    }
-
-    @Override
-    public float getRatioY() {
-        return mAspectRatio.getRatioY();
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        mAspectRatio.onMeasure(this, widthMeasureSpec, heightMeasureSpec);
     }
 }

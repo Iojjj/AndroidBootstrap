@@ -36,19 +36,20 @@ public interface BSGoogleSignInManager extends GoogleSignInManager {
             super(context);
         }
 
+        @Override
+        public BSGoogleSignInManager build() {
+            return new BSGoogleSignInManagerImpl(this);
+        }
+
         /**
          * Create a new instance of BSOAuthBuilder
          *
          * @param context instance of Context
+         *
          * @return a new instance of BSOAuthBuilder
          */
         public static Builder newInstance(@NonNull Context context) {
             return new Builder(context);
-        }
-
-        @Override
-        public BSGoogleSignInManager build() {
-            return new BSGoogleSignInManagerImpl(this);
         }
     }
 }

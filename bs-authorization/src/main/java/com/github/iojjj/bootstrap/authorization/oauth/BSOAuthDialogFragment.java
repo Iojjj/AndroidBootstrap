@@ -19,15 +19,15 @@ import com.github.iojjj.bootstrap.cg.BSConstantGenerator;
 public class BSOAuthDialogFragment extends DialogFragment implements ScribeDialog.Delegate {
 
     private static final String EXTRA_SCRIBE_BUNDLE = BSConstantGenerator.extra("scribe_bundle");
-
-    private ScribeDelegate mScribeDelegate;
     @Nullable
     private BSOAuthListener mAuthListener;
+    private ScribeDelegate mScribeDelegate;
 
     /**
      * Create a new instance of DialogFragment.
      *
      * @param scribeBundle a bundle filled with {@link BSOAuthBuilder}
+     *
      * @return a new instance of DialogFragment
      */
     public static BSOAuthDialogFragment newInstance(@NonNull Bundle scribeBundle) {
@@ -46,13 +46,6 @@ public class BSOAuthDialogFragment extends DialogFragment implements ScribeDialo
         BSAssertions.assertNotNull(bundle, "scribeBundle");
         final BSOAuthListener authListener = new BSOAuthListener() {
             @Override
-            public void onTokenAcquired(@NonNull BSOAuthAccessToken accessToken) {
-                if (mAuthListener != null) {
-                    mAuthListener.onTokenAcquired(accessToken);
-                }
-            }
-
-            @Override
             public void onCanceled() {
                 if (mAuthListener != null) {
                     mAuthListener.onCanceled();
@@ -63,6 +56,13 @@ public class BSOAuthDialogFragment extends DialogFragment implements ScribeDialo
             public void onError(@NonNull Throwable e) {
                 if (mAuthListener != null) {
                     mAuthListener.onError(e);
+                }
+            }
+
+            @Override
+            public void onTokenAcquired(@NonNull BSOAuthAccessToken accessToken) {
+                if (mAuthListener != null) {
+                    mAuthListener.onTokenAcquired(accessToken);
                 }
             }
         };

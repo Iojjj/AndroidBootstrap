@@ -24,13 +24,13 @@ public class BSProgressDialogFragment extends DialogFragment {
         final ProgressDialogFragmentDelegate.Manager manager = mDelegate.getManager();
         mManager = new Manager() {
             @Override
-            public void showProgressDialog(@Nullable String message) {
-                manager.showProgressDialog(message);
+            public void hideProgressDialog() {
+                manager.hideProgressDialog();
             }
 
             @Override
-            public void hideProgressDialog() {
-                manager.hideProgressDialog();
+            public void setCancelable(boolean isCancelable) {
+                manager.setCancelable(isCancelable);
             }
 
             @Override
@@ -39,24 +39,10 @@ public class BSProgressDialogFragment extends DialogFragment {
             }
 
             @Override
-            public void setCancelable(boolean isCancelable) {
-                manager.setCancelable(isCancelable);
+            public void showProgressDialog(@Nullable String message) {
+                manager.showProgressDialog(message);
             }
         };
-    }
-
-    @NonNull
-    public static BSProgressDialogFragment newInstance() {
-        Bundle args = new Bundle();
-        BSProgressDialogFragment fragment = new BSProgressDialogFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    private static BSProgressDialogFragment newInstanceImpl(@Nullable String message) {
-        final BSProgressDialogFragment fragment = newInstance();
-        fragment.getArguments().putString(KEY_MESSAGE, message);
-        return fragment;
     }
 
     /**
@@ -66,6 +52,14 @@ public class BSProgressDialogFragment extends DialogFragment {
      */
     public Manager getManager() {
         return mManager;
+    }
+
+    @NonNull
+    public static BSProgressDialogFragment newInstance() {
+        Bundle args = new Bundle();
+        BSProgressDialogFragment fragment = new BSProgressDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -86,6 +80,12 @@ public class BSProgressDialogFragment extends DialogFragment {
         mDelegate.onSaveInstanceState(getArguments());
     }
 
+    private static BSProgressDialogFragment newInstanceImpl(@Nullable String message) {
+        final BSProgressDialogFragment fragment = newInstance();
+        fragment.getArguments().putString(KEY_MESSAGE, message);
+        return fragment;
+    }
+
     public interface Manager extends ProgressDialogFragmentDelegate.Manager {
 
     }
@@ -99,10 +99,25 @@ public class BSProgressDialogFragment extends DialogFragment {
             mFragment = fragment;
         }
 
+        @Override
+        public void dismissAllowingStateLoss(DialogFragment dialogFragment) {
+            dialogFragment.dismissAllowingStateLoss();
+        }
+
+        @Override
+        public DialogFragment findFragmentByTag(String tag) {
+            return (DialogFragment) mFragment.getChildFragmentManager().findFragmentByTag(tag);
+        }
+
         @Nullable
         @Override
         public Dialog getDialog() {
             return mFragment.getDialog();
+        }
+
+        @Override
+        public boolean isAdded(DialogFragment dialogFragment) {
+            return dialogFragment.isAdded();
         }
 
         @NonNull
@@ -112,28 +127,13 @@ public class BSProgressDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void show(DialogFragment dialogFragment, String tag) {
-            dialogFragment.show(mFragment.getFragmentManager(), tag);
-        }
-
-        @Override
-        public void dismissAllowingStateLoss(DialogFragment dialogFragment) {
-            dialogFragment.dismissAllowingStateLoss();
-        }
-
-        @Override
-        public boolean isAdded(DialogFragment dialogFragment) {
-            return dialogFragment.isAdded();
-        }
-
-        @Override
-        public DialogFragment findFragmentByTag(String tag) {
-            return (DialogFragment) mFragment.getChildFragmentManager().findFragmentByTag(tag);
-        }
-
-        @Override
         public void setCancelable(DialogFragment dialogFragment, boolean cancelable) {
             dialogFragment.setCancelable(cancelable);
+        }
+
+        @Override
+        public void show(DialogFragment dialogFragment, String tag) {
+            dialogFragment.show(mFragment.getFragmentManager(), tag);
         }
     }
 }

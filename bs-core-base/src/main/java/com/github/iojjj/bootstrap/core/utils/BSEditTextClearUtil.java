@@ -30,6 +30,7 @@ import com.github.iojjj.bootstrap.assertions.BSAssertions;
 import com.github.iojjj.bootstrap.core.BSSimpleTextWatcher;
 
 // TODO: 23.09.2016 documentation
+
 /**
  * Util class for adding functionality of clearing of {@link EditText}.
  *
@@ -38,16 +39,34 @@ import com.github.iojjj.bootstrap.core.BSSimpleTextWatcher;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class BSEditTextClearUtil {
 
-    private EditText mEditText;
     private Drawable mClearDrawable;
+    private EditText mEditText;
     private OnClearListener mOnClearListener;
-    private OnTouchListener mOnTouchListener;
     private OnFocusChangeListener mOnFocusChangeListener;
+    private OnTouchListener mOnTouchListener;
 
     private BSEditTextClearUtil(@NonNull EditText editText, @NonNull Drawable clearDrawable) {
         mEditText = editText;
         mClearDrawable = clearDrawable;
         init();
+    }
+
+    public void setClearIconVisible(boolean visible) {
+        Drawable x = visible ? mClearDrawable : null;
+        mEditText.setCompoundDrawables(mEditText.getCompoundDrawables()[0],
+                mEditText.getCompoundDrawables()[1], x, mEditText.getCompoundDrawables()[3]);
+    }
+
+    public void setOnClearListener(OnClearListener onClearListener) {
+        mOnClearListener = onClearListener;
+    }
+
+    public void setOnFocusChangeListener(OnFocusChangeListener onFocusChangeListener) {
+        mOnFocusChangeListener = onFocusChangeListener;
+    }
+
+    public void setOnTouchListener(OnTouchListener onTouchListener) {
+        mOnTouchListener = onTouchListener;
     }
 
     private void init() {
@@ -88,41 +107,26 @@ public class BSEditTextClearUtil {
         });
     }
 
-    public void setClearIconVisible(boolean visible) {
-        Drawable x = visible ? mClearDrawable : null;
-        mEditText.setCompoundDrawables(mEditText.getCompoundDrawables()[0],
-                mEditText.getCompoundDrawables()[1], x, mEditText.getCompoundDrawables()[3]);
-    }
-
-    public void setOnClearListener(OnClearListener onClearListener) {
-        mOnClearListener = onClearListener;
-    }
-
-    public void setOnTouchListener(OnTouchListener onTouchListener) {
-        mOnTouchListener = onTouchListener;
-    }
-
-    public void setOnFocusChangeListener(OnFocusChangeListener onFocusChangeListener) {
-        mOnFocusChangeListener = onFocusChangeListener;
-    }
-
     public interface OnClearListener {
         void didClearText();
     }
 
     public static class Builder {
-        private EditText mEditText;
         private Drawable mClearDrawable;
         private Context mContext;
+        private EditText mEditText;
 
         public Builder(@NonNull Context context) throws AssertionError {
             BSAssertions.assertNotNull(context, "context");
             mContext = context;
         }
 
-        public Builder setEditText(@NonNull EditText editText) throws AssertionError {
-            BSAssertions.assertNotNull(mEditText, "editText");
-            mEditText = editText;
+        public BSEditTextClearUtil build() {
+            return new BSEditTextClearUtil(mEditText, mClearDrawable);
+        }
+
+        public Builder setClearDrawable(@DrawableRes int drawableId) {
+            mClearDrawable = BSContextCompat.getDrawable(mContext, drawableId);
             return this;
         }
 
@@ -132,13 +136,10 @@ public class BSEditTextClearUtil {
             return this;
         }
 
-        public Builder setClearDrawable(@DrawableRes int drawableId) {
-            mClearDrawable = BSContextCompat.getDrawable(mContext, drawableId);
+        public Builder setEditText(@NonNull EditText editText) throws AssertionError {
+            BSAssertions.assertNotNull(mEditText, "editText");
+            mEditText = editText;
             return this;
-        }
-
-        public BSEditTextClearUtil build() {
-            return new BSEditTextClearUtil(mEditText, mClearDrawable);
         }
     }
 }

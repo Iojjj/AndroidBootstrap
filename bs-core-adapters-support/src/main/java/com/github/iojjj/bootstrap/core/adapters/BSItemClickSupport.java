@@ -37,6 +37,14 @@ public final class BSItemClickSupport {
         return itemClickSupport;
     }
 
+    public static BSItemClickSupport from(RecyclerView recyclerView) {
+        if (recyclerView == null) {
+            return null;
+        }
+
+        return (BSItemClickSupport) recyclerView.getTag(com.github.iojjj.bootstrap.core.adapters.support.R.id.bs_twowayview_item_click_support);
+    }
+
     public static void removeFrom(RecyclerView recyclerView) {
         final BSItemClickSupport itemClickSupport = from(recyclerView);
         if (itemClickSupport == null) {
@@ -45,14 +53,6 @@ public final class BSItemClickSupport {
 
         recyclerView.removeOnItemTouchListener(itemClickSupport.mTouchListener);
         recyclerView.setTag(com.github.iojjj.bootstrap.core.adapters.support.R.id.bs_twowayview_item_click_support, null);
-    }
-
-    public static BSItemClickSupport from(RecyclerView recyclerView) {
-        if (recyclerView == null) {
-            return null;
-        }
-
-        return (BSItemClickSupport) recyclerView.getTag(com.github.iojjj.bootstrap.core.adapters.support.R.id.bs_twowayview_item_click_support);
     }
 
     /**
@@ -77,6 +77,38 @@ public final class BSItemClickSupport {
         }
 
         mItemLongClickListener = listener;
+    }
+
+    private class TouchListener extends BSItemClickTouchListener {
+        TouchListener(RecyclerView recyclerView) {
+            super(recyclerView);
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+
+        @Override
+        boolean performItemClick(RecyclerView parent, View view, int position, long id) {
+            if (mItemClickListener != null) {
+                view.playSoundEffect(SoundEffectConstants.CLICK);
+                mItemClickListener.onItemClick(parent, view, position, id);
+                return true;
+            }
+
+            return false;
+        }
+
+        @Override
+        boolean performItemLongClick(RecyclerView parent, View view, int position, long id) {
+            if (mItemLongClickListener != null) {
+                view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                return mItemLongClickListener.onItemLongClick(parent, view, position, id);
+            }
+
+            return false;
+        }
     }
 
     /**
@@ -109,40 +141,9 @@ public final class BSItemClickSupport {
          * @param view     The view within the RecyclerView that was clicked
          * @param position The position of the view in the list
          * @param id       The row id of the item that was clicked
+         *
          * @return true if the callback consumed the long click, false otherwise
          */
         boolean onItemLongClick(RecyclerView parent, View view, int position, long id);
-    }
-
-    private class TouchListener extends BSItemClickTouchListener {
-        TouchListener(RecyclerView recyclerView) {
-            super(recyclerView);
-        }
-
-        @Override
-        boolean performItemClick(RecyclerView parent, View view, int position, long id) {
-            if (mItemClickListener != null) {
-                view.playSoundEffect(SoundEffectConstants.CLICK);
-                mItemClickListener.onItemClick(parent, view, position, id);
-                return true;
-            }
-
-            return false;
-        }
-
-        @Override
-        boolean performItemLongClick(RecyclerView parent, View view, int position, long id) {
-            if (mItemLongClickListener != null) {
-                view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                return mItemLongClickListener.onItemLongClick(parent, view, position, id);
-            }
-
-            return false;
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-        }
     }
 }

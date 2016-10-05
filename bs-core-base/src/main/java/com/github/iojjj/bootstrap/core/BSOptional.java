@@ -23,10 +23,22 @@ public class BSOptional<T> {
     }
 
     /**
+     * Create a new empty optional.
+     *
+     * @param <T> type of object
+     *
+     * @return a new empty optional
+     */
+    public static <T> BSOptional<T> empty() {
+        return new BSOptional<>(null);
+    }
+
+    /**
      * Create a new optional from an object.
      *
      * @param object any object or null
      * @param <T>    type of object
+     *
      * @return a new optional
      */
     public static <T> BSOptional<T> from(@Nullable T object) {
@@ -34,13 +46,18 @@ public class BSOptional<T> {
     }
 
     /**
-     * Create a new empty optional.
+     * Get wrapped object.
      *
-     * @param <T> type of object
-     * @return a new empty optional
+     * @return wrapped object
+     *
+     * @throws NoSuchElementException if wrapped object is null
      */
-    public static <T> BSOptional<T> empty() {
-        return new BSOptional<>(null);
+    @NonNull
+    public T get() throws NoSuchElementException {
+        if (mObject == null) {
+            throw new NoSuchElementException("Object is null");
+        }
+        return mObject;
     }
 
     /**
@@ -56,26 +73,13 @@ public class BSOptional<T> {
      * Get wrapped object or return default one passed as <code>_else</code> parameter.
      *
      * @param _else default object
+     *
      * @return wrapped or default object
      */
     public T orElse(@NonNull T _else) {
         BSAssertions.assertNotNull(_else, "Else parameter");
         if (mObject == null) {
             return _else;
-        }
-        return mObject;
-    }
-
-    /**
-     * Get wrapped object.
-     *
-     * @return wrapped object
-     * @throws NoSuchElementException if wrapped object is null
-     */
-    @NonNull
-    public T get() throws NoSuchElementException {
-        if (mObject == null) {
-            throw new NoSuchElementException("Object is null");
         }
         return mObject;
     }

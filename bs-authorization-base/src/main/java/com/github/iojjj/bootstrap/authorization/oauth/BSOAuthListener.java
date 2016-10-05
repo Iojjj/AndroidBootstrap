@@ -10,13 +10,6 @@ import android.support.annotation.NonNull;
 public interface BSOAuthListener {
 
     /**
-     * Called when an access token is acquired.
-     *
-     * @param accessToken instance of an access token
-     */
-    void onTokenAcquired(@NonNull BSOAuthAccessToken accessToken);
-
-    /**
      * Called when an OAuth authorization flow is canceled.
      */
     void onCanceled();
@@ -27,4 +20,11 @@ public interface BSOAuthListener {
      * @param e instance of Throwable
      */
     void onError(@NonNull Throwable e);
+
+    /**
+     * Called when an access token is acquired.
+     *
+     * @param accessToken instance of an access token
+     */
+    void onTokenAcquired(@NonNull BSOAuthAccessToken accessToken);
 }

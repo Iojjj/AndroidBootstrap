@@ -9,16 +9,17 @@ import com.google.android.gms.common.api.Scope;
  * Interface of builder that creates a new instance of {@link GoogleSignInManager}.
  *
  * @param <T> type of {@link GoogleSignInManager}
+ *
  * @since 1.0
  */
 public interface ManagerBuilder<T extends GoogleSignInManager> {
 
     /**
-     * Set server client id. Required field.
+     * Create a new instance of {@link GoogleSignInManager}.
      *
-     * @param serverClientId server client id
+     * @return a new instance of GoogleSignInManager
      */
-    ManagerBuilder<T> setServerClientId(@NonNull String serverClientId);
+    T build();
 
     /**
      * Set callback listener.
@@ -26,6 +27,13 @@ public interface ManagerBuilder<T extends GoogleSignInManager> {
      * @param callback instance of Callback
      */
     ManagerBuilder<T> setCallback(@Nullable GoogleSignInManager.Callback callback);
+
+    /**
+     * Set request code for operation. Required field.
+     *
+     * @param requestCode any non-zero request code
+     */
+    ManagerBuilder<T> setRequestCode(int requestCode);
 
     /**
      * Set scopes that should be granted during sign in flow.
@@ -36,16 +44,9 @@ public interface ManagerBuilder<T extends GoogleSignInManager> {
     ManagerBuilder<T> setScopes(@NonNull Scope first, Scope... otherScopes);
 
     /**
-     * Set request code for operation. Required field.
+     * Set server client id. Required field.
      *
-     * @param requestCode any non-zero request code
+     * @param serverClientId server client id
      */
-    ManagerBuilder<T> setRequestCode(int requestCode);
-
-    /**
-     * Create a new instance of {@link GoogleSignInManager}.
-     *
-     * @return a new instance of GoogleSignInManager
-     */
-    T build();
+    ManagerBuilder<T> setServerClientId(@NonNull String serverClientId);
 }

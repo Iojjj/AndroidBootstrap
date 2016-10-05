@@ -37,8 +37,18 @@ public class BSAspectRatioImageView extends ImageView implements AspectRatioView
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        mHelper.onMeasure(this, widthMeasureSpec, heightMeasureSpec);
+    public float getRatioX() {
+        return mHelper.getRatioX();
+    }
+
+    @Override
+    public float getRatioY() {
+        return mHelper.getRatioY();
+    }
+
+    @Override
+    public void setAspectRatio(float ratioX, float ratioY) {
+        mHelper.setAspectRatio(ratioX, ratioY);
     }
 
     @SuppressLint("WrongCall")
@@ -53,17 +63,7 @@ public class BSAspectRatioImageView extends ImageView implements AspectRatioView
     }
 
     @Override
-    public void setAspectRatio(float ratioX, float ratioY) {
-        mHelper.setAspectRatio(ratioX, ratioY);
-    }
-
-    @Override
-    public float getRatioY() {
-        return mHelper.getRatioY();
-    }
-
-    @Override
-    public float getRatioX() {
-        return mHelper.getRatioX();
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        mHelper.onMeasure(this, widthMeasureSpec, heightMeasureSpec);
     }
 }

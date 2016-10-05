@@ -23,18 +23,6 @@ abstract class BSItemClickTouchListener implements OnItemTouchListener {
                 new ItemClickGestureListener(hostView));
     }
 
-    private boolean isAttachedToWindow(RecyclerView hostView) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return hostView.isAttachedToWindow();
-        } else {
-            return (hostView.getHandler() != null);
-        }
-    }
-
-    private boolean hasAdapter(RecyclerView hostView) {
-        return (hostView.getAdapter() != null);
-    }
-
     @Override
     public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent event) {
         if (!isAttachedToWindow(recyclerView) || !hasAdapter(recyclerView)) {
@@ -51,30 +39,21 @@ abstract class BSItemClickTouchListener implements OnItemTouchListener {
         // intercepting touch events in the host RecyclerView.
     }
 
+    private boolean hasAdapter(RecyclerView hostView) {
+        return (hostView.getAdapter() != null);
+    }
+
+    private boolean isAttachedToWindow(RecyclerView hostView) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return hostView.isAttachedToWindow();
+        } else {
+            return (hostView.getHandler() != null);
+        }
+    }
+
     abstract boolean performItemClick(RecyclerView parent, View view, int position, long id);
 
     abstract boolean performItemLongClick(RecyclerView parent, View view, int position, long id);
-
-    private static class ItemClickGestureDetector extends GestureDetector {
-        private final ItemClickGestureListener mGestureListener;
-
-        public ItemClickGestureDetector(Context context, ItemClickGestureListener listener) {
-            super(context, listener);
-            mGestureListener = listener;
-        }
-
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            final boolean handled = super.onTouchEvent(event);
-
-//            final int action = event.getAction() & MotionEventCompat.ACTION_MASK;
-//            if (action == MotionEvent.ACTION_UP) {
-//                mGestureListener.dispatchSingleTapUpIfNeeded(event);
-//            }
-
-            return handled;
-        }
-    }
 
     private class ItemClickGestureListener extends SimpleOnGestureListener {
         private final RecyclerView mHostView;
@@ -91,22 +70,6 @@ abstract class BSItemClickTouchListener implements OnItemTouchListener {
             // as potential item click.
             if (mTargetChild != null) {
                 onSingleTapUp(event);
-            }
-        }
-
-        @Override
-        public boolean onDown(MotionEvent event) {
-            final int x = (int) event.getX();
-            final int y = (int) event.getY();
-
-            mTargetChild = mHostView.findChildViewUnder(x, y);
-            return (mTargetChild != null);
-        }
-
-        @Override
-        public void onShowPress(MotionEvent event) {
-            if (mTargetChild != null) {
-                mTargetChild.setPressed(true);
             }
         }
 
@@ -128,18 +91,6 @@ abstract class BSItemClickTouchListener implements OnItemTouchListener {
         }
 
         @Override
-        public boolean onScroll(MotionEvent event, MotionEvent event2, float v, float v2) {
-            if (mTargetChild != null) {
-                mTargetChild.setPressed(false);
-                mTargetChild = null;
-
-                return true;
-            }
-
-            return false;
-        }
-
-        @Override
         public void onLongPress(MotionEvent event) {
             if (mTargetChild == null) {
                 return;
@@ -153,6 +104,55 @@ abstract class BSItemClickTouchListener implements OnItemTouchListener {
                 mTargetChild.setPressed(false);
                 mTargetChild = null;
             }
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent event, MotionEvent event2, float v, float v2) {
+            if (mTargetChild != null) {
+                mTargetChild.setPressed(false);
+                mTargetChild = null;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent event) {
+            if (mTargetChild != null) {
+                mTargetChild.setPressed(true);
+            }
+        }
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            final int x = (int) event.getX();
+            final int y = (int) event.getY();
+
+            mTargetChild = mHostView.findChildViewUnder(x, y);
+            return (mTargetChild != null);
+        }
+    }
+
+    private static class ItemClickGestureDetector extends GestureDetector {
+        private final ItemClickGestureListener mGestureListener;
+
+        public ItemClickGestureDetector(Context context, ItemClickGestureListener listener) {
+            super(context, listener);
+            mGestureListener = listener;
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            final boolean handled = super.onTouchEvent(event);
+
+//            final int action = event.getAction() & MotionEventCompat.ACTION_MASK;
+//            if (action == MotionEvent.ACTION_UP) {
+//                mGestureListener.dispatchSingleTapUpIfNeeded(event);
+//            }
+
+            return handled;
         }
     }
 }

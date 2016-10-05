@@ -75,18 +75,6 @@ public abstract class BSAsyncTaskLoader<T> extends AsyncTaskLoader<T> {
     }
 
     /**
-     * Handles a request to cancel a load.
-     */
-    @Override
-    public void onCanceled(T data) {
-        super.onCanceled(data);
-
-        // At this point we can release the resources associated with 'apps'
-        // if needed.
-        onReleaseResources(data);
-    }
-
-    /**
      * Handles a request to completely reset the Loader.
      */
     @Override
@@ -102,6 +90,18 @@ public abstract class BSAsyncTaskLoader<T> extends AsyncTaskLoader<T> {
             onReleaseResources(mData);
             mData = null;
         }
+    }
+
+    /**
+     * Handles a request to cancel a load.
+     */
+    @Override
+    public void onCanceled(T data) {
+        super.onCanceled(data);
+
+        // At this point we can release the resources associated with 'apps'
+        // if needed.
+        onReleaseResources(data);
     }
 
     /**

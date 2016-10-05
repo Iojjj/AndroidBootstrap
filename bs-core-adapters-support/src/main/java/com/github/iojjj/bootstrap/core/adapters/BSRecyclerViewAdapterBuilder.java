@@ -2,6 +2,13 @@ package com.github.iojjj.bootstrap.core.adapters;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
 
+/**
+ * Implementation of a RecyclerView's adapter builder.
+ *
+ * @param <T> type of item
+ *
+ * @since 1.0
+ */
 public class BSRecyclerViewAdapterBuilder<T> extends AdapterBuilder<T, BSRecyclerViewAdapterBuilder<T>> {
 
     BSRecyclerViewAdapterBuilder() {

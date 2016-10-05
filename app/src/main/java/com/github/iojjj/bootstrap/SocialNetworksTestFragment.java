@@ -38,6 +38,35 @@ public class SocialNetworksTestFragment extends Fragment implements BSGoogleSign
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mGoogleSignInManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onCanceled() {
+        Toast.makeText(getContext(), "Sign In Canceled", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick({R.id.btn_google, R.id.btn_sign_out})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_google:
+                mGoogleSignInManager.signIn(this);
+                break;
+            case R.id.btn_sign_out:
+                mGoogleSignInManager.signOut();
+                break;
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        GoogleApiAvailability.getInstance()
+                .showErrorDialogFragment(getActivity(), connectionResult.getErrorCode(), RC_GOOGLE_PLAY_SERVICES);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mGoogleSignInManager = BSGoogleSignInManager.Builder.newInstance(getContext())
@@ -58,6 +87,26 @@ public class SocialNetworksTestFragment extends Fragment implements BSGoogleSign
     }
 
     @Override
+    public void onError(@NonNull Throwable throwable) {
+        Toast.makeText(getContext(), "Error: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSignInFinished() {
+        mProgressDialogManager.hideProgressDialog();
+    }
+
+    @Override
+    public void onSignInStarted() {
+        mProgressDialogManager.showProgressDialog("Signing in...");
+    }
+
+    @Override
+    public void onSignedIn(@NonNull String accessToken) {
+        Toast.makeText(getContext(), "Signed In with Google+", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         mGoogleSignInManager.onStart();
@@ -67,54 +116,5 @@ public class SocialNetworksTestFragment extends Fragment implements BSGoogleSign
     public void onStop() {
         super.onStop();
         mGoogleSignInManager.onStop();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mGoogleSignInManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        GoogleApiAvailability.getInstance()
-                .showErrorDialogFragment(getActivity(), connectionResult.getErrorCode(), RC_GOOGLE_PLAY_SERVICES);
-    }
-
-    @Override
-    public void onCanceled() {
-        Toast.makeText(getContext(), "Sign In Canceled", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onError(@NonNull Throwable throwable) {
-        Toast.makeText(getContext(), "Error: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onSignedIn(@NonNull String accessToken) {
-        Toast.makeText(getContext(), "Signed In with Google+", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSignInStarted() {
-        mProgressDialogManager.showProgressDialog("Signing in...");
-    }
-
-    @Override
-    public void onSignInFinished() {
-        mProgressDialogManager.hideProgressDialog();
-    }
-
-    @OnClick({R.id.btn_google, R.id.btn_sign_out})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_google:
-                mGoogleSignInManager.signIn(this);
-                break;
-            case R.id.btn_sign_out:
-                mGoogleSignInManager.signOut();
-                break;
-        }
     }
 }

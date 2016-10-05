@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
  * Implementation of {@link BSMvpView} for {@link AppCompatActivity}.
  *
  * @param <P> type of presenter
+ *
  * @since 1.0
  */
 public abstract class BSAbstractActivityMvpView<P extends BSMvpPresenter> extends BSAbstractActivity

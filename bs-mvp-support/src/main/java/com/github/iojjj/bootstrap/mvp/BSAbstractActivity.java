@@ -20,9 +20,9 @@ public abstract class BSAbstractActivity extends AppCompatActivity implements BS
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mMvpDelegate.onResume();
+    public <V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
+    void initPresenter(int loaderId, @NonNull V view, @NonNull BSFunction0<P> presenterProvider) {
+        mMvpDelegate.initPresenter(loaderId, view, presenterProvider);
     }
 
     @Override
@@ -32,9 +32,9 @@ public abstract class BSAbstractActivity extends AppCompatActivity implements BS
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mMvpDelegate.onSaveInstanceState(outState);
+    public void onResume() {
+        super.onResume();
+        mMvpDelegate.onResume();
     }
 
     @Override
@@ -44,8 +44,8 @@ public abstract class BSAbstractActivity extends AppCompatActivity implements BS
     }
 
     @Override
-    public <V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
-    void initPresenter(int loaderId, @NonNull V view, @NonNull BSFunction0<P> presenterProvider) {
-        mMvpDelegate.initPresenter(loaderId, view, presenterProvider);
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mMvpDelegate.onSaveInstanceState(outState);
     }
 }

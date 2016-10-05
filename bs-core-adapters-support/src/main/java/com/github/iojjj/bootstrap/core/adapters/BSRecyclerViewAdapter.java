@@ -16,69 +16,17 @@ import java.util.List;
  * This adapter can be used with {@link RecyclerView} only.
  *
  * @param <T> type of items
+ *
  * @since 1.0
  */
 public final class BSRecyclerViewAdapter<T> extends RecyclerView.Adapter<BSRecyclerViewAdapter.ViewHolder> implements Adapter<T>, RecyclerViewAdapterCallbacks {
 
-    private final RecyclerViewAdapterDelegate<T> mAdapterDelegate;
-
+    private final RecyclerViewAdapter<T> mAdapterDelegate;
 
 
     BSRecyclerViewAdapter(@NonNull BSAdapterRenderer<T, ? extends BSViewHolder> renderer,
                           @Nullable BSFilterPredicate<T> predicate) {
-        mAdapterDelegate = new RecyclerViewAdapterDelegate<>(this, renderer, predicate);
-    }
-
-    @Override
-    public void setFilterPredicate(@Nullable BSFilterPredicate<T> predicate) {
-        mAdapterDelegate.setFilterPredicate(predicate);
-    }
-
-    @Override
-    public BSRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //noinspection unchecked
-        final BSRenderer<T, BSViewHolder> renderer = (BSRenderer<T, BSViewHolder>) mAdapterDelegate.getRenderer();
-        return new ViewHolder(renderer.createViewHolder(parent, viewType, false));
-    }
-
-    @Override
-    public void onBindViewHolder(BSRecyclerViewAdapter.ViewHolder holder, int position) {
-        //noinspection unchecked
-        final BSRenderer<T, BSViewHolder> renderer = (BSRenderer<T, BSViewHolder>) mAdapterDelegate.getRenderer();
-        renderer.bind(holder.mViewHolder, getItem(position), position);
-    }
-
-    @Override
-    public void onBindViewHolder(BSRecyclerViewAdapter.ViewHolder holder, int position, List<Object> payloads) {
-        //noinspection unchecked
-        final BSRenderer<T, BSViewHolder> renderer = (BSRenderer<T, BSViewHolder>) mAdapterDelegate.getRenderer();
-        renderer.bind(holder.mViewHolder, getItem(position), position, payloads);
-    }
-
-    @Override
-    public void filter(@Nullable CharSequence charSequence) {
-        mAdapterDelegate.filter(charSequence);
-    }
-
-    @Override
-    public T getItem(int position) {
-        return mAdapterDelegate.getItem(position);
-    }
-
-
-    @Override
-    public int getItemPosition(T item) {
-        return mAdapterDelegate.getItemPosition(item);
-    }
-
-    /**
-     * Get items count. This method will return number of filtered items if filtering was applied.
-     *
-     * @return items count
-     */
-    @Override
-    public int getItemCount() {
-        return mAdapterDelegate.getCount();
+        mAdapterDelegate = new RecyclerViewAdapter<>(this, renderer, predicate);
     }
 
     @Override
@@ -97,28 +45,29 @@ public final class BSRecyclerViewAdapter<T> extends RecyclerView.Adapter<BSRecyc
     }
 
     @Override
-    public T removeItemAt(int position) {
-        return mAdapterDelegate.removeItemAt(position);
-    }
-
-    @Override
-    public boolean removeItem(T item) {
-        return mAdapterDelegate.removeItem(item);
-    }
-
-    @Override
-    public boolean removeAll(@NonNull Collection<T> items) {
-        return mAdapterDelegate.removeAll(items);
-    }
-
-    @Override
-    public boolean retainAll(@NonNull Collection<T> items) {
-        return mAdapterDelegate.retainAll(items);
-    }
-
-    @Override
     public void clear() {
         mAdapterDelegate.clear();
+    }
+
+    @Override
+    public void filter(@Nullable CharSequence charSequence) {
+        mAdapterDelegate.filter(charSequence);
+    }
+
+    @Override
+    public T getItem(int position) {
+        return mAdapterDelegate.getItem(position);
+    }
+
+
+    @Override
+    public int getItemPosition(T item) {
+        return mAdapterDelegate.getItemPosition(item);
+    }
+
+    @Override
+    public Spannable highlightFilterQuery(@NonNull CharSequence charSequence, @ColorInt int highlightColor) {
+        return mAdapterDelegate.highlightFilterQuery(charSequence, highlightColor);
     }
 
     @Override
@@ -127,17 +76,59 @@ public final class BSRecyclerViewAdapter<T> extends RecyclerView.Adapter<BSRecyc
     }
 
     @Override
-    public Spannable highlightFilterQuery(@NonNull CharSequence charSequence, @ColorInt int highlightColor) {
-        return mAdapterDelegate.highlightFilterQuery(charSequence, highlightColor);
+    public boolean removeAll(@NonNull Collection<T> items) {
+        return mAdapterDelegate.removeAll(items);
+    }
+
+    @Override
+    public boolean removeItem(T item) {
+        return mAdapterDelegate.removeItem(item);
+    }
+
+    @Override
+    public T removeItemAt(int position) {
+        return mAdapterDelegate.removeItemAt(position);
+    }
+
+    @Override
+    public boolean retainAll(@NonNull Collection<T> items) {
+        return mAdapterDelegate.retainAll(items);
+    }
+
+    @Override
+    public void setFilterPredicate(@Nullable BSFilterPredicate<T> predicate) {
+        mAdapterDelegate.setFilterPredicate(predicate);
+    }
+
+    @Override
+    public BSRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //noinspection unchecked
+        final Renderer<T, BSViewHolder> renderer = (Renderer<T, BSViewHolder>) mAdapterDelegate.getRenderer();
+        return new ViewHolder(renderer.createViewHolder(parent, viewType, false));
+    }
+
+    @Override
+    public void onBindViewHolder(BSRecyclerViewAdapter.ViewHolder holder, int position) {
+        //noinspection unchecked
+        final Renderer<T, BSViewHolder> renderer = (Renderer<T, BSViewHolder>) mAdapterDelegate.getRenderer();
+        renderer.bind(holder.mViewHolder, getItem(position), position);
+    }
+
+    @Override
+    public void onBindViewHolder(BSRecyclerViewAdapter.ViewHolder holder, int position, List<Object> payloads) {
+        //noinspection unchecked
+        final Renderer<T, BSViewHolder> renderer = (Renderer<T, BSViewHolder>) mAdapterDelegate.getRenderer();
+        renderer.bind(holder.mViewHolder, getItem(position), position, payloads);
     }
 
     /**
-     * Set whenever to notify RecyclerView about changes in adapter in filtered state.  Default values is true.
+     * Get items count. This method will return number of filtered items if filtering was applied.
      *
-     * @param animateDataSetChangesWhenFiltered true or false
+     * @return items count
      */
-    public void setAnimateDataSetChangesWhenFiltered(boolean animateDataSetChangesWhenFiltered) {
-        mAdapterDelegate.setAnimateDataSetChangesWhenFiltered(animateDataSetChangesWhenFiltered);
+    @Override
+    public int getItemCount() {
+        return mAdapterDelegate.getCount();
     }
 
     /**
@@ -147,6 +138,15 @@ public final class BSRecyclerViewAdapter<T> extends RecyclerView.Adapter<BSRecyc
      */
     public void setAnimateDataSetChanges(boolean animateDataSetChanges) {
         mAdapterDelegate.setAnimateDataSetChanges(animateDataSetChanges);
+    }
+
+    /**
+     * Set whenever to notify RecyclerView about changes in adapter in filtered state.  Default values is true.
+     *
+     * @param animateDataSetChangesWhenFiltered true or false
+     */
+    public void setAnimateDataSetChangesWhenFiltered(boolean animateDataSetChangesWhenFiltered) {
+        mAdapterDelegate.setAnimateDataSetChangesWhenFiltered(animateDataSetChangesWhenFiltered);
     }
 
     /**

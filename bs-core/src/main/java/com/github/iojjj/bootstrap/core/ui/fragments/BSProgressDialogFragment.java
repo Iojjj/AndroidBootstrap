@@ -46,26 +46,21 @@ public class BSProgressDialogFragment extends DialogFragment {
         };
     }
 
+    /**
+     * Get fragment's manager.
+     *
+     * @return fragment's manager
+     */
+    public Manager getManager() {
+        return mManager;
+    }
+
     @NonNull
     public static BSProgressDialogFragment newInstance() {
         Bundle args = new Bundle();
         BSProgressDialogFragment fragment = new BSProgressDialogFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    private static BSProgressDialogFragment newInstanceImpl(@Nullable String message) {
-        final BSProgressDialogFragment fragment = newInstance();
-        fragment.getArguments().putString(KEY_MESSAGE, message);
-        return fragment;
-    }
-
-    /**
-     * Get fragment's manager.
-     * @return fragment's manager
-     */
-    public Manager getManager() {
-        return mManager;
     }
 
     @Override
@@ -84,6 +79,12 @@ public class BSProgressDialogFragment extends DialogFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mDelegate.onSaveInstanceState(getArguments());
+    }
+
+    private static BSProgressDialogFragment newInstanceImpl(@Nullable String message) {
+        final BSProgressDialogFragment fragment = newInstance();
+        fragment.getArguments().putString(KEY_MESSAGE, message);
+        return fragment;
     }
 
     public interface Manager extends ProgressDialogFragmentDelegate.Manager {

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
  * Implementation of {@link BSMvpView} for {@link Activity}.
  *
  * @param <P> type of presenter
+ *
  * @since 1.0
  */
 public abstract class BSAbstractActivityMvpView<P extends BSMvpPresenter> extends BSAbstractActivity

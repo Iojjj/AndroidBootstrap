@@ -20,65 +20,20 @@ import java.util.List;
  * This adapter can be used with classic widgets like {@link ListView} and {@link Spinner}.
  *
  * @param <T> type of items
+ *
  * @since 1.0
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
-final class BSArrayAdapterImpl<T> extends BaseAdapter implements AdapterCallbacks, BSArrayAdapter<T> {
+final class BSArrayAdapterImpl<T> extends BaseAdapter implements ArrayAdapterCallbacks, BSArrayAdapter<T> {
 
     @NonNull
-    private final ArrayAdapterDelegate<T> mAdapterDelegate;
+    private final ArrayAdapter<T> mAdapterDelegate;
 
     BSArrayAdapterImpl(@NonNull BSAdapterRenderer<T, ? extends BSViewHolder> renderer,
                        @Nullable BSFilterPredicate<T> predicate) {
         BSAssertions.assertNotNull(renderer, "renderer");
-        mAdapterDelegate = new ArrayAdapterDelegate<>(this, renderer, predicate);
+        mAdapterDelegate = new ArrayAdapter<>(this, renderer, predicate);
     }
-
-    @Override
-    public void setFilterPredicate(@Nullable BSFilterPredicate<T> predicate) {
-        mAdapterDelegate.setFilterPredicate(predicate);
-    }
-
-    @Override
-    public int getCount() {
-        return mAdapterDelegate.getCount();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return mAdapterDelegate.getItemId(position);
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return mAdapterDelegate.getItemViewType(position);
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return mAdapterDelegate.getViewTypeCount();
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return mAdapterDelegate.getView(position, convertView, parent);
-    }
-
-    @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        return mAdapterDelegate.getDropDownView(position, convertView, parent);
-    }
-
-    @Override
-    public void filter(@Nullable CharSequence charSequence) {
-        mAdapterDelegate.filter(charSequence);
-    }
-
-    @Override
-    public T getItem(int position) {
-        return mAdapterDelegate.getItem(position);
-    }
-
 
     @Override
     public boolean addItem(T item) {
@@ -96,38 +51,18 @@ final class BSArrayAdapterImpl<T> extends BaseAdapter implements AdapterCallback
     }
 
     @Override
-    public T removeItemAt(int position) {
-        return mAdapterDelegate.removeItemAt(position);
-    }
-
-    @Override
-    public boolean removeItem(T item) {
-        return mAdapterDelegate.removeItem(item);
-    }
-
-    @Override
-    public boolean removeAll(@NonNull Collection<T> items) {
-        return mAdapterDelegate.removeAll(items);
-    }
-
-    @Override
-    public boolean retainAll(@NonNull Collection<T> items) {
-        return mAdapterDelegate.retainAll(items);
-    }
-
-    @Override
     public void clear() {
         mAdapterDelegate.clear();
     }
 
     @Override
-    public void setAutoNotifyDataSetChanges(boolean notifyDataSetChanges) {
-        mAdapterDelegate.setAutoNotifyDataSetChanges(notifyDataSetChanges);
+    public void filter(@Nullable CharSequence charSequence) {
+        mAdapterDelegate.filter(charSequence);
     }
 
     @Override
-    public boolean isFiltered() {
-        return mAdapterDelegate.isFiltered();
+    public int getItemPosition(T item) {
+        return mAdapterDelegate.getItemPosition(item);
     }
 
     @Override
@@ -136,7 +71,72 @@ final class BSArrayAdapterImpl<T> extends BaseAdapter implements AdapterCallback
     }
 
     @Override
-    public int getItemPosition(T item) {
-        return mAdapterDelegate.getItemPosition(item);
+    public boolean isFiltered() {
+        return mAdapterDelegate.isFiltered();
+    }
+
+    @Override
+    public boolean removeAll(@NonNull Collection<T> items) {
+        return mAdapterDelegate.removeAll(items);
+    }
+
+    @Override
+    public boolean removeItem(T item) {
+        return mAdapterDelegate.removeItem(item);
+    }
+
+    @Override
+    public T removeItemAt(int position) {
+        return mAdapterDelegate.removeItemAt(position);
+    }
+
+    @Override
+    public boolean retainAll(@NonNull Collection<T> items) {
+        return mAdapterDelegate.retainAll(items);
+    }
+
+    @Override
+    public void setFilterPredicate(@Nullable BSFilterPredicate<T> predicate) {
+        mAdapterDelegate.setFilterPredicate(predicate);
+    }
+
+    @Override
+    public int getCount() {
+        return mAdapterDelegate.getCount();
+    }
+
+    @Override
+    public T getItem(int position) {
+        return mAdapterDelegate.getItem(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return mAdapterDelegate.getItemId(position);
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        return mAdapterDelegate.getView(position, convertView, parent);
+    }
+
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        return mAdapterDelegate.getDropDownView(position, convertView, parent);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mAdapterDelegate.getItemViewType(position);
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return mAdapterDelegate.getViewTypeCount();
+    }
+
+    @Override
+    public void setAutoNotifyDataSetChanges(boolean notifyDataSetChanges) {
+        mAdapterDelegate.setAutoNotifyDataSetChanges(notifyDataSetChanges);
     }
 }

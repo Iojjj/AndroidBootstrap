@@ -31,6 +31,7 @@ public class BSDatePickerFragment extends DialogFragment {
      * Create a new instance of date picker dialog fragment.
      *
      * @param date initial date in milliseconds
+     *
      * @return new instance of date picker dialog fragment
      */
     public static BSDatePickerFragment newInstance(long date) {
@@ -57,13 +58,13 @@ public class BSDatePickerFragment extends DialogFragment {
         }
 
         @Override
-        public void onDateSet(int result, Intent data) {
-            mFragment.getTargetFragment().onActivityResult(mFragment.getTargetRequestCode(), Activity.RESULT_OK, data);
+        public void dismiss() {
+            mFragment.dismiss();
         }
 
         @Override
-        public void dismiss() {
-            mFragment.dismiss();
+        public void onDateSet(int result, Intent data) {
+            mFragment.getTargetFragment().onActivityResult(mFragment.getTargetRequestCode(), Activity.RESULT_OK, data);
         }
     }
 }

@@ -21,11 +21,6 @@ public class BSScreenUtil {
         return context.getResources().getDisplayMetrics().density * dp;
     }
 
-    public static float pxToDp(@NonNull final Context context, float px) {
-        BSAssertions.assertNotNull(context, "context");
-        return px / context.getResources().getDisplayMetrics().density;
-    }
-
     @SuppressWarnings("deprecation")
     public static void getScreenDimensions(@NonNull Context context, @NonNull final Point point) {
         BSAssertions.assertNotNull(context, "context");
@@ -42,5 +37,10 @@ public class BSScreenUtil {
     public static void getScreenDimensions(@NonNull Context context, @NonNull DisplayMetrics displayMetrics) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+    }
+
+    public static float pxToDp(@NonNull final Context context, float px) {
+        BSAssertions.assertNotNull(context, "context");
+        return px / context.getResources().getDisplayMetrics().density;
     }
 }

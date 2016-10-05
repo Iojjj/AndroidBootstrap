@@ -16,16 +16,16 @@ import com.github.iojjj.bootstrap.assertions.BSAssertions;
  */
 public class BSPaddingDecoration extends RecyclerView.ItemDecoration {
 
-    private final int mPaddingTop;
-    private final int mPaddingBottom;
-    private final int mPaddingLeft;
-    private final int mPaddingRight;
-    private final int mPaddingTopHalf;
-    private final int mPaddingBottomHalf;
-    private final int mPaddingLeftHalf;
-    private final int mPaddingRightHalf;
-    private final int mSpanCount;
     private final boolean mHorizontal;
+    private final int mPaddingBottom;
+    private final int mPaddingBottomHalf;
+    private final int mPaddingLeft;
+    private final int mPaddingLeftHalf;
+    private final int mPaddingRight;
+    private final int mPaddingRightHalf;
+    private final int mPaddingTop;
+    private final int mPaddingTopHalf;
+    private final int mSpanCount;
 
     private BSPaddingDecoration(@NonNull Builder builder) {
         mPaddingLeft = builder.mPaddingLeft;
@@ -130,12 +130,22 @@ public class BSPaddingDecoration extends RecyclerView.ItemDecoration {
     }
 
     public static class Builder {
-        private int mPaddingTop;
+        private boolean mHorizontal;
         private int mPaddingBottom;
         private int mPaddingLeft;
         private int mPaddingRight;
+        private int mPaddingTop;
         private int mSpanCount = 1;
-        private boolean mHorizontal;
+
+        /**
+         * Create new decoration.
+         *
+         * @return new decoration
+         */
+        public BSPaddingDecoration build() {
+            BSAssertions.assertTrue(mSpanCount >= 1, "Span count can't be less than 1.");
+            return new BSPaddingDecoration(this);
+        }
 
         /**
          * Set all padding to same value.
@@ -151,13 +161,12 @@ public class BSPaddingDecoration extends RecyclerView.ItemDecoration {
         }
 
         /**
-         * Set vertical padding (top and bottom).
+         * Set flag if list or grid is horizontal one. Default value is false.
          *
-         * @param padding padding in pixels
+         * @param horizontal flag if list or grid is horizontal one
          */
-        public Builder setVerticalPadding(int padding) {
-            mPaddingTop = padding;
-            mPaddingBottom = padding;
+        public Builder setHorizontal(boolean horizontal) {
+            mHorizontal = horizontal;
             return this;
         }
 
@@ -169,16 +178,6 @@ public class BSPaddingDecoration extends RecyclerView.ItemDecoration {
         public Builder setHorizontalPadding(int padding) {
             mPaddingLeft = padding;
             mPaddingRight = padding;
-            return this;
-        }
-
-        /**
-         * Set top padding.
-         *
-         * @param paddingTop padding in pixels
-         */
-        public Builder setPaddingTop(int paddingTop) {
-            mPaddingTop = paddingTop;
             return this;
         }
 
@@ -213,6 +212,16 @@ public class BSPaddingDecoration extends RecyclerView.ItemDecoration {
         }
 
         /**
+         * Set top padding.
+         *
+         * @param paddingTop padding in pixels
+         */
+        public Builder setPaddingTop(int paddingTop) {
+            mPaddingTop = paddingTop;
+            return this;
+        }
+
+        /**
          * Set span count. Used for {@link GridLayoutManager}. Default value is 1.
          *
          * @param spanCount span count
@@ -223,23 +232,14 @@ public class BSPaddingDecoration extends RecyclerView.ItemDecoration {
         }
 
         /**
-         * Set flag if list or grid is horizontal one. Default value is false.
+         * Set vertical padding (top and bottom).
          *
-         * @param horizontal flag if list or grid is horizontal one
+         * @param padding padding in pixels
          */
-        public Builder setHorizontal(boolean horizontal) {
-            mHorizontal = horizontal;
+        public Builder setVerticalPadding(int padding) {
+            mPaddingTop = padding;
+            mPaddingBottom = padding;
             return this;
-        }
-
-        /**
-         * Create new decoration.
-         *
-         * @return new decoration
-         */
-        public BSPaddingDecoration build() {
-            BSAssertions.assertTrue(mSpanCount >= 1, "Span count can't be less than 1.");
-            return new BSPaddingDecoration(this);
         }
     }
 }

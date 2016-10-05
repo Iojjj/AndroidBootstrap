@@ -16,13 +16,24 @@ import java.util.Calendar;
 
 class DatePickerFragmentDelegate implements DatePickerDialog.OnDateSetListener {
 
-    private final OuterDelegate mOuterDelegate;
     static final String EXTRA_DATE = BSConstantGenerator.extra("date");
     static final String RESULT_DATE = BSConstantGenerator.result("date");
+    private final OuterDelegate mOuterDelegate;
 
     DatePickerFragmentDelegate(@NonNull OuterDelegate outerDelegate) {
         BSAssertions.assertNotNull(outerDelegate, "outerDelegate");
         mOuterDelegate = outerDelegate;
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        final Intent data = new Intent();
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, dayOfMonth, 0, 0, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        data.putExtra(RESULT_DATE, calendar.getTimeInMillis());
+        mOuterDelegate.onDateSet(Activity.RESULT_OK, data);
+        mOuterDelegate.dismiss();
     }
 
     @NonNull
@@ -37,21 +48,10 @@ class DatePickerFragmentDelegate implements DatePickerDialog.OnDateSetListener {
         return new DatePickerDialog(context, this, year, month, day);
     }
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        final Intent data = new Intent();
-        final Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, dayOfMonth, 0, 0, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        data.putExtra(RESULT_DATE, calendar.getTimeInMillis());
-        mOuterDelegate.onDateSet(Activity.RESULT_OK, data);
-        mOuterDelegate.dismiss();
-    }
-
     interface OuterDelegate {
 
-        void onDateSet(int result, Intent data);
-
         void dismiss();
+
+        void onDateSet(int result, Intent data);
     }
 }

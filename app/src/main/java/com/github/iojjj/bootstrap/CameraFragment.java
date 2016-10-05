@@ -23,14 +23,14 @@ import java.io.File;
 
 public class CameraFragment extends Fragment {
 
-    private ImageButton mBtnSwitchCamera;
-    private ImageButton mBtnSwitchFlash;
+    private CameraView.AutoExposureMode mAutoExposureMode = CameraView.AutoExposureMode.ON_AUTO;
     private ImageButton mBtnCaptureImage;
     private ImageButton mBtnCaptureVideo;
-    private CameraView mCameraView;
+    private ImageButton mBtnSwitchCamera;
+    private ImageButton mBtnSwitchFlash;
     private CameraService mCameraService;
+    private CameraView mCameraView;
     private CameraView.Facing mFacing = CameraView.Facing.BACK;
-    private CameraView.AutoExposureMode mAutoExposureMode = CameraView.AutoExposureMode.ON_AUTO;
 
     public static CameraFragment newInstance() {
         Bundle args = new Bundle();
@@ -50,6 +50,18 @@ public class CameraFragment extends Fragment {
         mBtnCaptureImage = (ImageButton) view.findViewById(R.id.btn_capture_photo);
         mBtnCaptureVideo = (ImageButton) view.findViewById(R.id.btn_capture_video);
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        mCameraView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mCameraView.onResume();
     }
 
     @Override
@@ -103,17 +115,5 @@ public class CameraFragment extends Fragment {
                     .setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                     .build());
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mCameraView.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        mCameraView.onPause();
-        super.onPause();
     }
 }

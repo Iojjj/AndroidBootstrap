@@ -35,15 +35,6 @@ public final class BSMvpDelegateImpl implements BSMvpDelegate {
     }
 
     @Override
-    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState) {
-        final int size = mPresenterLoaderCallbacks.size();
-        for (int i = 0; i < size; i++) {
-            final AndroidPresenterCallbacks presenterLoaderHandler = mPresenterLoaderCallbacks.valueAt(i);
-            presenterLoaderHandler.onRestoreInstanceState(savedInstanceState);
-        }
-    }
-
-    @Override
     public void onResume() {
         final int size = mPresenterLoaderCallbacks.size();
         for (int i = 0; i < size; i++) {
@@ -67,6 +58,15 @@ public final class BSMvpDelegateImpl implements BSMvpDelegate {
         for (int i = 0; i < size; i++) {
             final AndroidPresenterCallbacks presenterLoaderHandler = mPresenterLoaderCallbacks.valueAt(i);
             presenterLoaderHandler.onSaveInstanceState(outState);
+        }
+    }
+
+    @Override
+    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState) {
+        final int size = mPresenterLoaderCallbacks.size();
+        for (int i = 0; i < size; i++) {
+            final AndroidPresenterCallbacks presenterLoaderHandler = mPresenterLoaderCallbacks.valueAt(i);
+            presenterLoaderHandler.onRestoreInstanceState(savedInstanceState);
         }
     }
 

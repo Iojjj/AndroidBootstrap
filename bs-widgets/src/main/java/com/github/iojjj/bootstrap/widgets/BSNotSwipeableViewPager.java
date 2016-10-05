@@ -24,15 +24,6 @@ public class BSNotSwipeableViewPager extends ViewPager {
         super(context, attrs);
     }
 
-    /**
-     * Set swipe feature enabled.
-     *
-     * @param swipeEnabled true to enable swipe gestures, false otherwise
-     */
-    public void setSwipeEnabled(boolean swipeEnabled) {
-        mSwipeEnabled = swipeEnabled;
-    }
-
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return mSwipeEnabled && super.onInterceptTouchEvent(ev);
@@ -41,5 +32,14 @@ public class BSNotSwipeableViewPager extends ViewPager {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return mSwipeEnabled && super.onTouchEvent(ev);
+    }
+
+    /**
+     * Set swipe feature enabled.
+     *
+     * @param swipeEnabled true to enable swipe gestures, false otherwise
+     */
+    public void setSwipeEnabled(boolean swipeEnabled) {
+        mSwipeEnabled = swipeEnabled;
     }
 }

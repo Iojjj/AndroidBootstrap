@@ -16,9 +16,9 @@ import java.lang.ref.WeakReference;
 public class BSEmptyViewObserver {
 
     @NonNull
-    private final WeakReference<View> mViewWeakReference;
-    @NonNull
     private final RecyclerView.AdapterDataObserver mAdapterDataObserver;
+    @NonNull
+    private final WeakReference<View> mViewWeakReference;
     private WeakReference<RecyclerView> mRVWeakReference;
 
     private BSEmptyViewObserver(@NonNull View view) {
@@ -45,17 +45,6 @@ public class BSEmptyViewObserver {
     }
 
     /**
-     * Create a new observer for specified view.
-     *
-     * @param view some non-null view
-     * @return new observer
-     */
-    public static BSEmptyViewObserver newObserver(@NonNull View view) {
-        BSAssertions.assertNotNull(view, "view");
-        return new BSEmptyViewObserver(view);
-    }
-
-    /**
      * Bind observer to RecyclerView. RecyclerView must have an adapter at this moment.
      *
      * @param recyclerView some non-null RecyclerView with adapter
@@ -65,6 +54,18 @@ public class BSEmptyViewObserver {
         unbind();
         mRVWeakReference = new WeakReference<>(recyclerView);
         recyclerView.getAdapter().registerAdapterDataObserver(mAdapterDataObserver);
+    }
+
+    /**
+     * Create a new observer for specified view.
+     *
+     * @param view some non-null view
+     *
+     * @return new observer
+     */
+    public static BSEmptyViewObserver newObserver(@NonNull View view) {
+        BSAssertions.assertNotNull(view, "view");
+        return new BSEmptyViewObserver(view);
     }
 
     /**

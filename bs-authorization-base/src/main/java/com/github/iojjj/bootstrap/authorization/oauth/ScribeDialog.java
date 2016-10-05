@@ -42,17 +42,17 @@ import java.io.IOException;
  */
 class ScribeDialog extends Dialog {
 
-    private final OAuthService mService;
     private final BSOAuthListener mAuthListener;
     private final Delegate mDelegate;
-    private WebView mWebView;
-    private ProgressBar mProgressBar;
-    private OAuth1RequestToken mOAuth1RequestToken;
-    private BSOAuthAccessToken mToken;
+    private final OAuthService mService;
     private boolean mCanceled;
-    private AsyncTask mOAuth1ReqTokenTask;
     private AsyncTask mOAuth1AccTokenTask;
+    private AsyncTask mOAuth1ReqTokenTask;
+    private OAuth1RequestToken mOAuth1RequestToken;
     private AsyncTask mOAuth2AccTokenTask;
+    private ProgressBar mProgressBar;
+    private BSOAuthAccessToken mToken;
+    private WebView mWebView;
 
     ScribeDialog(@NonNull Context context,
                  @NonNull OAuthService service,
@@ -243,15 +243,6 @@ class ScribeDialog extends Dialog {
     }
 
     /**
-     * DialogFragment delegate. It's used for handling state restoration (we can't dismiss a dialog
-     * directly, only using a DialogFragment's dismiss method).
-     */
-    interface Delegate {
-
-        void dismiss();
-    }
-
-    /**
      * Implementation of WebViewClient that checks for OAuth callbacks and performs retrieving of an
      * access token.
      */
@@ -330,5 +321,14 @@ class ScribeDialog extends Dialog {
 
     private class ScribeWebChromeClient extends WebChromeClient {
 
+    }
+
+    /**
+     * DialogFragment delegate. It's used for handling state restoration (we can't dismiss a dialog
+     * directly, only using a DialogFragment's dismiss method).
+     */
+    interface Delegate {
+
+        void dismiss();
     }
 }

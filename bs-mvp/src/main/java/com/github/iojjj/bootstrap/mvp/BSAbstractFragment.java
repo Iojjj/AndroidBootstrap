@@ -21,21 +21,9 @@ public abstract class BSAbstractFragment extends Fragment implements BSMvpDelega
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mMvpDelegate.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMvpDelegate.onPause();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mMvpDelegate.onSaveInstanceState(outState);
+    public <V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
+    void initPresenter(int loaderId, @NonNull V view, @NonNull BSFunction0<P> presenterProvider) {
+        mMvpDelegate.initPresenter(loaderId, view, presenterProvider);
     }
 
     @Override
@@ -45,13 +33,25 @@ public abstract class BSAbstractFragment extends Fragment implements BSMvpDelega
     }
 
     @Override
-    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState) {
-        mMvpDelegate.onRestoreInstanceState(savedInstanceState);
+    public void onResume() {
+        super.onResume();
+        mMvpDelegate.onResume();
     }
 
     @Override
-    public <V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
-    void initPresenter(int loaderId, @NonNull V view, @NonNull BSFunction0<P> presenterProvider) {
-        mMvpDelegate.initPresenter(loaderId, view, presenterProvider);
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mMvpDelegate.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMvpDelegate.onPause();
+    }
+
+    @Override
+    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState) {
+        mMvpDelegate.onRestoreInstanceState(savedInstanceState);
     }
 }

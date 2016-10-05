@@ -36,11 +36,6 @@ class PresenterLoaderCallbacks<P extends BSMvpPresenter<V>, V extends BSMvpView<
         mPresenterProvider = presenterProvider;
     }
 
-    static <P extends BSMvpPresenter<V>, V extends BSMvpView<P>> PresenterLoaderCallbacks<P, V>
-    create(@NonNull Context context, @NonNull V view, @NonNull BSFunction0<P> presenterProvider) {
-        return new PresenterLoaderCallbacks<>(context, view, presenterProvider);
-    }
-
     @Override
     public Loader<P> onCreateLoader(int id, Bundle args) {
         return new PresenterLoader<>(mContext, mPresenterProvider);
@@ -54,5 +49,10 @@ class PresenterLoaderCallbacks<P extends BSMvpPresenter<V>, V extends BSMvpView<
     @Override
     public void onLoaderReset(Loader<P> loader) {
         onLoaderReset();
+    }
+
+    static <P extends BSMvpPresenter<V>, V extends BSMvpView<P>> PresenterLoaderCallbacks<P, V>
+    create(@NonNull Context context, @NonNull V view, @NonNull BSFunction0<P> presenterProvider) {
+        return new PresenterLoaderCallbacks<>(context, view, presenterProvider);
     }
 }

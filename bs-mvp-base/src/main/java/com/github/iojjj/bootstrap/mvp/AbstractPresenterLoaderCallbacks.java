@@ -27,12 +27,6 @@ abstract class AbstractPresenterLoaderCallbacks<V extends BSMvpView<P>, P extend
     }
 
     @Override
-    public void onResume() {
-        mResumed = true;
-        checkAndCallResume();
-    }
-
-    @Override
     public void onPause() {
         mResumed = false;
         P presenter = mPresenter;
@@ -46,12 +40,25 @@ abstract class AbstractPresenterLoaderCallbacks<V extends BSMvpView<P>, P extend
         }
     }
 
-    private void checkAndCallResume() {
+    @Override
+    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState) {
+        final P presenter = mPresenter;
+        if (presenter != null) {
+            presenter.onRestoreInstanceState(savedInstanceState);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        mResumed = true;
+        checkAndCallResume();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         P presenter = mPresenter;
         if (presenter != null) {
-            mView.setPresenter(presenter);
-            presenter.setView(mView);
-            presenter.onResume();
+            presenter.onSaveInstanceState(outState);
         }
     }
 
@@ -70,19 +77,12 @@ abstract class AbstractPresenterLoaderCallbacks<V extends BSMvpView<P>, P extend
         mPresenter = null;
     }
 
-    @Override
-    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState) {
-        final P presenter = mPresenter;
-        if (presenter != null) {
-            presenter.onRestoreInstanceState(savedInstanceState);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
+    private void checkAndCallResume() {
         P presenter = mPresenter;
         if (presenter != null) {
-            presenter.onSaveInstanceState(outState);
+            mView.setPresenter(presenter);
+            presenter.setView(mView);
+            presenter.onResume();
         }
     }
 }

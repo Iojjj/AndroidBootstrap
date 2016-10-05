@@ -27,6 +27,8 @@ import java.io.IOException;
 
 /**
  * Implementation of BSGoogleSignInManager.
+ *
+ * @since 1.0
  */
 class AbstractGoogleSignInManager implements GoogleSignInManager, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -34,8 +36,8 @@ class AbstractGoogleSignInManager implements GoogleSignInManager, GoogleApiClien
     private static final int STATUS_CODE_CANCELED = 12501;
     private final Context mContext;
     private final GoogleApiClient mGoogleApiClient;
-    private final Scope[] mScopes;
     private final int mRequestCode;
+    private final Scope[] mScopes;
     private Handler mHandler;
 
     AbstractGoogleSignInManager(@NonNull AbstractManagerBuilder builder) {
@@ -68,21 +70,6 @@ class AbstractGoogleSignInManager implements GoogleSignInManager, GoogleApiClien
     }
 
     @Override
-    public void onStart() {
-        mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
-    }
-
-    @Override
-    public void onStop() {
-        mGoogleApiClient.disconnect();
-    }
-
-    @Override
-    public void signOut() {
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient);
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == mRequestCode) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -112,6 +99,40 @@ class AbstractGoogleSignInManager implements GoogleSignInManager, GoogleApiClien
         }
     }
 
+    @Override
+    public void onStart() {
+        mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
+    }
+
+    @Override
+    public void onStop() {
+        mGoogleApiClient.disconnect();
+    }
+
+    @Override
+    public void signOut() {
+        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient);
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        mHandler.obtainMessage(CallbackHandler.RESULT_CONNECTION_FAILED, connectionResult).sendToTarget();
+    }
+
+    GoogleApiClient getGoogleApiClient() {
+        return mGoogleApiClient;
+    }
+
     @SuppressWarnings("TryWithIdenticalCatches")
     private void getAccessToken(@NonNull String email) {
         mHandler.sendEmptyMessage(CallbackHandler.RESULT_SHOW_PROGRESS_DIALOG);
@@ -134,34 +155,14 @@ class AbstractGoogleSignInManager implements GoogleSignInManager, GoogleApiClien
         }).start();
     }
 
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        mHandler.obtainMessage(CallbackHandler.RESULT_CONNECTION_FAILED, connectionResult).sendToTarget();
-    }
-
-    GoogleApiClient getGoogleApiClient() {
-        return mGoogleApiClient;
-    }
-
     private static class CallbackHandler extends Handler {
 
         private static final int RESULT_ACCESS_TOKEN = 1;
-        private static final int RESULT_ERROR = 2;
         private static final int RESULT_CANCELED = 3;
         private static final int RESULT_CONNECTION_FAILED = 4;
-        private static final int RESULT_SHOW_PROGRESS_DIALOG = 5;
+        private static final int RESULT_ERROR = 2;
         private static final int RESULT_HIDE_PROGRESS_DIALOG = 6;
-
+        private static final int RESULT_SHOW_PROGRESS_DIALOG = 5;
         @Nullable
         private final GoogleSignInManager.Callback mCallback;
 

@@ -7,11 +7,23 @@ import android.support.annotation.Nullable;
  * AdapterBuilder class for {@link BSArrayAdapterImpl}.
  *
  * @param <T> type of items
+ *
+ * @since 1.0
  */
 abstract class AdapterBuilder<T, B extends AdapterBuilder<T, ?>> {
 
-    private BSAdapterRenderer<T, ? extends BSViewHolder> mRenderer;
     private BSFilterPredicate<T> mFilterPredicate;
+    private BSAdapterRenderer<T, ? extends BSViewHolder> mRenderer;
+
+    /**
+     * Set filter predicate.
+     *
+     * @param filterPredicate instance of BSFilterPredicate
+     */
+    public B withFilterPredicate(@Nullable BSFilterPredicate<T> filterPredicate) {
+        mFilterPredicate = filterPredicate;
+        return getThis();
+    }
 
     /**
      * Set renderer for items.
@@ -24,22 +36,29 @@ abstract class AdapterBuilder<T, B extends AdapterBuilder<T, ?>> {
     }
 
     /**
-     * Set filter predicate.
+     * Get a filter predicate.
      *
-     * @param filterPredicate instance of BSFilterPredicate
+     * @return filter predicate or null
      */
-    public B withFilterPredicate(@Nullable BSFilterPredicate<T> filterPredicate) {
-        mFilterPredicate = filterPredicate;
-        return getThis();
-    }
-
-    BSAdapterRenderer<T, ? extends BSViewHolder> getRenderer() {
-        return mRenderer;
-    }
-
+    @Nullable
     BSFilterPredicate<T> getFilterPredicate() {
         return mFilterPredicate;
     }
 
+    /**
+     * Get a renderer.
+     *
+     * @return renderer
+     */
+    @NonNull
+    BSAdapterRenderer<T, ? extends BSViewHolder> getRenderer() {
+        return mRenderer;
+    }
+
+    /**
+     * Get <code>this</code> of a builder.
+     *
+     * @return <code>this</code> of a builder
+     */
     protected abstract B getThis();
 }

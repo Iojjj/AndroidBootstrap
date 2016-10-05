@@ -16,23 +16,20 @@ import java.lang.annotation.Target;
 
 public class VideoCaptureOptions {
 
+    private int mAudioChannels;
     @AudioEncoder
     private int mAudioEncoder;
-
-    @VideoEncoder
-    private int mVideoEncoder;
-
-    @OutputFormat
-    private int mOutputFormat;
-
-    private int mVideoEncodingBitrate;
-    private int mVideoFrameRate;
-    private int mAudioChannels;
     private int mAudioSamplingRate;
-    private int mMaxDurationInMs;
-    private long mMaxFileSizeBytes;
     private double mLatitude;
     private double mLongitude;
+    private int mMaxDurationInMs;
+    private long mMaxFileSizeBytes;
+    @OutputFormat
+    private int mOutputFormat;
+    @VideoEncoder
+    private int mVideoEncoder;
+    private int mVideoEncodingBitrate;
+    private int mVideoFrameRate;
 
     private VideoCaptureOptions(@NonNull Builder builder) {
         mAudioEncoder = builder.mAudioEncoder;
@@ -48,40 +45,16 @@ public class VideoCaptureOptions {
         mLongitude = builder.mLongitude;
     }
 
-    public int getAudioEncoder() {
-        return mAudioEncoder;
-    }
-
-    public int getVideoEncoder() {
-        return mVideoEncoder;
-    }
-
-    public int getOutputFormat() {
-        return mOutputFormat;
-    }
-
-    public int getVideoEncodingBitrate() {
-        return mVideoEncodingBitrate;
-    }
-
-    public int getVideoFrameRate() {
-        return mVideoFrameRate;
-    }
-
     public int getAudioChannels() {
         return mAudioChannels;
     }
 
+    public int getAudioEncoder() {
+        return mAudioEncoder;
+    }
+
     public int getAudioSamplingRate() {
         return mAudioSamplingRate;
-    }
-
-    public int getMaxDurationInMs() {
-        return mMaxDurationInMs;
-    }
-
-    public long getMaxFileSizeBytes() {
-        return mMaxFileSizeBytes;
     }
 
     public double getLatitude() {
@@ -92,50 +65,75 @@ public class VideoCaptureOptions {
         return mLongitude;
     }
 
+    public int getMaxDurationInMs() {
+        return mMaxDurationInMs;
+    }
+
+    public long getMaxFileSizeBytes() {
+        return mMaxFileSizeBytes;
+    }
+
+    public int getOutputFormat() {
+        return mOutputFormat;
+    }
+
+    public int getVideoEncoder() {
+        return mVideoEncoder;
+    }
+
+    public int getVideoEncodingBitrate() {
+        return mVideoEncodingBitrate;
+    }
+
+    public int getVideoFrameRate() {
+        return mVideoFrameRate;
+    }
+
+    @SuppressLint("InlinedApi")
+    @Target({ElementType.PARAMETER, ElementType.FIELD})
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({MediaRecorder.AudioEncoder.DEFAULT, MediaRecorder.AudioEncoder.AAC,
+            MediaRecorder.AudioEncoder.AAC_ELD, MediaRecorder.AudioEncoder.AMR_NB,
+            MediaRecorder.AudioEncoder.AMR_WB, MediaRecorder.AudioEncoder.HE_AAC,
+            MediaRecorder.AudioEncoder.VORBIS})
+    public @interface AudioEncoder {
+    }
+
+    @SuppressLint("InlinedApi")
+    @Target({ElementType.PARAMETER, ElementType.FIELD})
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({MediaRecorder.VideoEncoder.DEFAULT, MediaRecorder.VideoEncoder.H263,
+            MediaRecorder.VideoEncoder.H264, MediaRecorder.VideoEncoder.MPEG_4_SP,
+            MediaRecorder.VideoEncoder.VP8})
+    public @interface VideoEncoder {
+    }
+
+    @Target({ElementType.PARAMETER, ElementType.FIELD})
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({MediaRecorder.OutputFormat.DEFAULT, MediaRecorder.OutputFormat.MPEG_4,
+            MediaRecorder.OutputFormat.THREE_GPP})
+    public @interface OutputFormat {
+    }
+
     public static final class Builder {
 
+        private int mAudioChannels;
         @AudioEncoder
         private int mAudioEncoder;
-
-        @VideoEncoder
-        private int mVideoEncoder;
-
-        @OutputFormat
-        private int mOutputFormat;
-
-        private int mVideoEncodingBitrate;
-        private int mVideoFrameRate;
-        private int mAudioChannels;
         private int mAudioSamplingRate;
-        private int mMaxDurationInMs;
-        private long mMaxFileSizeBytes;
         private double mLatitude;
         private double mLongitude;
+        private int mMaxDurationInMs;
+        private long mMaxFileSizeBytes;
+        @OutputFormat
+        private int mOutputFormat;
+        @VideoEncoder
+        private int mVideoEncoder;
+        private int mVideoEncodingBitrate;
+        private int mVideoFrameRate;
 
-
-        public Builder setAudioEncoder(@AudioEncoder int audioEncoder) {
-            mAudioEncoder = audioEncoder;
-            return this;
-        }
-
-        public Builder setVideoEncoder(@VideoEncoder int videoEncoder) {
-            mVideoEncoder = videoEncoder;
-            return this;
-        }
-
-        public Builder setOutputFormat(@OutputFormat int outputFormat) {
-            mOutputFormat = outputFormat;
-            return this;
-        }
-
-        public Builder setVideoEncodingBitrate(int videoEncodingBitrate) {
-            mVideoEncodingBitrate = videoEncodingBitrate;
-            return this;
-        }
-
-        public Builder setVideoFrameRate(int videoFrameRate) {
-            mVideoFrameRate = videoFrameRate;
-            return this;
+        public VideoCaptureOptions build() {
+            return new VideoCaptureOptions(this);
         }
 
         public Builder setAudioChannels(int audioChannels) {
@@ -143,8 +141,19 @@ public class VideoCaptureOptions {
             return this;
         }
 
+        public Builder setAudioEncoder(@AudioEncoder int audioEncoder) {
+            mAudioEncoder = audioEncoder;
+            return this;
+        }
+
         public Builder setAudioSamplingRate(int audioSamplingRate) {
             mAudioSamplingRate = audioSamplingRate;
+            return this;
+        }
+
+        public Builder setLocation(double latitude, double longitude) {
+            mLatitude = latitude;
+            mLongitude = longitude;
             return this;
         }
 
@@ -158,37 +167,24 @@ public class VideoCaptureOptions {
             return this;
         }
 
-        public Builder setLocation(double latitude, double longitude) {
-            mLatitude = latitude;
-            mLongitude = longitude;
+        public Builder setOutputFormat(@OutputFormat int outputFormat) {
+            mOutputFormat = outputFormat;
             return this;
         }
 
-        public VideoCaptureOptions build() {
-            return new VideoCaptureOptions(this);
+        public Builder setVideoEncoder(@VideoEncoder int videoEncoder) {
+            mVideoEncoder = videoEncoder;
+            return this;
+        }
+
+        public Builder setVideoEncodingBitrate(int videoEncodingBitrate) {
+            mVideoEncodingBitrate = videoEncodingBitrate;
+            return this;
+        }
+
+        public Builder setVideoFrameRate(int videoFrameRate) {
+            mVideoFrameRate = videoFrameRate;
+            return this;
         }
     }
-
-    @SuppressLint("InlinedApi")
-    @Target({ElementType.PARAMETER, ElementType.FIELD})
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({MediaRecorder.AudioEncoder.DEFAULT, MediaRecorder.AudioEncoder.AAC,
-            MediaRecorder.AudioEncoder.AAC_ELD, MediaRecorder.AudioEncoder.AMR_NB,
-            MediaRecorder.AudioEncoder.AMR_WB, MediaRecorder.AudioEncoder.HE_AAC,
-            MediaRecorder.AudioEncoder.VORBIS})
-    public @interface AudioEncoder {}
-
-    @SuppressLint("InlinedApi")
-    @Target({ElementType.PARAMETER, ElementType.FIELD})
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({MediaRecorder.VideoEncoder.DEFAULT, MediaRecorder.VideoEncoder.H263,
-            MediaRecorder.VideoEncoder.H264, MediaRecorder.VideoEncoder.MPEG_4_SP,
-            MediaRecorder.VideoEncoder.VP8})
-    public @interface VideoEncoder{}
-
-    @Target({ElementType.PARAMETER, ElementType.FIELD})
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({MediaRecorder.OutputFormat.DEFAULT, MediaRecorder.OutputFormat.MPEG_4,
-            MediaRecorder.OutputFormat.THREE_GPP})
-    public @interface OutputFormat{}
 }

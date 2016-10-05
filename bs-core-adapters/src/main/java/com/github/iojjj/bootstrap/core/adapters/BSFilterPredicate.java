@@ -16,6 +16,7 @@ public interface BSFilterPredicate<T> {
      *
      * @param query some non-null query
      * @param item  some item
+     *
      * @return true if item applicable with filtering predicate, false otherwise
      */
     boolean apply(@NonNull String query, @Nullable T item);

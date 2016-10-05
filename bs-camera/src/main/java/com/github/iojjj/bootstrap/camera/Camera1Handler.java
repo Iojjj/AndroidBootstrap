@@ -11,14 +11,6 @@ import android.support.annotation.Nullable;
 @SuppressWarnings("deprecation")
 class Camera1Handler {
 
-    public boolean isFrontCameraSupported() {
-        return getCameraId(CameraView.Facing.FRONT) != null;
-    }
-
-    public boolean isBackCameraSupported() {
-        return getCameraId(CameraView.Facing.BACK) != null;
-    }
-
     @Nullable
     public String getCameraId(@NonNull CameraView.Facing facing) {
         final int numberOfCameras = Camera.getNumberOfCameras();
@@ -31,5 +23,13 @@ class Camera1Handler {
             }
         }
         return null;
+    }
+
+    public boolean isBackCameraSupported() {
+        return getCameraId(CameraView.Facing.BACK) != null;
+    }
+
+    public boolean isFrontCameraSupported() {
+        return getCameraId(CameraView.Facing.FRONT) != null;
     }
 }

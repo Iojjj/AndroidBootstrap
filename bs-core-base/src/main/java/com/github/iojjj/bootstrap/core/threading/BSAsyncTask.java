@@ -39,15 +39,15 @@ public abstract class BSAsyncTask<TIn, TProgress, TOut> extends AsyncTask<TIn, T
     }
 
     @SafeVarargs
+    public final void executeEx(final TIn... params) {
+        BSThreadingManager.runOnUiThread(() -> executeExSafe(params));
+    }
+
+    @SafeVarargs
     private final BSAsyncTask<TIn, TProgress, TOut> executeExSafe(final TIn... params) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             return (BSAsyncTask<TIn, TProgress, TOut>) super.executeOnExecutor(mExecutor, params);
         }
         return (BSAsyncTask<TIn, TProgress, TOut>) super.execute(params);
-    }
-
-    @SafeVarargs
-    public final void executeEx(final TIn... params) {
-        BSThreadingManager.runOnUiThread(() -> executeExSafe(params));
     }
 }

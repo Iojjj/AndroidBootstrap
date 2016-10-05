@@ -29,15 +29,15 @@ import com.github.iojjj.bootstrap.widgets.R;
 // TODO: check, update
 abstract class BSProgressBar extends View {
 
-    private final RectF borderRect = new RectF();
-    private final Paint borderPaint = new Paint();
-    private final Paint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.LINEAR_TEXT_FLAG);
-    private final Paint textPaintWhite = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.LINEAR_TEXT_FLAG);
     private final Paint arcPaint = new Paint();
     private final Paint arcPaintTransparent = new Paint();
+    private final Paint borderPaint = new Paint();
+    private final RectF borderRect = new RectF();
     private final Rect canvasRect = new Rect();
-    private int progress = 0;
+    private final Paint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.LINEAR_TEXT_FLAG);
+    private final Paint textPaintWhite = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.LINEAR_TEXT_FLAG);
     private int max = 0;
+    private int progress = 0;
 
     public BSProgressBar(Context context) {
         super(context);
@@ -57,6 +57,70 @@ abstract class BSProgressBar extends View {
     public BSProgressBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public BSProgressBar setMax(int max) {
+        this.max = max;
+        invalidate();
+        return this;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public BSProgressBar setProgress(int progress) {
+        this.progress = progress;
+        invalidate();
+        return this;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        float percent = 1.0f * progress / max;
+        String text = getText(progress);
+        float textWidth = textPaint.measureText(text);
+        float textHeight = (textPaint.descent() + textPaint.ascent());
+        float xPos = (borderRect.width() - textWidth) / 2f;
+        float yPos = (borderRect.height() - textHeight) / 2f;
+        float h = borderRect.bottom * (1 - percent);
+        canvas.save();
+        canvas.clipRect(borderRect.left, borderRect.top, borderRect.right, h);
+        canvas.drawArc(borderRect, 0, 360, false, arcPaintTransparent);
+        canvas.drawText(text, xPos, yPos, textPaint);
+        canvas.restore();
+        canvas.save();
+        canvas.clipRect(borderRect.left, h + borderRect.top, borderRect.right, borderRect.bottom);
+        canvas.drawArc(borderRect, 0, 360, false, arcPaint);
+        canvas.drawText(text, xPos, yPos, textPaintWhite);
+        canvas.restore();
+        canvas.drawArc(borderRect, 0, 360, false, borderPaint);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        borderRect.left = getPaddingLeft() >> 1;
+        borderRect.top = getPaddingTop() >> 1;
+        canvasRect.left = 0;
+        canvasRect.top = 0;
+
+        if (getWidth() > 0) {
+            borderRect.right = getWidth() - (getPaddingRight() >> 1);
+            borderRect.bottom = getHeight() - (getPaddingBottom() >> 1);
+            canvasRect.right = getWidth();
+            canvasRect.bottom = getHeight();
+        } else {
+            borderRect.right = getMeasuredWidth() - (getPaddingRight() >> 1);
+            borderRect.bottom = getMeasuredHeight() - (getPaddingBottom() >> 1);
+            canvasRect.right = getMeasuredWidth();
+            canvasRect.bottom = getMeasuredHeight();
+        }
     }
 
     private void init(@NonNull Context context, @NonNull AttributeSet attrs) {
@@ -109,69 +173,5 @@ abstract class BSProgressBar extends View {
         arcPaintTransparent.setColor(Color.TRANSPARENT);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        borderRect.left = getPaddingLeft() >> 1;
-        borderRect.top = getPaddingTop() >> 1;
-        canvasRect.left = 0;
-        canvasRect.top = 0;
-
-        if (getWidth() > 0) {
-            borderRect.right = getWidth() - (getPaddingRight() >> 1);
-            borderRect.bottom = getHeight() - (getPaddingBottom() >> 1);
-            canvasRect.right = getWidth();
-            canvasRect.bottom = getHeight();
-        } else {
-            borderRect.right = getMeasuredWidth() - (getPaddingRight() >> 1);
-            borderRect.bottom = getMeasuredHeight() - (getPaddingBottom() >> 1);
-            canvasRect.right = getMeasuredWidth();
-            canvasRect.bottom = getMeasuredHeight();
-        }
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        float percent = 1.0f * progress / max;
-        String text = getText(progress);
-        float textWidth = textPaint.measureText(text);
-        float textHeight = (textPaint.descent() + textPaint.ascent());
-        float xPos = (borderRect.width() - textWidth) / 2f;
-        float yPos = (borderRect.height() - textHeight) / 2f;
-        float h = borderRect.bottom * (1 - percent);
-        canvas.save();
-        canvas.clipRect(borderRect.left, borderRect.top, borderRect.right, h);
-        canvas.drawArc(borderRect, 0, 360, false, arcPaintTransparent);
-        canvas.drawText(text, xPos, yPos, textPaint);
-        canvas.restore();
-        canvas.save();
-        canvas.clipRect(borderRect.left, h + borderRect.top, borderRect.right, borderRect.bottom);
-        canvas.drawArc(borderRect, 0, 360, false, arcPaint);
-        canvas.drawText(text, xPos, yPos, textPaintWhite);
-        canvas.restore();
-        canvas.drawArc(borderRect, 0, 360, false, borderPaint);
-    }
-
     protected abstract String getText(int progress);
-
-    public BSProgressBar setProgress(int progress) {
-        this.progress = progress;
-        invalidate();
-        return this;
-    }
-
-    public BSProgressBar setMax(int max) {
-        this.max = max;
-        invalidate();
-        return this;
-    }
-
-    public int getProgress() {
-        return progress;
-    }
-
-    public int getMax() {
-        return max;
-    }
 }

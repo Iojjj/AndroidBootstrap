@@ -18,17 +18,16 @@ import com.github.scribejava.core.oauth.OAuthService;
  */
 class ScribeDelegate {
 
+    static final String EXTRA_API_GETTER = BSConstantGenerator.extra("oauth_api_getter");
     static final String EXTRA_API_KEY = BSConstantGenerator.extra("api_key");
     static final String EXTRA_API_SECRET = BSConstantGenerator.extra("api_secret");
     static final String EXTRA_CALLBACK = BSConstantGenerator.extra("callback");
     static final String EXTRA_CONNECT_TIMEOUT = BSConstantGenerator.extra("connect_timeout");
     static final String EXTRA_READ_TIMEOUT = BSConstantGenerator.extra("read_timeout");
     static final String EXTRA_SCOPE = BSConstantGenerator.extra("scope");
-    static final String EXTRA_API_GETTER = BSConstantGenerator.extra("oauth_api_getter");
-
-    private final OAuthService mOAuthService;
     private final BSOAuthListener mAuthListener;
     private final ScribeDialog.Delegate mDelegate;
+    private final OAuthService mOAuthService;
 
     ScribeDelegate(@NonNull Bundle bundle, @NonNull BSOAuthListener authListener,
                    @NonNull ScribeDialog.Delegate delegate) {
@@ -58,6 +57,7 @@ class ScribeDelegate {
      * Creates a new dialog that will perform an OAuth authorization.
      *
      * @param context instance of Context
+     *
      * @return instance of Dialog
      */
     Dialog onCreateDialog(@NonNull Context context) {

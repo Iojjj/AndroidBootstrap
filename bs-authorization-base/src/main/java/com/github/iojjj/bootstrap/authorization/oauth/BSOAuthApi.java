@@ -1,10 +1,13 @@
 package com.github.iojjj.bootstrap.authorization.oauth;
 
 /**
- * List of default OAuth API providers.
+ * List of available OAuth API implementations.
+ *
+ * @since 1.0
  */
 public enum BSOAuthApi {
-    AWEBBER,
+
+    AWEBER,
     DIGG,
     DOKTORNARABOTE,
     FACEBOOK,

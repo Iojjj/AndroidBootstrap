@@ -18,9 +18,29 @@ public class BSOAuthBuilder {
     private String mApiSecret;
     private String mCallback;
     private int mConnectTimeout;
+    private BSOAuthApiGetterAbstract mOAuthApiGetter;
     private int mReadTimeout;
     private String mScope;
-    private BSOAuthApiGetterAbstract mOAuthApiGetter;
+
+    @NonNull
+    public Bundle build() {
+        BSAssertions.assertNotEmpty(mApiKey, "apiKey");
+        BSAssertions.assertNotEmpty(mApiSecret, "apiSecret");
+        BSAssertions.assertNotNull(mOAuthApiGetter, "oAuthApiGetter");
+        BSAssertions.assertNotNull(mCallback, "callback");
+        BSAssertions.assertNotNull(mScope, "scope");
+        BSAssertions.assertTrue(mConnectTimeout >= 0, "Parameter \"connectTimeout\" can't hold a negative value.");
+        BSAssertions.assertTrue(mReadTimeout >= 0, "Parameter \"readTimeout\" can't hold a negative value.");
+        final Bundle bundle = new Bundle();
+        bundle.putString(ScribeDelegate.EXTRA_API_KEY, mApiKey);
+        bundle.putString(ScribeDelegate.EXTRA_API_SECRET, mApiSecret);
+        bundle.putString(ScribeDelegate.EXTRA_CALLBACK, mCallback);
+        bundle.putString(ScribeDelegate.EXTRA_SCOPE, mScope);
+        bundle.putInt(ScribeDelegate.EXTRA_CONNECT_TIMEOUT, mConnectTimeout);
+        bundle.putInt(ScribeDelegate.EXTRA_READ_TIMEOUT, mReadTimeout);
+        bundle.putParcelable(ScribeDelegate.EXTRA_API_GETTER, mOAuthApiGetter);
+        return bundle;
+    }
 
     /**
      * Set an API key (or an application id).
@@ -53,22 +73,22 @@ public class BSOAuthBuilder {
     }
 
     /**
-     * Set scope for an OAuth authorization flow.
-     *
-     * @param scope non-empty scope
-     */
-    public BSOAuthBuilder setScope(@NonNull String scope) {
-        mScope = scope;
-        return this;
-    }
-
-    /**
      * Set a connection timeout.
      *
      * @param connectTimeout non-negative value in milliseconds
      */
     public BSOAuthBuilder setConnectTimeout(int connectTimeout) {
         mConnectTimeout = connectTimeout;
+        return this;
+    }
+
+    /**
+     * Set an instance of {@link BSOAuthApiGetterAbstract} that will create a new instance of {@link BaseApi}.
+     *
+     * @param oAuthApiGetter instance of BSOAuthApiGetterAbstract
+     */
+    public BSOAuthBuilder setOAuthApiGetter(@NonNull BSOAuthApiGetterAbstract oAuthApiGetter) {
+        mOAuthApiGetter = oAuthApiGetter;
         return this;
     }
 
@@ -83,32 +103,12 @@ public class BSOAuthBuilder {
     }
 
     /**
-     * Set an instance of {@link BSOAuthApiGetterAbstract} that will create a new instance of {@link BaseApi}.
+     * Set scope for an OAuth authorization flow.
      *
-     * @param oAuthApiGetter instance of BSOAuthApiGetterAbstract
+     * @param scope non-empty scope
      */
-    public BSOAuthBuilder setOAuthApiGetter(@NonNull BSOAuthApiGetterAbstract oAuthApiGetter) {
-        mOAuthApiGetter = oAuthApiGetter;
+    public BSOAuthBuilder setScope(@NonNull String scope) {
+        mScope = scope;
         return this;
-    }
-
-    @NonNull
-    public Bundle build() {
-        BSAssertions.assertNotEmpty(mApiKey, "apiKey");
-        BSAssertions.assertNotEmpty(mApiSecret, "apiSecret");
-        BSAssertions.assertNotNull(mOAuthApiGetter, "oAuthApiGetter");
-        BSAssertions.assertNotNull(mCallback, "callback");
-        BSAssertions.assertNotNull(mScope, "scope");
-        BSAssertions.assertTrue(mConnectTimeout >= 0, "Parameter \"connectTimeout\" can't hold a negative value.");
-        BSAssertions.assertTrue(mReadTimeout >= 0, "Parameter \"readTimeout\" can't hold a negative value.");
-        final Bundle bundle = new Bundle();
-        bundle.putString(ScribeDelegate.EXTRA_API_KEY, mApiKey);
-        bundle.putString(ScribeDelegate.EXTRA_API_SECRET, mApiSecret);
-        bundle.putString(ScribeDelegate.EXTRA_CALLBACK, mCallback);
-        bundle.putString(ScribeDelegate.EXTRA_SCOPE, mScope);
-        bundle.putInt(ScribeDelegate.EXTRA_CONNECT_TIMEOUT, mConnectTimeout);
-        bundle.putInt(ScribeDelegate.EXTRA_READ_TIMEOUT, mReadTimeout);
-        bundle.putParcelable(ScribeDelegate.EXTRA_API_GETTER, mOAuthApiGetter);
-        return bundle;
     }
 }

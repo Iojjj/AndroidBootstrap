@@ -10,6 +10,7 @@ import com.github.iojjj.bootstrap.core.functions.BSFunction0;
 
 /**
  * Implementation of {@link Loader} that loads and stores {@link BSMvpPresenter} instance.
+ *
  * @param <P> type of presenter
  */
 final class PresenterLoader<P extends BSMvpPresenter> extends Loader<P>
@@ -24,7 +25,8 @@ final class PresenterLoader<P extends BSMvpPresenter> extends Loader<P>
      * the Loader's Context, don't use the constructor argument directly.
      * The Context returned by {@link #getContext} is safe to use across
      * Activity instances.
-     *  @param context used to retrieve the application context.
+     *
+     * @param context           used to retrieve the application context.
      * @param presenterProvider provider of presenter instances
      */
     PresenterLoader(@NonNull Context context, @NonNull BSFunction0<P> presenterProvider) {
@@ -34,15 +36,16 @@ final class PresenterLoader<P extends BSMvpPresenter> extends Loader<P>
     }
 
     @Override
-    protected void onStartLoading() {
-        super.onStartLoading();
-        mPresenterLoaderDelegate.onStartLoading();
+    public void cancelLoadImpl() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            cancelLoad();
+        }
     }
 
     @Override
-    protected void onStopLoading() {
-        super.onStopLoading();
-        mPresenterLoaderDelegate.onStopLoading();
+    protected void onStartLoading() {
+        super.onStartLoading();
+        mPresenterLoaderDelegate.onStartLoading();
     }
 
     @Override
@@ -52,15 +55,14 @@ final class PresenterLoader<P extends BSMvpPresenter> extends Loader<P>
     }
 
     @Override
-    protected void onReset() {
-        super.onReset();
-        mPresenterLoaderDelegate.onReset();
+    protected void onStopLoading() {
+        super.onStopLoading();
+        mPresenterLoaderDelegate.onStopLoading();
     }
 
     @Override
-    public void cancelLoadImpl() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            cancelLoad();
-        }
+    protected void onReset() {
+        super.onReset();
+        mPresenterLoaderDelegate.onReset();
     }
 }

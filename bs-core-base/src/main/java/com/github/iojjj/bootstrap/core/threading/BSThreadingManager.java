@@ -30,16 +30,47 @@ public class BSThreadingManager {
     }
 
     /**
-     * Execute runnable on UI thread.
+     * Checks if current thread is the UI thread.
      *
-     * @param r runnable
+     * @return true if current thread is the UI thread, false otherwise
      */
-    public static void runOnUiThread(@NonNull final Runnable r) {
-        if (isUiThread()) {
-            r.run();
-            return;
+    public static boolean isUiThread() {
+        return Thread.currentThread().equals(Looper.getMainLooper().getThread());
+    }
+
+    /**
+     * Execute runnable in background thread.
+     *
+     * @param runnable    runnable
+     * @param immediately if set to true, runnable will be executed immediately if current thread is not a UI thread
+     * @param executor    any executor
+     *
+     * @return a Future representing pending completion of the task or null if runnable was executed immediately
+     *
+     * @deprecated use <a href="https://github.com/ReactiveX/RxJava">RxJava</a> instead.
+     */
+    @Nullable
+    public static Future runOnExecutor(@NonNull final Runnable runnable, @NonNull ExecutorService executor, boolean immediately) {
+        if (immediately && !isUiThread()) {
+            runnable.run();
+            return null;
         }
-        getMainHandler().post(r);
+        return executor.submit(runnable);
+    }
+
+    /**
+     * Execute runnable in background thread.
+     *
+     * @param runnable runnable
+     * @param executor any executor
+     *
+     * @return a Future representing pending completion of the task
+     *
+     * @deprecated use <a href="https://github.com/ReactiveX/RxJava">RxJava</a> instead.
+     */
+    @Nullable
+    public static Future runOnExecutor(@NonNull final Runnable runnable, @NonNull ExecutorService executor) {
+        return runOnExecutor(runnable, executor, false);
     }
 
     /**
@@ -53,43 +84,16 @@ public class BSThreadingManager {
     }
 
     /**
-     * Execute runnable in background thread.
+     * Execute runnable on UI thread.
      *
-     * @param runnable runnable
-     * @param executor any executor
-     * @return a Future representing pending completion of the task
-     * @deprecated use <a href="https://github.com/ReactiveX/RxJava">RxJava</a> instead.
+     * @param r runnable
      */
-    @Nullable
-    public static Future runOnExecutor(@NonNull final Runnable runnable, @NonNull ExecutorService executor) {
-        return runOnExecutor(runnable, executor, false);
-    }
-
-    /**
-     * Execute runnable in background thread.
-     *
-     * @param runnable    runnable
-     * @param immediately if set to true, runnable will be executed immediately if current thread is not a UI thread
-     * @param executor    any executor
-     * @return a Future representing pending completion of the task or null if runnable was executed immediately
-     * @deprecated use <a href="https://github.com/ReactiveX/RxJava">RxJava</a> instead.
-     */
-    @Nullable
-    public static Future runOnExecutor(@NonNull final Runnable runnable, @NonNull ExecutorService executor, boolean immediately) {
-        if (immediately && !isUiThread()) {
-            runnable.run();
-            return null;
+    public static void runOnUiThread(@NonNull final Runnable r) {
+        if (isUiThread()) {
+            r.run();
+            return;
         }
-        return executor.submit(runnable);
-    }
-
-    /**
-     * Checks if current thread is the UI thread.
-     *
-     * @return true if current thread is the UI thread, false otherwise
-     */
-    public static boolean isUiThread() {
-        return Thread.currentThread().equals(Looper.getMainLooper().getThread());
+        getMainHandler().post(r);
     }
 
     private static final class Loader {

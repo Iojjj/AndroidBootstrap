@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
  * Implementation of {@link BSMvpPresenter}.
  *
  * @param <V> type of view.
+ *
  * @since 1.0
  */
 public abstract class BSMvpPresenterImpl<V extends BSMvpView> implements BSMvpPresenter<V> {
@@ -27,6 +28,16 @@ public abstract class BSMvpPresenterImpl<V extends BSMvpView> implements BSMvpPr
     }
 
     @Override
+    public void onCreated() {
+
+    }
+
+    @Override
+    public void onDestroyed() {
+
+    }
+
+    @Override
     public void onResume() {
 
     }
@@ -43,16 +54,6 @@ public abstract class BSMvpPresenterImpl<V extends BSMvpView> implements BSMvpPr
 
     @Override
     public void onRestoreInstanceState(@Nullable Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    public void onCreated() {
-
-    }
-
-    @Override
-    public void onDestroyed() {
 
     }
 }

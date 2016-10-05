@@ -6,40 +6,46 @@ import android.support.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 
-class ArrayAdapterDelegate<T> extends AdapterDelegate<T, AdapterCallbacks> {
+/**
+ * Implementation of {@link AdapterImpl} used in {@link BSArrayAdapterImpl}.
+ *
+ * @param <T> type of items
+ *
+ * @since 1.0
+ */
+class ArrayAdapter<T> extends AdapterImpl<T, ArrayAdapterCallbacks> {
 
     /**
      * Flag indicates that adapter will notify observers about data changes.
      */
     private boolean mAutoNotifyDataSetChanges = true;
 
-    ArrayAdapterDelegate(@NonNull AdapterCallbacks adapterCallbacks,
-                         @NonNull BSAdapterRenderer<T, ? extends BSViewHolder> renderer,
-                         @Nullable BSFilterPredicate<T> predicate) {
+    ArrayAdapter(@NonNull ArrayAdapterCallbacks adapterCallbacks,
+                 @NonNull BSAdapterRenderer<T, ? extends BSViewHolder> renderer,
+                 @Nullable BSFilterPredicate<T> predicate) {
         super(adapterCallbacks, renderer, predicate);
     }
 
     @Override
-    protected void onItemAdded(T item) {
-        final AdapterCallbacks adapterCallbacks = getAdapterCallbacks();
+    protected void onCleared(int count) {
+        final ArrayAdapterCallbacks adapterCallbacks = getAdapterCallbacks();
         if (isFiltered()) {
-            final CharSequence lastFilterQuery = getLastFilterQuery();
-            final BSFilterPredicate<T> filterPredicate = getFilterPredicate();
-            if (lastFilterQuery != null &&
-                    filterPredicate.apply(lastFilterQuery.toString().trim(), item)) {
-                getFilteredItems().add(item);
-                if (mAutoNotifyDataSetChanges) {
-                    adapterCallbacks.notifyDataSetChanged();
-                }
+            final List<T> filteredItems = getFilteredItems();
+            count = filteredItems.size();
+            filteredItems.clear();
+            setFiltered(false);
+            setLastFilterQuery(null);
+            if (mAutoNotifyDataSetChanges && count > 0) {
+                adapterCallbacks.notifyDataSetChanged();
             }
-        } else if (mAutoNotifyDataSetChanges) {
+        } else if (mAutoNotifyDataSetChanges && count > 0) {
             adapterCallbacks.notifyDataSetChanged();
         }
     }
 
     @Override
-    protected void onCollectionAdded(Collection<T> items, int insertPosition) {
-        final AdapterCallbacks adapterCallbacks = getAdapterCallbacks();
+    protected void onCollectionAdded(@NonNull Collection<T> items, int insertPosition) {
+        final ArrayAdapterCallbacks adapterCallbacks = getAdapterCallbacks();
         if (isFiltered()) {
             final CharSequence lastFilterQuery = getLastFilterQuery();
             final BSFilterPredicate<T> filterPredicate = getFilterPredicate();
@@ -61,8 +67,31 @@ class ArrayAdapterDelegate<T> extends AdapterDelegate<T, AdapterCallbacks> {
     }
 
     @Override
+    protected void onFiltered() {
+        getAdapterCallbacks().notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onItemAdded(T item) {
+        final ArrayAdapterCallbacks adapterCallbacks = getAdapterCallbacks();
+        if (isFiltered()) {
+            final CharSequence lastFilterQuery = getLastFilterQuery();
+            final BSFilterPredicate<T> filterPredicate = getFilterPredicate();
+            if (lastFilterQuery != null &&
+                    filterPredicate.apply(lastFilterQuery.toString().trim(), item)) {
+                getFilteredItems().add(item);
+                if (mAutoNotifyDataSetChanges) {
+                    adapterCallbacks.notifyDataSetChanged();
+                }
+            }
+        } else if (mAutoNotifyDataSetChanges) {
+            adapterCallbacks.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     protected void onItemRemoved(T item, int position) {
-        final AdapterCallbacks adapterCallbacks = getAdapterCallbacks();
+        final ArrayAdapterCallbacks adapterCallbacks = getAdapterCallbacks();
         if (isFiltered()) {
             final int pos = getFilteredItems().indexOf(item);
             if (pos > -1 && mAutoNotifyDataSetChanges) {
@@ -71,28 +100,6 @@ class ArrayAdapterDelegate<T> extends AdapterDelegate<T, AdapterCallbacks> {
         } else if (mAutoNotifyDataSetChanges) {
             adapterCallbacks.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    protected void onCleared(int count) {
-        final AdapterCallbacks adapterCallbacks = getAdapterCallbacks();
-        if (isFiltered()) {
-            final List<T> filteredItems = getFilteredItems();
-            count = filteredItems.size();
-            filteredItems.clear();
-            setFiltered(false);
-            setLastFilterQuery(null);
-            if (mAutoNotifyDataSetChanges && count > 0) {
-                adapterCallbacks.notifyDataSetChanged();
-            }
-        } else if (mAutoNotifyDataSetChanges && count > 0) {
-            adapterCallbacks.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    protected void onFiltered() {
-        getAdapterCallbacks().notifyDataSetChanged();
     }
 
     int getCount() {

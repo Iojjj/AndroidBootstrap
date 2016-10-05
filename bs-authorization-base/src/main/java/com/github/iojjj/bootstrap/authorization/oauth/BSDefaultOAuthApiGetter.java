@@ -77,12 +77,22 @@ public class BSDefaultOAuthApiGetter extends BSOAuthApiGetterAbstract {
         mApi = BSOAuthApi.values()[in.readInt()];
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mApi.ordinal());
+    }
+
     @NonNull
     @Override
     BaseApi getApi() {
         final BaseApi api;
         switch (mApi) {
-            case AWEBBER:
+            case AWEBER:
                 api = AWeberApi.instance();
                 break;
             case DIGG:
@@ -206,16 +216,6 @@ public class BSDefaultOAuthApiGetter extends BSOAuthApiGetterAbstract {
                 throw new IllegalArgumentException("Unknown Api type: " + mApi);
         }
         return api;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mApi.ordinal());
     }
 
 }

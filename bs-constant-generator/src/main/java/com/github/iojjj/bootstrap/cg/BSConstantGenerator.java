@@ -13,10 +13,10 @@ import com.github.iojjj.bootstrap.assertions.BSAssertions;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class BSConstantGenerator {
 
-    private static final String EXTRA_IN_PREFIX = "EXTRA_";
-    private static final String EXTRA_OUT_PREFIX = "RESULT_";
     private static final String ACTION_PREFIX = "ACTION_";
     private static final String EXPRESSION = "(.)(\\p{Upper})";
+    private static final String EXTRA_IN_PREFIX = "EXTRA_";
+    private static final String EXTRA_OUT_PREFIX = "RESULT_";
     private static final String REPLACEMENT = "$1_$2";
 
     private static String sPackageName = "";
@@ -25,43 +25,11 @@ public class BSConstantGenerator {
         //no instance
     }
 
-    private static String toUpper(@NonNull String in) {
-        BSAssertions.assertNotNull(in, "in");
-        return in.replaceAll(EXPRESSION, REPLACEMENT).toUpperCase();
-    }
-
-    private static String toLower(@NonNull String in) {
-        BSAssertions.assertNotNull(in, "in");
-        return in.replaceAll(EXPRESSION, REPLACEMENT).toLowerCase();
-    }
-
-
-    /**
-     * Create a new RESULT_ constant.
-     *
-     * @param extraName result field name
-     * @return a new RESULT_ constant in SNAKE_CASE
-     */
-    public static String result(@NonNull String extraName) {
-        BSAssertions.assertNotEmpty(extraName, "extraName");
-        return sPackageName + EXTRA_OUT_PREFIX + toUpper(extraName);
-    }
-
-    /**
-     * Create a new EXTRA_ constant.
-     *
-     * @param extraName extra field name
-     * @return a new EXTRA_ constant in SNAKE_CASE
-     */
-    public static String extra(@NonNull String extraName) {
-        BSAssertions.assertNotEmpty(extraName, "extraName");
-        return sPackageName + EXTRA_IN_PREFIX + toUpper(extraName);
-    }
-
     /**
      * Create a new ACTION_ constant.
      *
      * @param actionName action field name
+     *
      * @return a new ACTION_ constant in SNAKE_CASE
      */
     public static String action(@NonNull String actionName) {
@@ -73,6 +41,7 @@ public class BSConstantGenerator {
      * Create a new table's column constant.
      *
      * @param columnName column name
+     *
      * @return a new table's column constant in snake_case
      */
     public static String column(@NonNull String columnName) {
@@ -81,14 +50,27 @@ public class BSConstantGenerator {
     }
 
     /**
-     * Create a new table name constant.
+     * Create a new EXTRA_ constant.
      *
-     * @param tableName table name
-     * @return a new table name constant in snake_case
+     * @param extraName extra field name
+     *
+     * @return a new EXTRA_ constant in SNAKE_CASE
      */
-    public static String table(@NonNull String tableName) {
-        BSAssertions.assertNotEmpty(tableName, "tableName");
-        return toLower(tableName);
+    public static String extra(@NonNull String extraName) {
+        BSAssertions.assertNotEmpty(extraName, "extraName");
+        return sPackageName + EXTRA_IN_PREFIX + toUpper(extraName);
+    }
+
+    /**
+     * Create a new RESULT_ constant.
+     *
+     * @param extraName result field name
+     *
+     * @return a new RESULT_ constant in SNAKE_CASE
+     */
+    public static String result(@NonNull String extraName) {
+        BSAssertions.assertNotEmpty(extraName, "extraName");
+        return sPackageName + EXTRA_OUT_PREFIX + toUpper(extraName);
     }
 
     /**
@@ -99,5 +81,27 @@ public class BSConstantGenerator {
     public static void setPackageName(@NonNull String packageName) {
         BSAssertions.assertNotNull(packageName, "packageName");
         sPackageName = packageName + ".";
+    }
+
+    /**
+     * Create a new table name constant.
+     *
+     * @param tableName table name
+     *
+     * @return a new table name constant in snake_case
+     */
+    public static String table(@NonNull String tableName) {
+        BSAssertions.assertNotEmpty(tableName, "tableName");
+        return toLower(tableName);
+    }
+
+    private static String toLower(@NonNull String in) {
+        BSAssertions.assertNotNull(in, "in");
+        return in.replaceAll(EXPRESSION, REPLACEMENT).toLowerCase();
+    }
+
+    private static String toUpper(@NonNull String in) {
+        BSAssertions.assertNotNull(in, "in");
+        return in.replaceAll(EXPRESSION, REPLACEMENT).toUpperCase();
     }
 }

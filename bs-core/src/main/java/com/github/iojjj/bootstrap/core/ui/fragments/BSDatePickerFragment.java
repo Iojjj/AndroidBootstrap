@@ -29,7 +29,9 @@ public class BSDatePickerFragment extends DialogFragment {
 
     /**
      * Create a new instance of date picker dialog fragment.
+     *
      * @param date initial date in milliseconds
+     *
      * @return new instance of date picker dialog fragment
      */
     public static BSDatePickerFragment newInstance(long date) {

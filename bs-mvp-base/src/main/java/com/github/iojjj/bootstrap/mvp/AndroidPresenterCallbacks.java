@@ -13,21 +13,9 @@ import android.support.annotation.Nullable;
  */
 interface AndroidPresenterCallbacks {
     /**
-     * Called in {@link Activity#onResume()} or {@link Fragment#onResume()}.
-     */
-    void onResume();
-
-    /**
      * Called in {@link Activity#onPause()} or {@link Fragment#onPause()}.
      */
     void onPause();
-
-    /**
-     * Called when it's time to save instance state.
-     *
-     * @param outState instance of Bundle
-     */
-    void onSaveInstanceState(@NonNull Bundle outState);
 
     /**
      * Called when it's time to restore instance state.
@@ -35,4 +23,16 @@ interface AndroidPresenterCallbacks {
      * @param savedInstanceState instance of Bundle or null
      */
     void onRestoreInstanceState(@Nullable Bundle savedInstanceState);
+
+    /**
+     * Called in {@link Activity#onResume()} or {@link Fragment#onResume()}.
+     */
+    void onResume();
+
+    /**
+     * Called when it's time to save instance state.
+     *
+     * @param outState instance of Bundle
+     */
+    void onSaveInstanceState(@NonNull Bundle outState);
 }
