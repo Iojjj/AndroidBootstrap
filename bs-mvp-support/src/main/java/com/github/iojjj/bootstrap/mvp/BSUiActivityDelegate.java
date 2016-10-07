@@ -1,8 +1,6 @@
 package com.github.iojjj.bootstrap.mvp;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.github.iojjj.bootstrap.assertions.BSAssertions;
@@ -20,10 +18,10 @@ public class BSUiActivityDelegate implements BSMvpDelegateImpl.UIDelegate {
 
     @Override
     public <V extends BSMvpView<P>, P extends BSMvpPresenter<V>> AndroidPresenterCallbacks
-    initLoader(int loaderId, @Nullable Bundle args, V view, BSFunction0<P> presenterProvider) {
+    initLoader(int loaderId, V view, BSFunction0<P> presenterProvider) {
         final PresenterLoaderCallbacks<V, P> loaderCallbacks =
                 PresenterLoaderCallbacks.create(mActivity, view, presenterProvider);
-        mActivity.getSupportLoaderManager().initLoader(loaderId, args, loaderCallbacks);
+        mActivity.getSupportLoaderManager().initLoader(loaderId, null, loaderCallbacks);
         return loaderCallbacks;
     }
 }

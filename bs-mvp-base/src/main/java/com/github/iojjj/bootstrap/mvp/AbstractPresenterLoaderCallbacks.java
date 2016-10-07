@@ -21,6 +21,7 @@ abstract class AbstractPresenterLoaderCallbacks<V extends BSMvpView<P>, P extend
     @Nullable
     private P mPresenter;
     private boolean mResumed;
+    private Bundle mSavedInstanceState;
 
     AbstractPresenterLoaderCallbacks(@NonNull V view) {
         mView = view;
@@ -45,6 +46,9 @@ abstract class AbstractPresenterLoaderCallbacks<V extends BSMvpView<P>, P extend
         final P presenter = mPresenter;
         if (presenter != null) {
             presenter.onRestoreInstanceState(savedInstanceState);
+            mSavedInstanceState = null;
+        } else if (savedInstanceState != null) {
+            mSavedInstanceState = (Bundle) savedInstanceState.clone();
         }
     }
 
@@ -82,6 +86,11 @@ abstract class AbstractPresenterLoaderCallbacks<V extends BSMvpView<P>, P extend
         if (presenter != null) {
             mView.setPresenter(presenter);
             presenter.setView(mView);
+            // restore state before resuming
+            if (mSavedInstanceState != null) {
+                presenter.onRestoreInstanceState(mSavedInstanceState);
+                mSavedInstanceState = null;
+            }
             presenter.onResume();
         }
     }

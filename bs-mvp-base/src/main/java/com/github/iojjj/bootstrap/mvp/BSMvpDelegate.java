@@ -21,5 +21,4 @@ public interface BSMvpDelegate extends AndroidPresenterCallbacks {
      */
     <V extends BSMvpView<P>, P extends BSMvpPresenter<V>>
     void initPresenter(int loaderId, @NonNull V view, @NonNull BSFunction0<P> presenterProvider);
-
 }

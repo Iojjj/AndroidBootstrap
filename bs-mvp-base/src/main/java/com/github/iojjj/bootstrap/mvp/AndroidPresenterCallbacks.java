@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
  * @since 1.0
  */
 interface AndroidPresenterCallbacks {
+
     /**
      * Called in {@link Activity#onPause()} or {@link Fragment#onPause()}.
      */

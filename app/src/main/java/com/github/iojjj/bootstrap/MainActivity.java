@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.github.iojjj.bootstrap.social.SocialNetworksTestFragment;
+
 /**
  * Main demo activity.
  */
@@ -15,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, CameraFragment.newInstance())
+                    .add(R.id.container, SocialNetworksTestFragment.newInstance())
                     .commit();
         }
     }

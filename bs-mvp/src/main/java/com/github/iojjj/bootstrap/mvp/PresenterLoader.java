@@ -18,17 +18,6 @@ final class PresenterLoader<P extends BSMvpPresenter> extends Loader<P>
 
     private final PresenterLoaderDelegate<P> mPresenterLoaderDelegate;
 
-    /**
-     * Stores away the application context associated with context.
-     * Since Loaders can be used across multiple activities it's dangerous to
-     * store the context directly; always use {@link #getContext()} to retrieve
-     * the Loader's Context, don't use the constructor argument directly.
-     * The Context returned by {@link #getContext} is safe to use across
-     * Activity instances.
-     *
-     * @param context           used to retrieve the application context.
-     * @param presenterProvider provider of presenter instances
-     */
     PresenterLoader(@NonNull Context context, @NonNull BSFunction0<P> presenterProvider) {
         super(context);
         BSAssertions.assertNotNull(presenterProvider, "presenterProvider");
